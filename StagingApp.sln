@@ -5,17 +5,17 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EA853937-EA24-4058-9EFC-31C342020BCF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StagingApp.App", "src\StagingApp.App\StagingApp.App.csproj", "{A2B35BF5-04D9-4237-9ED0-6524D6225351}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StagingApp.Main", "src\StagingApp.App\StagingApp.Main.csproj", "{A2B35BF5-04D9-4237-9ED0-6524D6225351}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StagingApp.Application", "src\StagingApp.Application\StagingApp.Application.csproj", "{45862D9D-74E3-4BCD-B1FD-F1C53C64BA2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StagingApp.Domain", "src\StagingApp.Domain\StagingApp.Domain.csproj", "{3D251154-F80B-4C8F-911D-1E3F9D34023E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StagingApp.Domain", "src\StagingApp.Domain\StagingApp.Domain.csproj", "{3D251154-F80B-4C8F-911D-1E3F9D34023E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StagingApp.Presentation", "src\StagingApp.Presentation\StagingApp.Presentation.csproj", "{90241206-8EBE-4926-A361-41D2C169D995}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StagingApp.Presentation", "src\StagingApp.Presentation\StagingApp.Presentation.csproj", "{90241206-8EBE-4926-A361-41D2C169D995}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StagingApp.Persistence", "src\StagingApp.Persistence\StagingApp.Persistence.csproj", "{C3F6C8E0-45A4-4FF2-B4B4-5F61F9B2C98E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StagingApp.Persistence", "src\StagingApp.Persistence\StagingApp.Persistence.csproj", "{C3F6C8E0-45A4-4FF2-B4B4-5F61F9B2C98E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StagingApp.Infrastructure", "src\StagingApp.Infrastructure\StagingApp.Infrastructure.csproj", "{F6E94E5F-DEA0-4BF4-BB18-DA50138E5FC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StagingApp.Infrastructure", "src\StagingApp.Infrastructure\StagingApp.Infrastructure.csproj", "{F6E94E5F-DEA0-4BF4-BB18-DA50138E5FC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

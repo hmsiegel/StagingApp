@@ -10,4 +10,12 @@
     <ProjectReference Include="..\StagingApp.Application\StagingApp.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\InfoViewModels\" />
+  </ItemGroup>
+
 </Project>
