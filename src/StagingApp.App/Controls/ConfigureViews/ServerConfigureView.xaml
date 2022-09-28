@@ -5,9 +5,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:local="clr-namespace:StagingApp.Main.Controls.ConfigureViews"
+    xmlns:mx="http://compiledbinding.com/x"
+    xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels.ConfigureViewModels;assembly=StagingApp.Presentation"
+    d:DataContext="{d:DesignInstance Type=viewmodels:ServerConfigureViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="550"
-    d:DesignWidth="800">
+    d:DesignWidth="800"
+    Background="{StaticResource BackgroundColor}">
 
     <Grid Style="{StaticResource GridStyle}">
 
@@ -31,17 +35,17 @@
         </Grid.RowDefinitions>
 
         <!-- Instructions Row -->
-        <TextBlock
+        <Label
             Grid.Row="1"
             Grid.Column="1"
             Grid.ColumnSpan="2"
-            Style="{StaticResource TextConfigureHeaderStyle}">
+            Style="{StaticResource ConfiguerLabelHeaderStyle}">
             PLEASE ENTER THE FOLLOWING INFORMATION:
-        </TextBlock>
+        </Label>
 
         <!-- Site ID Row -->
         <StackPanel 
-            Style="{StaticResource StackPanelStyle}"
+            Style="{StaticResource ConfigureStackPanelStyle}"
             Grid.Row="2"
             Grid.Column="1">
                 <Label
@@ -49,13 +53,14 @@
                     SITE ID:
                 </Label>
                 <ComboBox
-                    x:Name="SiteIds"
+                    ItemsSource="{Binding SiteIds}"
+                    SelectedItem="{Binding SelectedSiteId}"
                     Style="{StaticResource ServerConfigureComboBoxStyle}" />
         </StackPanel>
 
         <!-- Staging Tech Name Row -->
         <StackPanel
-            Style="{StaticResource StackPanelStyle}"
+            Style="{StaticResource ConfigureStackPanelStyle}"
             Grid.Row="3"
             Grid.Column="1">
                 <Label
@@ -63,13 +68,13 @@
                     STAGING TECH NAME:
                 </Label>
                 <TextBox
-                    x:Name="TechName"
+                    Text="{Binding StagingTechName}"
                     Style="{StaticResource ServerConfigureTextBox}" />
         </StackPanel>
 
         <!-- Hard Drive Replacement Row -->
         <StackPanel
-            Style="{StaticResource StackPanelStyle}"
+            Style="{StaticResource ConfigureStackPanelStyle}"
             Grid.Row="4"
             Grid.Column="1">
                 <Label
@@ -77,29 +82,31 @@
                     HARD DRIVE REPLACEMENT:
                 </Label>
                 <ComboBox
-                    x:Name="ReplacmentSelections"
+                    ItemsSource="{Binding ReplacementSelectionsList}"
+                    SelectedItem="{Binding Path=SelectedHardDriveReplacement}"
+                    IsEditable="False"
                     Style="{StaticResource ServerConfigureComboBoxStyle}" />
         </StackPanel>
 
         <!-- Hard Drive Replacement Letter Row -->
         <StackPanel
-            Style="{StaticResource StackPanelStyle}"
+            Style="{StaticResource ConfigureStackPanelStyle}"
             Grid.Row="5"
             Grid.Column="1"
-            Visibility="{Binding IsHardDriveLetterVisible, Converter={StaticResource BooleanToVisibilityConverter},
-                FallbackValue=Collapsed}">
-                <Label
+            Visibility="{Binding IsHardDriveLetterVisible, Converter={StaticResource BoolToVisibilityConverter}, FallbackValue=Collapsed}">
+            <Label
                     Style="{StaticResource ConfigureLabelStyle}">
                     HARD DRIVE LETTER:
                 </Label>
                 <ComboBox
-                    x:Name="HardDriveLetters"
+                    ItemsSource="{Binding HardDriveLettersList}"
+                    SelectedItem="{Binding SelectedHardDriveLetter}"
                     Style="{StaticResource ServerConfigureComboBoxStyle}" />
         </StackPanel>
 
         <!-- Button Row -->
         <Button
-            x:Name="ValidateInputs"
+            Command="{Binding ConfigureCommand}"
             Grid.Column="1"
             Grid.Row="6"
             Style="{StaticResource ConfigureButton}" >
