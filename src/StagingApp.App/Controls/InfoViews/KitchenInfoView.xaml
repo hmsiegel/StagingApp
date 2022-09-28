@@ -1,0 +1,230 @@
+﻿<UserControl 
+    x:Class="StagingApp.Main.Controls.InfoViews.KitchenInfoView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:StagingApp.Main.Controls.InfoViews"
+    mc:Ignorable="d" 
+    d:DesignHeight="725" 
+    d:DesignWidth="600"
+    Background="{StaticResource Blue}">
+    <Grid Margin="20">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <Label 
+            x:Name="ValidationTitle"
+            Grid.Row="0"
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Style="{StaticResource DeviceInfoTitleStyle}">
+            DEVICE VALIDATION
+        </Label>
+
+        <!-- Directions -->
+        <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                Style="{StaticResource TextDirectionStyle}">
+                    Please confirm that the following information is correct. 
+                    If any setting is incorrect, change the value in the text box and select "Edit". 
+                    The value will then be adjusted. Once all values are correct, press 'OK'.
+                    The device will then reboot.
+        </TextBlock>
+
+        <!-- Data -->
+        <!-- Controller Name -->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="2"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                CONTROLLER NAME:
+            </Label>
+            <TextBox
+                x:Name="ControllerName"
+                Text="AK238EXPO"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Button
+                x:Name="EditControllerName"
+                Style="{StaticResource DeviceInfoEditButtonStyle}">
+                Edit
+            </Button>
+        </StackPanel>
+
+        <!-- Controller Number -->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="3"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                CONTROLLER NUMBER:
+            </Label>
+            <TextBox
+                x:Name="ControllerNumber"
+                Text="170"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Button
+                x:Name="EditControllerNumber"
+                Style="{StaticResource DeviceInfoEditButtonStyle}">
+                Edit
+            </Button>
+        </StackPanel>
+
+        <!-- BOH Server Name-->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="4"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                BOH SERVER NAME:
+            </Label>
+            <TextBox
+                x:Name="BohServerName"
+                Text="ALOHABOH238"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Button
+                x:Name="EditBohServerName"
+                Style="{StaticResource DeviceInfoEditButtonStyle}">
+                Edit
+            </Button>
+        </StackPanel>
+
+        <!-- TERMSTR -->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="5"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                TERMSTR:
+            </Label>
+            <TextBox
+                x:Name="TermStr"
+                Text="TABLE238_"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Button
+                x:Name="EditTermStr"
+                Style="{StaticResource DeviceInfoEditButtonStyle}">
+                Edit
+            </Button>
+        </StackPanel>
+
+        <!--  Key Number -->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="6"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                KEYNUMBER:
+            </Label>
+            <TextBox
+                x:Name="KeyNumber"
+                Text="123456"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Button
+                x:Name="EditKeyNumber"
+                Style="{StaticResource DeviceInfoEditButtonStyle}">
+                Edit
+            </Button>
+        </StackPanel>
+
+        
+        <!-- IP Address-->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="7"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                IP ADDRESS:
+            </Label>
+            <TextBox
+                x:Name="IpAddress"
+                Text="10.102.238.170"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Button
+                x:Name="EditIpAddress"
+                Style="{StaticResource DeviceInfoEditButtonStyle}">
+                Edit
+            </Button>
+        </StackPanel>
+
+        
+        <!-- BOH IP Address -->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="8"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                BOH IP ADDRESS:
+            </Label>
+            <TextBox
+                x:Name="BohIpAddress"
+                Text="10.102.238.81"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Button
+                x:Name="EditBohIpAddress"
+                Style="{StaticResource DeviceInfoEditButtonStyle}">
+                Edit
+            </Button>
+        </StackPanel>
+
+        <!-- Buttons -->
+        <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            Margin="0 20 0 0"
+            Grid.Row="9"
+            Grid.Column="1"
+            Grid.ColumnSpan="2">
+
+            <Button
+                x:Name="OK"
+                IsDefault="True"
+                Style="{StaticResource DeviceInfoOkButtonStyle}">
+                OK
+            </Button>
+            <Button
+                x:Name="Cancel"
+                IsCancel="True"
+                Style="{StaticResource DeviceInfoCancelButtonStyle}">
+                CANCEL
+            </Button>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
