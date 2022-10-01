@@ -9,3 +9,4 @@ global using Microsoft.Extensions.DependencyInjection;
 global using StagingApp.Main.Views;
 
 global using StagingApp.Presentation.ViewModels.ConfigureViewModels;
+global using StagingApp.Presentation.ViewModels.InfoViewModels;

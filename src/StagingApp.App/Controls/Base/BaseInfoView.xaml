@@ -4,9 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StagingApp.Main.Controls.Base"
+             xmlns:basecontrols="clr-namespace:StagingApp.Main.Controls.Common"
+             d:DataContext="{d:DesignInstance Type=local:BaseInfoView}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Title Row -->
+        
+        
+        <!-- Directions Row -->
+        <!-- Data Row -->
+        <Grid
+            x:Name="DataContentGrid" />
+
+        <!-- Buttons Row -->
             
     </Grid>
 </UserControl>

@@ -4,10 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:local="clr-namespace:StagingApp.Main.Controls.InfoViews"
+    xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels.InfoViewModels;assembly=StagingApp.Presentation"
+    d:DataContext="{d:DesignInstance Type=viewmodels:KitchenInfoViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="725" 
-    d:DesignWidth="600"
+    d:DesignWidth="780"
     Background="{StaticResource Blue}">
     <Grid Margin="20">
 
@@ -35,8 +36,8 @@
         <Label 
             x:Name="ValidationTitle"
             Grid.Row="0"
-            Grid.Column="1"
-            Grid.ColumnSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
             Style="{StaticResource DeviceInfoTitleStyle}">
             DEVICE VALIDATION
         </Label>
@@ -56,151 +57,332 @@
         <!-- Data -->
         <!-- Controller Name -->
         <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
+                Style="{StaticResource InfoRowStackPanelStyle}"
                 Grid.Row="2"
-                Grid.Column="1">
+                Grid.Column="0">
             <Label
                 Style="{StaticResource DeviceInfoPropertyLabelStyle}">
                 CONTROLLER NAME:
             </Label>
             <TextBox
-                x:Name="ControllerName"
-                Text="AK238EXPO"
+                Text="{Binding ControllerName}"
                 Style="{StaticResource DeviceInfoTextBoxStyle}" />
-            <Button
-                x:Name="EditControllerName"
-                Style="{StaticResource DeviceInfoEditButtonStyle}">
-                Edit
-            </Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0">
+
+                    <Button
+                        Command="{Binding EditCommand}"
+                        CommandParameter="ControllerName"
+                        Visibility="{Binding IsControllerNameEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        Edit
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0"
+                    Visibility="{Binding IsControllerNameEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Command="{Binding OkEditCommand}"
+                        CommandParameter="ControllerName"
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        OK
+                    </Button>
+                    <Button
+                        Command="{Binding  CancelEditCommand}"
+                        CommandParameter="ControllerName"
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
         </StackPanel>
 
         <!-- Controller Number -->
         <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
-                Grid.Row="3"
-                Grid.Column="1">
-            <Label
-                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
-                CONTROLLER NUMBER:
-            </Label>
-            <TextBox
-                x:Name="ControllerNumber"
-                Text="170"
+            Style="{StaticResource InfoRowStackPanelStyle}"
+            Grid.Row="3"
+            Grid.Column="0">
+        <Label
+            Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+            CONTROLLER NUMBER:
+        </Label>
+        <TextBox
+            Text="{Binding ControllerNumber}"
                 Style="{StaticResource DeviceInfoTextBoxStyle}" />
-            <Button
-                x:Name="EditControllerNumber"
-                Style="{StaticResource DeviceInfoEditButtonStyle}">
-                Edit
-            </Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0">
+                    <Button
+                        Command="{Binding EditCommand}"
+                        CommandParameter="ControllerNumber"
+                        Visibility="{Binding IsControllerNumberEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        Edit
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0"
+                    Visibility="{Binding IsControllerNumberEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Command="{Binding OkEditCommand}"
+                        CommandParameter="ControllerNumber"
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        OK
+                    </Button>
+                    <Button
+                        Command="{Binding  CancelEditCommand}"
+                        CommandParameter="ControllerNumber"
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
         </StackPanel>
 
         <!-- BOH Server Name-->
         <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
+                Style="{StaticResource InfoRowStackPanelStyle}"
                 Grid.Row="4"
-                Grid.Column="1">
+                Grid.Column="0">
             <Label
                 Style="{StaticResource DeviceInfoPropertyLabelStyle}">
                 BOH SERVER NAME:
             </Label>
             <TextBox
-                x:Name="BohServerName"
-                Text="ALOHABOH238"
+                Text="{Binding BohServerName}"
                 Style="{StaticResource DeviceInfoTextBoxStyle}" />
-            <Button
-                x:Name="EditBohServerName"
-                Style="{StaticResource DeviceInfoEditButtonStyle}">
-                Edit
-            </Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0">
+                    <Button
+                        Command="{Binding EditCommand}"
+                        CommandParameter="BohServerName"
+                        Visibility="{Binding IsBohServerNameEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        Edit
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0"
+                    Visibility="{Binding IsBohServerNameEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Command="{Binding OkEditCommand}"
+                        CommandParameter="BohServerName"
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        OK
+                    </Button>
+                    <Button
+                        Command="{Binding  CancelEditCommand}"
+                        CommandParameter="BohServerName"
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
         </StackPanel>
 
         <!-- TERMSTR -->
         <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
+                Style="{StaticResource InfoRowStackPanelStyle}"
                 Grid.Row="5"
-                Grid.Column="1">
+                Grid.Column="0">
             <Label
                 Style="{StaticResource DeviceInfoPropertyLabelStyle}">
                 TERMSTR:
             </Label>
             <TextBox
-                x:Name="TermStr"
-                Text="TABLE238_"
+                Text="{Binding TermStr}"
                 Style="{StaticResource DeviceInfoTextBoxStyle}" />
-            <Button
-                x:Name="EditTermStr"
-                Style="{StaticResource DeviceInfoEditButtonStyle}">
-                Edit
-            </Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0">
+                    <Button
+                        Command="{Binding EditCommand}"
+                        CommandParameter="TermStr"
+                        Visibility="{Binding IsTermStrEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        Edit
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0"
+                    Visibility="{Binding IsTermStrEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Command="{Binding OkEditCommand}"
+                        CommandParameter="TermStr"
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        OK
+                    </Button>
+                    <Button
+                        Command="{Binding  CancelEditCommand}"
+                        CommandParameter="TermStr"
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
         </StackPanel>
 
         <!--  Key Number -->
         <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
+                Style="{StaticResource InfoRowStackPanelStyle}"
                 Grid.Row="6"
-                Grid.Column="1">
+                Grid.Column="0">
             <Label
                 Style="{StaticResource DeviceInfoPropertyLabelStyle}">
-                KEYNUMBER:
+                KEY NUMBER:
             </Label>
             <TextBox
-                x:Name="KeyNumber"
-                Text="123456"
+                Text="{Binding KeyNumber}"
                 Style="{StaticResource DeviceInfoTextBoxStyle}" />
-            <Button
-                x:Name="EditKeyNumber"
-                Style="{StaticResource DeviceInfoEditButtonStyle}">
-                Edit
-            </Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0">
+                    <Button
+                        Command="{Binding EditCommand}"
+                        CommandParameter="KeyNumber"
+                        Visibility="{Binding IsKeyNumberEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        Edit
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0"
+                    Visibility="{Binding IsKeyNumberEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Command="{Binding OkEditCommand}"
+                        CommandParameter="KeyNumber"
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        OK
+                    </Button>
+                    <Button
+                        Command="{Binding  CancelEditCommand}"
+                        CommandParameter="KeyNumber"
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
         </StackPanel>
 
-        
         <!-- IP Address-->
         <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
+                Style="{StaticResource InfoRowStackPanelStyle}"
                 Grid.Row="7"
-                Grid.Column="1">
+                Grid.Column="0">
             <Label
                 Style="{StaticResource DeviceInfoPropertyLabelStyle}">
                 IP ADDRESS:
             </Label>
             <TextBox
-                x:Name="IpAddress"
-                Text="10.102.238.170"
+                Text="{Binding IpAddress}"
                 Style="{StaticResource DeviceInfoTextBoxStyle}" />
-            <Button
-                x:Name="EditIpAddress"
-                Style="{StaticResource DeviceInfoEditButtonStyle}">
-                Edit
-            </Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0">
+                    <Button
+                        Command="{Binding EditCommand}"
+                        CommandParameter="IpAddress"
+                        Visibility="{Binding IsIpAddressEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        Edit
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0"
+                    Visibility="{Binding IsIpAddressEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Command="{Binding OkEditCommand}"
+                        CommandParameter="IpAddress"
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        OK
+                    </Button>
+                    <Button
+                        Command="{Binding  CancelEditCommand}"
+                        CommandParameter="IpAddress"
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
         </StackPanel>
 
-        
         <!-- BOH IP Address -->
         <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
+                Style="{StaticResource InfoRowStackPanelStyle}"
                 Grid.Row="8"
-                Grid.Column="1">
+                Grid.Column="0">
             <Label
                 Style="{StaticResource DeviceInfoPropertyLabelStyle}">
                 BOH IP ADDRESS:
             </Label>
             <TextBox
-                x:Name="BohIpAddress"
-                Text="10.102.238.81"
+                Text="{Binding BohIpAddress}"
                 Style="{StaticResource DeviceInfoTextBoxStyle}" />
-            <Button
-                x:Name="EditBohIpAddress"
-                Style="{StaticResource DeviceInfoEditButtonStyle}">
-                Edit
-            </Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0">
+                    <Button
+                        Command="{Binding EditCommand}"
+                        CommandParameter="BohIpAddress"
+                        Visibility="{Binding IsBohIpAddressEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        Edit
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="0"
+                    Visibility="{Binding IsBohIpAddressEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Command="{Binding OkEditCommand}"
+                        CommandParameter="BohIpAddress"
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        OK
+                    </Button>
+                    <Button
+                        Command="{Binding  CancelEditCommand}"
+                        CommandParameter="BohIpAddress"
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
         </StackPanel>
 
         <!-- Buttons -->

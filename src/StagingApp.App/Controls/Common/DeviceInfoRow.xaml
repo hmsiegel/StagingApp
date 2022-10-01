@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="StagingApp.Main.Controls.Common.DeviceInfoRow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:common="clr-namespace:StagingApp.Main.Controls.Common"
+             d:DataContext="{d:DesignInstance Type=common:DeviceInfoRow}"
+             xmlns:local="clr-namespace:StagingApp.Main.Controls.Common"
+             mc:Ignorable="d" >
+
+    <StackPanel
+        Style="{StaticResource InfoRowStackPanelStyle}">
+
+        <Label
+            Style="{StaticResource DeviceInfoPropertyLabelStyle}"
+            x:Name="InfoLabel" />
+        <TextBox
+            Style="{StaticResource DeviceInfoTextBoxStyle}"
+            x:Name="InfoTextBox" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel
+                Orientation="Horizontal"
+                Grid.Column="0">
+                <Button
+                    Command="{Binding EditCommand, Mode=OneWay}"
+                    CommandParameter="{Binding EditCommandParameter, Mode=OneWay}"
+                    Visibility="{Binding IsEditButtonVisible, Converter={StaticResource BoolToVisConverter}}"
+                    Style="{StaticResource DeviceInfoEditButtonStyle}">
+                    Edit
+                </Button>
+            </StackPanel>
+            <StackPanel
+                Orientation="Horizontal"
+                Grid.Column="0"
+                Visibility="{Binding IsEditButtonVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse}">
+                <Button
+                    Command="{Binding OkCommand, Mode=OneWay}"
+                    CommandParameter="{Binding OkCommandParameter, Mode=OneWay}"
+                    Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                    OK
+                </Button>
+                <Button
+                    Command="{Binding CancelCommand, Mode=OneWay}"
+                    CommandParameter="{Binding CancelCommandParameter, Mode=OneWay}"
+                    Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                    CANCEL
+                </Button>
+            </StackPanel>
+        </Grid>
+
+    </StackPanel>
+
+</UserControl>

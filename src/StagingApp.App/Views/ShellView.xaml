@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:configureviews="clr-namespace:StagingApp.Main.Controls.ConfigureViews"
+        xmlns:infoviews="clr-namespace:StagingApp.Main.Controls.InfoViews"
         xmlns:local="clr-namespace:StagingApp.Main.Views"
         mc:Ignorable="d"
         Background="{StaticResource BackgroundColor}"
@@ -11,6 +12,6 @@
         WindowStartupLocation="CenterScreen"
         Title="TA Staging" Height="800" Width="800">
     <Grid>
-        <configureviews:ServerConfigureView />
+        <infoviews:KitchenInfoView />
     </Grid>
 </Window>

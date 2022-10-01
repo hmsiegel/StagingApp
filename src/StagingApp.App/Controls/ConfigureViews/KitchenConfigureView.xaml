@@ -3,9 +3,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:local="clr-namespace:StagingApp.Main.Controls.ConfigureViews"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels.ConfigureViewModels;assembly=StagingApp.Presentation"
+    d:DataContext="{d:DesignInstance Type=viewmodels:KitchenConfigureViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="650"
     d:DesignWidth="800"
@@ -37,7 +37,7 @@
 
         <!-- Header Row -->
         <Label
-            Style="{StaticResource ConfiguerLabelHeaderStyle}"
+            Style="{StaticResource ConfigureLabelHeaderStyle}"
             Grid.Row="2"
             Grid.Column="1">
             PLEASE ENTER THE FOLLOWING INFORMATION:
@@ -53,7 +53,7 @@
                 CONTROLLER NAME:
             </Label>
             <TextBox
-                x:Name="ControllerName"
+                Text="{Binding ControllerName}"
                 Style="{StaticResource ServerConfigureTextBox}" />
         </StackPanel>
         
@@ -67,7 +67,7 @@
                 CONTROLLER #:
             </Label>
             <TextBox
-                x:Name="ControllerNumber"
+                Text="{Binding ControllerNumber}"
                 Style="{StaticResource ServerConfigureTextBox}" />
         </StackPanel>
 
@@ -81,7 +81,7 @@
                 TERMSTR:
             </Label>
             <TextBox
-                x:Name="Termstr"
+                Text="{Binding TermStr}"
                 Style="{StaticResource ServerConfigureTextBox}" />
         </StackPanel>
 
@@ -95,7 +95,7 @@
                 BOH SERVER NAME:
             </Label>
             <TextBox
-                x:Name="ServerName"
+                Text="{Binding BohServerName}"
                 Style="{StaticResource ServerConfigureTextBox}" />
         </StackPanel>
         
@@ -109,7 +109,7 @@
                 IP ADDRESS:
             </Label>
             <TextBox
-                x:Name="IpAddress"
+                Text="{Binding IpAddress}"
                 Style="{StaticResource ServerConfigureTextBox}" />
         </StackPanel>
 
@@ -123,7 +123,7 @@
                 KEY NUMBER:
             </Label>
             <TextBox
-                x:Name="KeyNumber"
+                Text="{Binding KeyNumber}"
                 Style="{StaticResource ServerConfigureTextBox}" />
         </StackPanel>
 
@@ -137,14 +137,14 @@
                 CONCEPT:
             </Label>
             <ComboBox
-                x:Name="Concept"
-                SelectedItem="SelectedConcept"
+                ItemsSource="{Binding KitchenConceptsList}"
+                SelectedItem="{Binding SelectedConcept}"
                 Style="{StaticResource ServerConfigureComboBoxStyle}" />
         </StackPanel>
 
         <!-- Button Row -->
         <Button
-                x:Name="ValidateInput"
+                Command="{Binding ValidateInputCommand}"
                 Style="{StaticResource ConfigureButton}"
                 Grid.Row="10"
                 Grid.Column="1">

@@ -1,26 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace StagingApp.Main.Controls.InfoViews;
+﻿namespace StagingApp.Main.Controls.InfoViews;
 /// <summary>
 /// Interaction logic for KitchenInfoView.xaml
 /// </summary>
 public partial class KitchenInfoView : UserControl
 {
+    public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
+        nameof(Title),
+        typeof(string),
+        typeof(KitchenInfoView),
+        new PropertyMetadata(OnTitlePropertyChanged));
+
+    private static void OnTitlePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d != null && d is KitchenInfoView infoView)
+        {
+            infoView.Title = (string)e.NewValue;
+        }
+    }
+
+    public string Title
+    {
+        get => (string)GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
+    }
+
+
     public KitchenInfoView()
     {
         InitializeComponent();
+        DataContext = new KitchenInfoViewModel();
     }
 }

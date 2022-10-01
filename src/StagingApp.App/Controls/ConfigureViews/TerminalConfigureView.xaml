@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:StagingApp.Main.Controls.ConfigureViews"
+             xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels.ConfigureViewModels;assembly=StagingApp.Presentation"
+             d:DataContext="{d:DesignInstance Type=viewmodels:TerminalConfigureViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450"
              d:DesignWidth="800"
@@ -30,7 +31,7 @@
             Grid.Row="1"
             Grid.Column="1"
             Grid.ColumnSpan="2"
-            Style="{StaticResource ConfiguerLabelHeaderStyle}">
+            Style="{StaticResource ConfigureLabelHeaderStyle}">
             PLEASE ENTER THE FOLLOWING INFORMATION:
         </Label>
 
@@ -42,7 +43,7 @@
             TERMINAL NAME:
         </Label>
         <TextBox
-            x:Name="TerminalName"
+            Text="{Binding TerminalName}"
             Grid.Row="2"
             Grid.Column="2"
             Style="{StaticResource ConfigureTextBox}" />
@@ -56,14 +57,14 @@
             IP ADDRESS:
         </Label>
         <TextBox
-            x:Name="IpAddress"
+            Text="{Binding IpAddress}"
             Grid.Row="3"
             Grid.Column="2"
             Style="{StaticResource ConfigureTextBox}" />
 
         <!-- Button Row -->
         <Button
-            x:Name="ValidateInputs"
+            Command="{Binding ValidateInputsCommand}"
             Grid.Column="1"
             Grid.Row="4"
             Style="{StaticResource ConfigureButton}" >
