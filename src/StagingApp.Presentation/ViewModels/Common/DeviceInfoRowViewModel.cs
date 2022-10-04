@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
+﻿using StagingApp.Presentation.ViewModels.Base;
 
 namespace StagingApp.Presentation.ViewModels.Common;
-public partial class DeviceInfoRowViewModel : ObservableObject, INotifyPropertyChanged
+public partial class DeviceInfoRowViewModel : BaseViewModel
 {
     private string? _labelText;
 
@@ -11,7 +11,7 @@ public partial class DeviceInfoRowViewModel : ObservableObject, INotifyPropertyC
         set 
         { 
             _labelText = value;
-            OnPropertyChanged();
+            OnPropertyChanged(nameof(LabelText));
         }
     }
 
@@ -23,27 +23,40 @@ public partial class DeviceInfoRowViewModel : ObservableObject, INotifyPropertyC
         set 
         { 
             _infoTextBox = value;
-            OnPropertyChanged();
+            OnPropertyChanged(nameof(InfoTextBox));
+        }
+    }
+
+    private bool _isEditButtonVisible;
+
+    public bool IsEditButtonVisible
+    {
+        get => _isEditButtonVisible;
+        set 
+        {
+            _isEditButtonVisible = value;
+            OnPropertyChanged(nameof(IsEditButtonVisible));
         }
     }
 
 
-    [RelayCommand]
-    private void Ok()
-    {
 
+    [RelayCommand]
+    public virtual void Ok()
+    {
+        IsEditButtonVisible = false;
     }
 
     [RelayCommand]
-    private void Cancel()
+    public virtual void Cancel()
     {
-        
+        IsEditButtonVisible = false;
     }
 
     [RelayCommand]
-    private void Edit()
+    public virtual void Edit()
     {
-        
+        IsEditButtonVisible = true;
     }
 }
 

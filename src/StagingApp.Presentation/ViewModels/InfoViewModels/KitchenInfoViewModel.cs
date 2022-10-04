@@ -1,7 +1,8 @@
-﻿using System.ComponentModel;
+﻿using StagingApp.Presentation.ViewModels.Base;
+using StagingApp.Presentation.ViewModels.Common;
 
 namespace StagingApp.Presentation.ViewModels.InfoViewModels;
-public partial class KitchenInfoViewModel : ObservableObject
+public partial class KitchenInfoViewModel : BaseViewModel
 {
     [ObservableProperty]
     private string? _controllerName;
@@ -11,155 +12,65 @@ public partial class KitchenInfoViewModel : ObservableObject
 
     [ObservableProperty]
     private string? _bohServerName;
-    
+
     [ObservableProperty]
     private string? _termStr;
-    
+
     [ObservableProperty]
     private string? _keyNumber;
 
     [ObservableProperty]
-    [Description("IP Address")]
     private string? _ipAddress;
 
     [ObservableProperty]
     private string? _bohIpAddress;
 
-    private bool _isControllerNameEditVisible;
-    private bool _isControllerNumberEditVisible;
-    private bool _isBohServerNameEditVisible;
-    private bool _isTermStrEditVisible;
-    private bool _isKeyNumberEditVisible;
-    private bool _isIpAddressEditVisible;
-    private bool _isBohIpAddressEditVisible;
-
-    public bool IsControllerNameEditVisible
-    {
-        get => _isControllerNameEditVisible;
-        set 
-        { 
-            _isControllerNameEditVisible = value;
-            OnPropertyChanged(nameof(IsControllerNameEditVisible));
-        }
-    }
-
-    public bool IsControllerNumberEditVisible
-    {
-        get => _isControllerNumberEditVisible;
-        set 
-        { 
-            _isControllerNumberEditVisible = value;
-            OnPropertyChanged(nameof(IsControllerNumberEditVisible));
-        }
-    }
-
-    public bool IsBohServerNameEditVisible
-    {
-        get => _isBohServerNameEditVisible;
-        set 
-        { 
-            _isBohServerNameEditVisible = value;
-            OnPropertyChanged(nameof(IsBohServerNameEditVisible));
-        }
-    }
-
-    public bool IsTermStrEditVisible
-    {
-        get => _isTermStrEditVisible;
-        set 
-        { 
-            _isTermStrEditVisible = value;
-            OnPropertyChanged(nameof(IsTermStrEditVisible));
-        }
-    }
-
-    public bool IsKeyNumberEditVisible
-    {
-        get => _isKeyNumberEditVisible;
-        set 
-        { 
-            _isKeyNumberEditVisible = value;
-            OnPropertyChanged(nameof(IsKeyNumberEditVisible));
-        }
-    }
-
-    public bool IsIpAddressEditVisible
-    {
-        get => _isIpAddressEditVisible;
-        set 
-        { 
-            _isIpAddressEditVisible = value;
-            OnPropertyChanged(nameof(IsIpAddressEditVisible));
-        }
-    }
-
-    public bool IsBohIpAddressEditVisible
-    {
-        get => _isBohIpAddressEditVisible;
-        set 
-        { 
-            _isBohIpAddressEditVisible = value;
-            OnPropertyChanged(nameof(IsBohIpAddressEditVisible));
-        }
-    }
-
+    public ObservableCollection<DeviceInfoRowViewModel> Rows { get; set; }
     public KitchenInfoViewModel()
     {
-
-    }
-
-    [RelayCommand]
-    private void Edit(string commandParameter)
-    {
-        bool isVisible = true;
-
-        ToggleButtonVisibility(commandParameter,isVisible);
-
-    }
-
-    [RelayCommand]
-    private void OkEdit(string commandParameter)
-    {
-        bool isVisible = false;
-
-        ToggleButtonVisibility(commandParameter, isVisible);
-    }
-
-    [RelayCommand]
-    private void CancelEdit(string commandParameter)
-    {
-        bool isVisible = false;
-
-        ToggleButtonVisibility(commandParameter, isVisible);
-    }
-
-    private void ToggleButtonVisibility(string commandParameter, bool isVisible)
-    {
-        switch (commandParameter)
+        Rows = new ObservableCollection<DeviceInfoRowViewModel>
         {
-            case "ControllerName":
-                IsControllerNameEditVisible = isVisible;
-                break;
-            case "ControllerNumber":
-                IsControllerNumberEditVisible = isVisible;
-                break;
-            case "BohServerName":
-                IsBohServerNameEditVisible = isVisible;
-                break;
-            case "TermStr":
-                IsTermStrEditVisible = isVisible;
-                break;
-            case "KeyNumber":
-                IsKeyNumberEditVisible = isVisible;
-                break;
-            case "IpAddress":
-                IsIpAddressEditVisible = isVisible;
-                break;
-            case "BohIpAddress":
-                IsBohIpAddressEditVisible = isVisible;
-                break;
-            default:
-                break;
-        }
+            new DeviceInfoRowViewModel
+            {
+                LabelText = "Controller Name:",
+                
+            },
+            new DeviceInfoRowViewModel
+            {
+                LabelText = "Controller Number:"
+            },
+            new DeviceInfoRowViewModel
+            {
+                LabelText = "BOH Server Name:"
+            },
+            new DeviceInfoRowViewModel
+            {
+                LabelText = "TERMSTR:"
+            },
+            new DeviceInfoRowViewModel
+            {
+                LabelText = "Key Number:"
+            },
+            new DeviceInfoRowViewModel
+            {
+                LabelText = "IP Address:"
+            },
+            new DeviceInfoRowViewModel
+            {
+                LabelText = "BOH IP Address:"
+            },
+        };
+    }
+
+    [RelayCommand]
+    private void Ok()
+    {
+        throw new NotImplementedException();
+    }
+
+    [RelayCommand]
+    private void Cancel()
+    {
+        throw new NotImplementedException();
     }
 }

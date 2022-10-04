@@ -310,6 +310,7 @@
         <!-- Info Property Label Style -->
         <Style TargetType="Label" x:Key="DeviceInfoPropertyLabelStyle" BasedOn="{StaticResource ConfigureLabelStyle}">
             <Setter Property="FontSize" Value="20" />
+            <Setter Property="Height" Value="32" />
             <Setter Property="Foreground" Value="Black" />
             <Setter Property="Margin" Value="0 10 10 10" />
         </Style>
