@@ -1,6 +1,4 @@
-﻿using StagingApp.Presentation.ViewModels.Base;
-
-namespace StagingApp.Presentation.ViewModels.Common;
+﻿namespace StagingApp.Presentation.ViewModels.Common;
 public partial class DeviceInfoRowViewModel : BaseViewModel
 {
     private string? _labelText;

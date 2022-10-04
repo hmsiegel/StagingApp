@@ -1,5 +1,4 @@
-﻿using StagingApp.Presentation.ViewModels.Base;
-using StagingApp.Presentation.ViewModels.Common;
+﻿using StagingApp.Presentation.ViewModels.Common;
 
 namespace StagingApp.Presentation.ViewModels.InfoViewModels;
 public partial class KitchenInfoViewModel : BaseViewModel

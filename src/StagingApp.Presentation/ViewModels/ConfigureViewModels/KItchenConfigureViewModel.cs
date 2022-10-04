@@ -1,5 +1,7 @@
-﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
-public partial class KitchenConfigureViewModel : ObservableObject
+﻿using StagingApp.Presentation.ViewModels.Common;
+
+namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
+public partial class KitchenConfigureViewModel : BaseViewModel
 {
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
@@ -32,6 +34,8 @@ public partial class KitchenConfigureViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<string>? _kitchenConceptsList;
 
+    public ObservableCollection<DeviceConfigureTextRowViewModel> Rows { get; set; }
+
     private bool CanValidateInput
     {
         get
@@ -51,6 +55,35 @@ public partial class KitchenConfigureViewModel : ObservableObject
     public KitchenConfigureViewModel()
     {
         LoadList();
+
+        Rows = new ObservableCollection<DeviceConfigureTextRowViewModel>
+        {
+            new DeviceConfigureTextRowViewModel
+            {
+                ConfigureLabelText = "CONTROLLER NAME:"
+            },
+            new DeviceConfigureTextRowViewModel
+            {
+                ConfigureLabelText = "CONTROLLER NUMBER:"
+            },
+            new DeviceConfigureTextRowViewModel
+            {
+                ConfigureLabelText = "TERMSTR:"
+            },
+            new DeviceConfigureTextRowViewModel
+            {
+                ConfigureLabelText = "BOH SERVER NAME:"
+            },
+            new DeviceConfigureTextRowViewModel
+            {
+                ConfigureLabelText = "IP ADDRESS:"
+            },
+            new DeviceConfigureTextRowViewModel
+            {
+                ConfigureLabelText = "KEY NUMBER:"
+            }
+        };
+
     }
 
     private void LoadList()

@@ -4,8 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels.ConfigureViewModels;assembly=StagingApp.Presentation"
-    d:DataContext="{d:DesignInstance Type=viewmodels:KitchenConfigureViewModel}"
+    xmlns:common="clr-namespace:StagingApp.Main.Controls.Common"
     mc:Ignorable="d" 
     d:DesignHeight="650"
     d:DesignWidth="800"
@@ -27,11 +26,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -42,95 +36,25 @@
             Grid.Column="1">
             PLEASE ENTER THE FOLLOWING INFORMATION:
         </Label>
-        
-        <!-- Controller Name Row -->
+
+         <!-- Data Rows --> 
         <StackPanel
             Style="{StaticResource ConfigureStackPanelStyle}"
             Grid.Row="3"
             Grid.Column="1">
-            <Label 
-                Style="{StaticResource ConfigureLabelStyle}">
-                CONTROLLER NAME:
-            </Label>
-            <TextBox
-                Text="{Binding ControllerName}"
-                Style="{StaticResource ServerConfigureTextBox}" />
+            <ItemsControl ItemsSource="{Binding Rows}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <common:DeviceConfigureTextRow />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate> 
+            </ItemsControl>
         </StackPanel>
         
-        <!-- Controller Number Row -->
+         <!--Concept Row--> 
         <StackPanel
             Style="{StaticResource ConfigureStackPanelStyle}"
             Grid.Row="4"
-            Grid.Column="1">
-            <Label 
-                Style="{StaticResource ConfigureLabelStyle}">
-                CONTROLLER #:
-            </Label>
-            <TextBox
-                Text="{Binding ControllerNumber}"
-                Style="{StaticResource ServerConfigureTextBox}" />
-        </StackPanel>
-
-        <!-- TermStr Row -->
-        <StackPanel
-            Style="{StaticResource ConfigureStackPanelStyle}"
-            Grid.Row="5"
-            Grid.Column="1">
-            <Label 
-                Style="{StaticResource ConfigureLabelStyle}">
-                TERMSTR:
-            </Label>
-            <TextBox
-                Text="{Binding TermStr}"
-                Style="{StaticResource ServerConfigureTextBox}" />
-        </StackPanel>
-
-        <!-- BOH Server Row -->
-        <StackPanel
-            Style="{StaticResource ConfigureStackPanelStyle}"
-            Grid.Row="6"
-            Grid.Column="1">
-            <Label 
-                Style="{StaticResource ConfigureLabelStyle}">
-                BOH SERVER NAME:
-            </Label>
-            <TextBox
-                Text="{Binding BohServerName}"
-                Style="{StaticResource ServerConfigureTextBox}" />
-        </StackPanel>
-        
-        <!-- IP Address Row -->
-        <StackPanel
-            Style="{StaticResource ConfigureStackPanelStyle}"
-            Grid.Row="7"
-            Grid.Column="1">
-            <Label 
-                Style="{StaticResource ConfigureLabelStyle}">
-                IP ADDRESS:
-            </Label>
-            <TextBox
-                Text="{Binding IpAddress}"
-                Style="{StaticResource ServerConfigureTextBox}" />
-        </StackPanel>
-
-        <!-- Key Number Row -->
-        <StackPanel
-            Style="{StaticResource ConfigureStackPanelStyle}"
-            Grid.Row="8"
-            Grid.Column="1">
-            <Label 
-                Style="{StaticResource ConfigureLabelStyle}">
-                KEY NUMBER:
-            </Label>
-            <TextBox
-                Text="{Binding KeyNumber}"
-                Style="{StaticResource ServerConfigureTextBox}" />
-        </StackPanel>
-
-        <!-- Concept Row -->
-        <StackPanel
-            Style="{StaticResource ConfigureStackPanelStyle}"
-            Grid.Row="9"
             Grid.Column="1">
             <Label 
                 Style="{StaticResource ConfigureLabelStyle}">
@@ -146,7 +70,7 @@
         <Button
                 Command="{Binding ValidateInputCommand}"
                 Style="{StaticResource ConfigureButton}"
-                Grid.Row="10"
+                Grid.Row="5"
                 Grid.Column="1">
             CONFIGURE
         </Button>
