@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StagingApp.Persistence", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StagingApp.Infrastructure", "src\StagingApp.Infrastructure\StagingApp.Infrastructure.csproj", "{F6E94E5F-DEA0-4BF4-BB18-DA50138E5FC3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StagingApp.Styling", "src\StagingApp.Styles\StagingApp.Styling.csproj", "{4753EA3E-4B68-4915-93C0-6484A85FD34E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StagingApp.Controls.Library", "src\StagingApp.Controls.Library\StagingApp.Controls.Library.csproj", "{86430705-1A89-4243-ACB1-2445AB0474FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,14 @@ Global
 		{F6E94E5F-DEA0-4BF4-BB18-DA50138E5FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6E94E5F-DEA0-4BF4-BB18-DA50138E5FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6E94E5F-DEA0-4BF4-BB18-DA50138E5FC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4753EA3E-4B68-4915-93C0-6484A85FD34E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4753EA3E-4B68-4915-93C0-6484A85FD34E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4753EA3E-4B68-4915-93C0-6484A85FD34E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4753EA3E-4B68-4915-93C0-6484A85FD34E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86430705-1A89-4243-ACB1-2445AB0474FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86430705-1A89-4243-ACB1-2445AB0474FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86430705-1A89-4243-ACB1-2445AB0474FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86430705-1A89-4243-ACB1-2445AB0474FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +70,8 @@ Global
 		{90241206-8EBE-4926-A361-41D2C169D995} = {EA853937-EA24-4058-9EFC-31C342020BCF}
 		{C3F6C8E0-45A4-4FF2-B4B4-5F61F9B2C98E} = {EA853937-EA24-4058-9EFC-31C342020BCF}
 		{F6E94E5F-DEA0-4BF4-BB18-DA50138E5FC3} = {EA853937-EA24-4058-9EFC-31C342020BCF}
+		{4753EA3E-4B68-4915-93C0-6484A85FD34E} = {EA853937-EA24-4058-9EFC-31C342020BCF}
+		{86430705-1A89-4243-ACB1-2445AB0474FD} = {EA853937-EA24-4058-9EFC-31C342020BCF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9619C078-8CD6-4E59-8CF1-E725BD9891BB}
