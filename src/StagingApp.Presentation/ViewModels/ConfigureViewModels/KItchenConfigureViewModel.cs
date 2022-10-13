@@ -1,29 +1,33 @@
-﻿using StagingApp.Presentation.ViewModels.Common;
-
-namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
+﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
 public partial class KitchenConfigureViewModel : BaseViewModel
 {
     [ObservableProperty]
+    [Description("CONTROLLER NAME:")]
     [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
     private string? _controllerName;
 
     [ObservableProperty]
+    [Description("CONTROLLER NUMBER:")]
     [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
     private string? _controllerNumber;
 
     [ObservableProperty]
+    [Description("TERMSTR:")]
     [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
     private string? _termStr;
 
     [ObservableProperty]
+    [Description("BOH SERVER NAME:")]
     [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
     private string? _bohServerName;
 
     [ObservableProperty]
+    [Description("IP ADDRESS:")]
     [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
     private string? _ipAddress;
 
     [ObservableProperty]
+    [Description("KEY NUMBER:")]
     [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
     private string? _keyNumber;
 
@@ -32,6 +36,7 @@ public partial class KitchenConfigureViewModel : BaseViewModel
     private string? _selectedConcept;
 
     [ObservableProperty]
+    [Description("CONCEPT:")]
     private ObservableCollection<string>? _kitchenConceptsList;
 
     public ObservableCollection<DeviceConfigureTextRowViewModel> Rows { get; set; }
@@ -83,7 +88,6 @@ public partial class KitchenConfigureViewModel : BaseViewModel
                 ConfigureLabelText = "KEY NUMBER:"
             }
         };
-
     }
 
     private void LoadList()
