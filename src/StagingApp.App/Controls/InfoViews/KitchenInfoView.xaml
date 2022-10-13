@@ -5,10 +5,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:common="clr-namespace:StagingApp.Main.Controls.Common"
+    xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels.InfoViewModels;assembly=StagingApp.Presentation"
     mc:Ignorable="d" 
     d:DesignHeight="725" 
     d:DesignWidth="780"
     Background="{StaticResource Blue}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/StagingDesign.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Margin="20">
 
         <Grid.ColumnDefinitions>
@@ -49,16 +57,15 @@
 
         <!-- Data -->
         <StackPanel
-            Style="{StaticResource InfoRowStackPanelStyle}"
             Grid.Row="2"
             Grid.Column="0">
-            <ItemsControl ItemsSource="{Binding Rows}">
+            <!--<ItemsControl ItemsSource="{Binding Rows}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <common:DeviceInfoRow />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            </ItemsControl>-->
         </StackPanel>
 
         <!-- Buttons -->
