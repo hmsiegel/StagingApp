@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Fonts/Fonts.xaml" />
+        <ResourceDictionary Source="Colors/Colors.xaml" />
+        <ResourceDictionary Source="Styles/Staging.Labels.xaml" />
+        <ResourceDictionary Source="Styles/Staging.TextBoxes.xaml" />
+        <ResourceDictionary Source="Styles/Staging.Grids.xaml" />
+        <ResourceDictionary Source="Styles/Staging.TextBlocks.xaml" />
+        <ResourceDictionary Source="Styles/Staging.StackPanels.xaml" />
+        <ResourceDictionary Source="Styles/Staging.Buttons.xaml" />
+        <ResourceDictionary Source="Styles/Staging.ToggleButton.xaml" />
+        <ResourceDictionary Source="Styles/Staging.ComboBox.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="Button" BasedOn="{StaticResource PrimaryButtonStyle}" />
+    <Style TargetType="ComboBox" BasedOn="{StaticResource PrimaryComboBoxStyle}" />
+    <Style TargetType="Grid" BasedOn="{StaticResource PrimaryGridStyle}" />
+    <Style TargetType="Label" BasedOn="{StaticResource PrimaryLabelStyle}" />
+    <Style TargetType="StackPanel" BasedOn="{StaticResource PrimaryStackPanelStyle}" />
+    <Style TargetType="TextBlock" BasedOn="{StaticResource PrimaryTextBlockStyle}" />
+    <Style TargetType="TextBox" BasedOn="{StaticResource PrimaryTextBoxStyle}" />
+    <Style TargetType="ToggleButton" BasedOn="{StaticResource PrimaryToggleButtonStyle}" />
+
+</ResourceDictionary>
