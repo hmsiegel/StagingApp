@@ -10,4 +10,9 @@ public partial class BaseConfigureView : UserControl
     {
         InitializeComponent();
     }
+
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+
+    }
 }
