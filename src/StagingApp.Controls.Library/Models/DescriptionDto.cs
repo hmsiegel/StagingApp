@@ -17,6 +17,7 @@ public class DescriptionDto
     public bool IsReadonly { get; }
     public object? Source { get; }
 
+
     public DescriptionDto SetSource(object? newSource) =>
         new(Description!, Path!, IsReadonly, newSource);
 

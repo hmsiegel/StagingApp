@@ -6,4 +6,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StagingApp.Styles\StagingApp.Styling.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Resources\DescriptionsListControl.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
 </Project>

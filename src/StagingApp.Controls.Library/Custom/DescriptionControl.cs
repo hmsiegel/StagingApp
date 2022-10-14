@@ -3,7 +3,7 @@
 [TemplatePart(Name = _textBoxTemplateName, Type = typeof(TextBox))]
 public class DescriptionControl : Control
 {
-    private const string _textBoxTemplateName = "PART_Textbox";
+    private const string _textBoxTemplateName = "PART_TextBox";
     private TextBox? _partTextBox;
     private Binding? _textBinding;
 

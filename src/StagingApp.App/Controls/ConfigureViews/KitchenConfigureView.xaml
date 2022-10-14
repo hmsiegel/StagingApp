@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:custom="clr-namespace:StagingApp.Controls.Library.Custom;assembly=StagingApp.Controls.Library"
-    xmlns:models="StagingApp.Control.Library.Models;assembly=StagingApp.Controls.Library"
+    xmlns:models="StagingApp.Control.Library.Models;assembly=StagingApp.Controls.Library" xmlns:infoviews="clr-namespace:StagingApp.Main.Controls.InfoViews"
     mc:Ignorable="d" 
     d:DesignHeight="650"
     d:DesignWidth="800"
@@ -36,6 +36,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
+        <infoviews:KitchenInfoView Grid.ColumnSpan="10" Grid.RowSpan="10"/>
+
 
         <!-- Header Row -->
         <Label
