@@ -1,5 +1,5 @@
 ﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
-public partial class KitchenConfigureViewModel : BaseViewModel
+public partial class KitchenConfigureViewModel : OkCancelCommandsVM
 {
     [ObservableProperty]
     [Description("CONTROLLER NAME:")]
@@ -39,8 +39,6 @@ public partial class KitchenConfigureViewModel : BaseViewModel
     [Description("CONCEPT:")]
     private ObservableCollection<string>? _kitchenConceptsList;
 
-    public ObservableCollection<DeviceConfigureTextRowViewModel> Rows { get; set; }
-
     private bool CanValidateInput
     {
         get
@@ -61,33 +59,6 @@ public partial class KitchenConfigureViewModel : BaseViewModel
     {
         LoadList();
 
-        Rows = new ObservableCollection<DeviceConfigureTextRowViewModel>
-        {
-            new DeviceConfigureTextRowViewModel
-            {
-                ConfigureLabelText = "CONTROLLER NAME:"
-            },
-            new DeviceConfigureTextRowViewModel
-            {
-                ConfigureLabelText = "CONTROLLER NUMBER:"
-            },
-            new DeviceConfigureTextRowViewModel
-            {
-                ConfigureLabelText = "TERMSTR:"
-            },
-            new DeviceConfigureTextRowViewModel
-            {
-                ConfigureLabelText = "BOH SERVER NAME:"
-            },
-            new DeviceConfigureTextRowViewModel
-            {
-                ConfigureLabelText = "IP ADDRESS:"
-            },
-            new DeviceConfigureTextRowViewModel
-            {
-                ConfigureLabelText = "KEY NUMBER:"
-            }
-        };
     }
 
     private void LoadList()

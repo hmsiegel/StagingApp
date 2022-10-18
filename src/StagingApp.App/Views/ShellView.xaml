@@ -6,12 +6,40 @@
         xmlns:configureviews="clr-namespace:StagingApp.Main.Controls.ConfigureViews"
         xmlns:infoviews="clr-namespace:StagingApp.Main.Controls.InfoViews"
         xmlns:local="clr-namespace:StagingApp.Main.Views"
+        xmlns:controls="clr-namespace:StagingApp.Main.Controls"
+        xmlns:infoVM="clr-namespace:StagingApp.Presentation.ViewModels.InfoViewModels;assembly=StagingApp.Presentation"
+        xmlns:confVM="clr-namespace:StagingApp.Presentation.ViewModels.ConfigureViewModels;assembly=StagingApp.Presentation"
         mc:Ignorable="d"
         Background="{StaticResource BackgroundColor}"
         WindowStyle="ToolWindow"
         WindowStartupLocation="CenterScreen"
-        Title="TA Staging" Width="800" SizeToContent="Height">
+        Title="TA Staging" Width="1200" SizeToContent="Height">
     <Grid>
-        <configureviews:KitchenConfigureView />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="listBox" SelectedIndex="0">
+            <ListBox.ItemsSource>
+                <CompositeCollection>
+                    <infoVM:KitchenInfoViewModel
+                            ControllerName = "First Controller"
+                            BohServerName = "Second Server"
+                            TermStr = "Third Term"
+                            KeyNumber = "Fourth Key"
+                            IpAddress = "Fifth Address"
+                            BohIpAddress = "Sixth Address"
+                            ControllerNumber="Seventh Number"/>
+                    <confVM:KitchenConfigureViewModel
+                            ControllerName = "First Configure Controller"
+                            BohServerName = "Second Configure Server"
+                            TermStr = "Third Configure Term"
+                            KeyNumber = "Fourth Configure Key"
+                            IpAddress = "Fifth Configure Address"
+                            ControllerNumber="Seventh Configure Number"/>
+                </CompositeCollection>
+            </ListBox.ItemsSource>
+        </ListBox>
+        <controls:PropertyListEditView Grid.Column="2" DataContext="{Binding SelectedItem, ElementName=listBox}"/>
     </Grid>
 </Window>
