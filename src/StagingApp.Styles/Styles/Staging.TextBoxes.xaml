@@ -24,6 +24,7 @@
         <Setter Property="FontSize" Value="18" />
         <Setter Property="MinWidth" Value="225" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="CharacterCasing" Value="Upper" />
         <Setter Property="Margin" Value="10 5 30 5" />
         <Setter Property="FontFamily" Value="{StaticResource Rubik}" />
@@ -37,10 +38,15 @@
                             BorderBrush="Gray"
                             BorderThickness="1"
                             Background="{TemplateBinding Background}">
-                        <ContentPresenter
+                        
+                        <!-- This ScrollViewer named PART_ContentHost is a required element of the TextBox template.
+                        Without it, there will be no text editing!!! -->
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+
+                        <!--<ContentPresenter
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Content="{TemplateBinding Text}"/>
+                                Content="{TemplateBinding Text}"/>-->
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

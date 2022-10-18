@@ -1,8 +1,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/StagingApp.Controls.Library;component/Resources/DescriptionControl.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/StagingApp.Controls.Library;component/Resources/DescriptionsListControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/StagingApp.Controls.Library;component/Custom/DescriptionControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/StagingApp.Controls.Library;component/Custom/DescriptionsListControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.Labels.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.TextBoxes.xaml" />
    </ResourceDictionary.MergedDictionaries>

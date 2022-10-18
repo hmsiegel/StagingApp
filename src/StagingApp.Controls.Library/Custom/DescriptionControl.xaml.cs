@@ -10,17 +10,7 @@ public class DescriptionControl : Control
     public override void OnApplyTemplate()
     {
         _partTextBox = GetTemplateChild(_textBoxTemplateName) as TextBox;
-        if (_partTextBox is TextBox tbox)
-        {
-            if (_textBinding is Binding binding)
-            {
-                tbox.SetBinding(TextBox.TextProperty, binding);
-            }
-            else
-            {
-                BindingOperations.ClearBinding(tbox, TextBox.TextProperty);
-            }
-        }
+        SetBindingPartTextBox();
     }
 
     static DescriptionControl()
@@ -42,6 +32,8 @@ public class DescriptionControl : Control
         typeof(DescriptionControl),
         new PropertyMetadata(null, DescriptionSourceChangedCallback));
 
+    private static readonly PropertyPath NewValuePropertyPath = new PropertyPath(typeof(DescriptionDto).GetProperty(nameof(DescriptionDto.NewValue)));
+    
     private static void DescriptionSourceChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         DescriptionControl control = (DescriptionControl)d;
@@ -50,29 +42,42 @@ public class DescriptionControl : Control
         {
             binding = new Binding
             {
-                Path = description.Path,
-                Source = description.Source
+                Path = NewValuePropertyPath,
+                Source = description,
+                Mode = BindingMode.TwoWay,
             };
-            if (description.IsReadonly)
-            {
-                binding.Mode = BindingMode.OneWay;
-            }
-            else
-            {
-                binding.Mode = BindingMode.TwoWay;
-            }
         }
         control._textBinding = binding;
-        if (control._partTextBox is TextBox tbox)
+
+        control.SetBindingPartTextBox();
+    }
+
+    private void SetBindingPartTextBox()
+    {
+        if (_partTextBox is TextBox tbox)
         {
-            if (binding is null)
+            if (_textBinding is null)
             {
                 BindingOperations.ClearBinding(tbox, TextBox.TextProperty);
             }
             else
             {
-                tbox.SetBinding(TextBox.TextProperty, binding);
+                tbox.SetBinding(TextBox.TextProperty, _textBinding);
             }
         }
     }
+
+
+    /// <summary>
+    /// ReadOnly Mode.
+    /// </summary>
+    public bool IsReadOnly
+    {
+        get => (bool)GetValue(IsReadOnlyProperty);
+        set => SetValue(IsReadOnlyProperty, value);
+    }
+
+    /// <summary><see cref="DependencyProperty"/> for property <see cref="IsReadOnly"/>.</summary>
+    public static readonly DependencyProperty IsReadOnlyProperty =
+        DependencyProperty.Register(nameof(IsReadOnly), typeof(bool), typeof(DescriptionControl), new PropertyMetadata(true));
 }

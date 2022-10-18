@@ -5,7 +5,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:custom="clr-namespace:StagingApp.Controls.Library.Custom;assembly=StagingApp.Controls.Library"
-    xmlns:models="StagingApp.Control.Library.Models;assembly=StagingApp.Controls.Library" xmlns:infoviews="clr-namespace:StagingApp.Main.Controls.InfoViews"
+    xmlns:models="StagingApp.Control.Library.Models;assembly=StagingApp.Controls.Library"
+    xmlns:infoviews="clr-namespace:StagingApp.Main.Controls.InfoViews"
     mc:Ignorable="d" 
     d:DesignHeight="650"
     d:DesignWidth="800"
@@ -19,90 +20,18 @@
     </UserControl.Resources>
 
     <Grid Style="{StaticResource GridStyle}">
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <infoviews:KitchenInfoView Grid.ColumnSpan="10" Grid.RowSpan="10"/>
+        <infoviews:KitchenInfoView Grid.Row="1"/>
 
 
         <!-- Header Row -->
-        <Label
-            Style="{StaticResource ConfigureLabelHeaderStyle}"
-            Grid.Row="2"
-            Grid.Column="1">
+        <TextBlock
+            Style="{StaticResource ConfigureLabelHeaderStyle}">
             PLEASE ENTER THE FOLLOWING INFORMATION:
-        </Label>
+        </TextBlock>
 
-        <!-- Data Rows -->
-        <StackPanel
-            Style="{StaticResource ConfigureStackPanelStyle}"
-            Grid.Row="3"
-            Grid.Column="1">
-            <!--<ContentControl Content="{Binding}">
-                <ContentControl.ContentTemplate>
-                    <DataTemplate>
-                        <helpers:DescriptionsListControl>
-                            <Control.Template>
-                                <ControlTemplate TargetType="{x:Type custom:DescriptionsListControl}">
-                                    <ItemsControl ItemsSource="{TemplateBinding Descriptions}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate DataType="{x:Type models:}">
-                                                <helpers:DescriptionControl DescriptionSource="{Binding}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </ControlTemplate>
-                            </Control.Template>
-                        </helpers:DescriptionsListControl>
-                    </DataTemplate>
-                </ContentControl.ContentTemplate>
-            </ContentControl>-->
-            <!--<ItemsControl ItemsSource="{Binding Rows}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <common:DeviceConfigureTextRow />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate> 
-            </ItemsControl>-->
-        </StackPanel>
-
-        <!--Concept Row-->
-        <StackPanel
-            Style="{StaticResource ConfigureStackPanelStyle}"
-            Grid.Row="4"
-            Grid.Column="1">
-            <Label 
-                Style="{StaticResource ConfigureLabelStyle}">
-                CONCEPT:
-            </Label>
-            <ComboBox
-                ItemsSource="{Binding KitchenConceptsList}"
-                SelectedItem="{Binding SelectedConcept}"
-                Style="{StaticResource ServerConfigureComboBoxStyle}" />
-        </StackPanel>
-
-        <!-- Button Row -->
-        <Button
-                Command="{Binding ValidateInputCommand}"
-                Style="{StaticResource ConfigureButton}"
-                Grid.Row="5"
-                Grid.Column="1">
-            CONFIGURE
-        </Button>
     </Grid>
 </UserControl>

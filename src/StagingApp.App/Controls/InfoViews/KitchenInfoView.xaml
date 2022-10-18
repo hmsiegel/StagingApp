@@ -9,7 +9,7 @@
     xmlns:local="clr-namespace:StagingApp.Main.Controls.InfoViews"
     xmlns:custom="clr-namespace:StagingApp.Controls.Library.Custom;assembly=StagingApp.Controls.Library"
     mc:Ignorable="d" 
-    d:DesignHeight="725" 
+    d:DesignHeight="800" 
     d:DesignWidth="780"
     Background="{StaticResource Blue}">
     <UserControl.Resources>
@@ -29,38 +29,22 @@
             BohIpAddress = "Sixth Address"
             ControllerNumber="Seventh Number"/>
     </FrameworkElement.DataContext>
-    <Grid Margin="20">
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <StackPanel Margin="20">
 
         <!-- Title -->
-        <Label 
+        <TextBlock 
             x:Name="ValidationTitle"
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="4"
             Style="{StaticResource DeviceInfoTitleStyle}">
             DEVICE VALIDATION
-        </Label>
+        </TextBlock>
 
         <!-- Directions -->
         <TextBlock
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="4"
-                Style="{StaticResource TextDirectionStyle}">
+            Style="{StaticResource TextDirectionStyle}"
+            Margin="30 5">
                     Please confirm that the following information is correct. 
                     If any setting is incorrect, change the value in the text box and select "Edit". 
                     The value will then be adjusted. Once all values are correct, press 'OK'.
@@ -68,41 +52,42 @@
         </TextBlock>
 
         <!-- Data -->
-        <StackPanel
-            Grid.Row="2"
-            Grid.Column="0" Grid.ColumnSpan="10">
-            <!--<ItemsControl ItemsSource="{Binding Rows}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <common:DeviceInfoRow />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>-->
-            <custom:DescriptionsListControl/>
-        </StackPanel>
-
+        <custom:DescriptionsListControl x:Name="descriptionsListControl"/>
+        <CheckBox Content="Is Read Only"
+                  IsChecked="{Binding IsReadOnly, ElementName=descriptionsListControl}"
+                  Style="{StaticResource ConfigureLabelStyle}" HorizontalAlignment="Center"/>
         <!-- Buttons -->
         <StackPanel
             Orientation="Horizontal"
             HorizontalAlignment="Center"
-            Margin="0 20 0 0"
-            Grid.Row="9"
-            Grid.Column="1"
-            Grid.ColumnSpan="2">
-
+            Margin="0 20 0 0">
+            <FrameworkElement.Style>
+                <Style TargetType="Panel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsReadOnly, ElementName=descriptionsListControl}"
+                                     Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </FrameworkElement.Style>
             <Button
                 x:Name="OK"
                 IsDefault="True"
-                Style="{StaticResource DeviceInfoOkButtonStyle}">
+                Style="{StaticResource DeviceInfoOkButtonStyle}"
+                Command="{Binding OkCommand}"
+                CommandParameter="{Binding Descriptions, ElementName=descriptionsListControl}">
                 OK
             </Button>
             <Button
                 x:Name="Cancel"
                 IsCancel="True"
-                Style="{StaticResource DeviceInfoCancelButtonStyle}">
+                Style="{StaticResource DeviceInfoCancelButtonStyle}"
+                Command="{Binding CancelCommand}"
+                CommandParameter="{Binding CancelEditAction, ElementName=descriptionsListControl, Mode=OneWay}">
                 CANCEL
             </Button>
         </StackPanel>
 
-    </Grid>
+    </StackPanel>
 </UserControl>

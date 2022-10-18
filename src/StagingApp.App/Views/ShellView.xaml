@@ -10,7 +10,7 @@
         Background="{StaticResource BackgroundColor}"
         WindowStyle="ToolWindow"
         WindowStartupLocation="CenterScreen"
-        Title="TA Staging" Height="800" Width="800">
+        Title="TA Staging" Width="800" SizeToContent="Height">
     <Grid>
         <configureviews:KitchenConfigureView />
     </Grid>
