@@ -1,103 +1,117 @@
 ﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
-public partial class KitchenConfigureViewModel : BaseViewModel
+public class KitchenConfigureViewModel : BaseConfigureViewModel
 {
-    [ObservableProperty]
-    [Description("CONTROLLER NAME:")]
-    [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
+
     private string? _controllerName;
-
-    [ObservableProperty]
-    [Description("CONTROLLER NUMBER:")]
-    [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
     private string? _controllerNumber;
-
-    [ObservableProperty]
-    [Description("TERMSTR:")]
-    [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
     private string? _termStr;
-
-    [ObservableProperty]
-    [Description("BOH SERVER NAME:")]
-    [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
     private string? _bohServerName;
-
-    [ObservableProperty]
-    [Description("IP ADDRESS:")]
-    [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
     private string? _ipAddress;
-
-    [ObservableProperty]
-    [Description("KEY NUMBER:")]
-    [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
     private string? _keyNumber;
+    private string? _selectedConcept = string.Empty;
+    private ObservableCollection<string>? _concepts;
 
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(ValidateInputCommand))]
-    private string? _selectedConcept;
-
-    [ObservableProperty]
-    [Description("CONCEPT:")]
-    private ObservableCollection<string>? _kitchenConceptsList;
-
-    public ObservableCollection<DeviceConfigureTextRowViewModel> Rows { get; set; }
-
-    private bool CanValidateInput
+    [Description("CONTROLLER NAME:")]
+    public string? ControllerName
     {
-        get
+        get => _controllerName;
+        set
         {
-            bool output = false;
-            if (ControllerName?.Length > 0 && ControllerNumber?.Length > 0 &&
-                BohServerName?.Length > 0 && IpAddress?.Length > 0 &&
-                KeyNumber?.Length > 0 && TermStr?.Length > 0 && SelectedConcept?.Length > 0)
-            {
-                output = true;
-            }
-
-            return output;
+            _controllerName = value;
+            NotifyOfPropertyChange(() => ControllerName);
         }
     }
 
-    public KitchenConfigureViewModel()
+    [Description("CONTROLLER NUMBER:")]
+    public string? ControllerNumber
     {
-        LoadList();
-
-        Rows = new ObservableCollection<DeviceConfigureTextRowViewModel>
+        get => _controllerNumber;
+        set
         {
-            new DeviceConfigureTextRowViewModel
-            {
-                ConfigureLabelText = "CONTROLLER NAME:"
-            },
-            new DeviceConfigureTextRowViewModel
-            {
-                ConfigureLabelText = "CONTROLLER NUMBER:"
-            },
-            new DeviceConfigureTextRowViewModel
-            {
-                ConfigureLabelText = "TERMSTR:"
-            },
-            new DeviceConfigureTextRowViewModel
-            {
-                ConfigureLabelText = "BOH SERVER NAME:"
-            },
-            new DeviceConfigureTextRowViewModel
-            {
-                ConfigureLabelText = "IP ADDRESS:"
-            },
-            new DeviceConfigureTextRowViewModel
-            {
-                ConfigureLabelText = "KEY NUMBER:"
-            }
-        };
+            _controllerNumber = value;
+            NotifyOfPropertyChange(() => ControllerNumber);
+        }
     }
+
+    [Description("TERMSTR:")]
+    public string? TermStr
+    {
+        get => _termStr;
+        set
+        {
+            _termStr = value;
+            NotifyOfPropertyChange(() => TermStr);
+        }
+    }
+
+    [Description("BOH SERVER NAME:")]
+    public string? BohServerName
+    {
+        get => _bohServerName;
+        set
+        {
+            _bohServerName = value;
+            NotifyOfPropertyChange(() => BohServerName);
+        }
+    }
+
+    [Description("IP ADDRESS:")]
+    public string? IpAddress
+    {
+        get => _ipAddress;
+        set
+        {
+            _ipAddress = value;
+            NotifyOfPropertyChange(() => IpAddress);
+        }
+    }
+
+    [Description("KEY NUMBER:")]
+    public string? KeyNumber
+    {
+        get => _keyNumber;
+        set
+        {
+            _keyNumber = value;
+            NotifyOfPropertyChange(() => KeyNumber);
+        }
+    }
+
+    public string? SelectedConcept
+    {
+        get => _selectedConcept;
+        set
+        {
+            _selectedConcept = value;
+            NotifyOfPropertyChange(() => SelectedConcept);
+        }
+    }
+
+    public ObservableCollection<string>? Concepts
+    {
+        get => _concepts;
+        set
+        {
+            _concepts = value;
+            NotifyOfPropertyChange(() => Concepts);
+        }
+    }
+
+
+    public KitchenConfigureViewModel() => LoadList();
 
     private void LoadList()
     {
         var conceptsList = EnumServices.GetEnumDescriptions<KitchenConcepts>();
-        KitchenConceptsList = new ObservableCollection<string>(conceptsList);
+        Concepts = new ObservableCollection<string>(conceptsList);
     }
 
-    [RelayCommand(CanExecute = nameof(CanValidateInput))]
-    private void ValidateInput()
+    public override void ValidateInput()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Configure()
     {
         throw new NotImplementedException();
     }

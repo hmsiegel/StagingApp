@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace StagingApp.Presentation;
+﻿namespace StagingApp.Presentation;
 public static class AssemblyReference
 {
     public static readonly Assembly Assembly = typeof(AssemblyReference).Assembly;

@@ -8,6 +8,7 @@
 
         <ResourceDictionary>
             <converter:BoolToVisConverter x:Key="BoolToVisConverter" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/StagingDesign.xaml" />

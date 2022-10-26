@@ -12,6 +12,6 @@
         WindowStartupLocation="CenterScreen"
         Title="TA Staging" Height="800" Width="800">
     <Grid>
-        <configureviews:KitchenConfigureView />
+        <configureviews:TerminalConfigureView />
     </Grid>
 </Window>

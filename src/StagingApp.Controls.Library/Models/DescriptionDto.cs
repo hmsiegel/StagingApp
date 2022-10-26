@@ -2,23 +2,37 @@
 public class DescriptionDto
 {
     public DescriptionDto(string? description,
-                          PropertyPath? path,
-                          bool isReadonly,
+                          PropertyInfo property,
                           object? source)
     {
+        if (property.GetGetMethod() is not MethodInfo method)
+        {
+            throw new ArgumentException("Property must have a public getter.", nameof(property));
+        }
+        if (!method.IsStatic)
+        {
+            if (source is null)
+                throw new ArgumentException("For Source=null, Property must be static.", nameof(property));
+
+            if (property != source.GetType().GetProperty(property.Name))
+                throw new ArgumentException("This property is not from this Source.", nameof(property));
+        }
+
         Description = description ?? string.Empty;
-        Path = path;
-        IsReadonly = isReadonly;
+        Property = property;
         Source = source;
+        NewValue = property.GetValue(source)?.ToString();
     }
 
     public string? Description { get; }
-    public PropertyPath? Path { get; }
-    public bool IsReadonly { get; }
+    public PropertyInfo Property { get; }
     public object? Source { get; }
 
-    public DescriptionDto SetSource(object? newSource) =>
-        new(Description!, Path!, IsReadonly, newSource);
+    public string? NewValue { get; set; }
 
-    public override string ToString() => Description!;
+    public DescriptionDto SetSource(object? newSource) =>
+        new(Description!, Property, newSource);
+
+    public override string ToString() =>
+        $"{(string.IsNullOrWhiteSpace(Description) ? string.Empty : $"[{Description}] ")}({Source?.GetType().Name}).{Property.Name}: {NewValue}";
 }

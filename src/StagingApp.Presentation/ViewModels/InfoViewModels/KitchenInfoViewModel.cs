@@ -1,79 +1,37 @@
 ﻿namespace StagingApp.Presentation.ViewModels.InfoViewModels;
-public partial class KitchenInfoViewModel : BaseViewModel
+public sealed class KitchenInfoViewModel : BaseInfoViewModel
 {
-    [ObservableProperty]
-    [Description("Controller Name")]
-    private string? _controllerName;
+    [Description("Controller Name:")]
+    public string? ControllerName { get; set; }
 
-    [ObservableProperty]
-    [Description("Controller Number")]
-    private string? _controllerNumber;
+    [Description("Controller Number:")]
+    public string? ControllerNumber { get; set; }
 
-    [ObservableProperty]
-    [Description("BOH ServerName")]
-    private string? _bohServerName;
+    [Description("BOH IP Address:")]
+    public string? BohIpAddress { get; set; }
 
-    [ObservableProperty]
-    [Description("TERMSTR")]
-    private string? _termStr;
-
-    [ObservableProperty]
-    [Description("Key Number")]
-    private string? _keyNumber;
-
-    [ObservableProperty]
-    [Description("IP Address")]
-    private string? _ipAddress;
-
-    [ObservableProperty]
-    [Description("BOH IP Address")]
-    private string? _bohIpAddress;
-
-    public ObservableCollection<DeviceInfoRowViewModel> Rows { get; set; }
-    public KitchenInfoViewModel()
+    public KitchenInfoViewModel(
+        string? controllerName,
+        string? controllerNumber,
+        string? ipAddress,
+        string? keyNumber,
+        string? termStr,
+        string? bohServerName,
+        string? bohIpAddress,
+        string? message)
     {
-        Rows = new ObservableCollection<DeviceInfoRowViewModel>
-        {
-            new DeviceInfoRowViewModel
-            {
-                LabelText = "Controller Name:",
-
-            },
-            new DeviceInfoRowViewModel
-            {
-                LabelText = "Controller Number:"
-            },
-            new DeviceInfoRowViewModel
-            {
-                LabelText = "BOH Server Name:"
-            },
-            new DeviceInfoRowViewModel
-            {
-                LabelText = "TERMSTR:"
-            },
-            new DeviceInfoRowViewModel
-            {
-                LabelText = "Key Number:"
-            },
-            new DeviceInfoRowViewModel
-            {
-                LabelText = "IP Address:"
-            },
-            new DeviceInfoRowViewModel
-            {
-                LabelText = "BOH IP Address:"
-            },
-        };
+        ControllerName = controllerName;
+        ControllerNumber = controllerNumber;
+        IpAddress = ipAddress;
+        KeyNumber = keyNumber;
+        TermStr = termStr;
+        BohServerName = bohServerName;
+        BohIpAddress = bohIpAddress;
+        Message = message;
     }
 
-    [RelayCommand]
-    private void Ok()
-    {
-        throw new NotImplementedException();
-    }
 
-    [RelayCommand]
-    private void Cancel()
+    public override void Ok()
     {
         throw new NotImplementedException();
     }

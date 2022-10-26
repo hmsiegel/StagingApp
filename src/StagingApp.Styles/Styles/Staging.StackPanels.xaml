@@ -15,4 +15,10 @@
         <Setter Property="Grid.ColumnSpan" Value="4" />
     </Style>
 
+    <Style TargetType="StackPanel" x:Key="ServerConfigureStackPanel">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Margin" Value="0 5 25 0" />
+    </Style>
+
 </ResourceDictionary>

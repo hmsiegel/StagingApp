@@ -5,11 +5,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels.ConfigureViewModels;assembly=StagingApp.Presentation"
-    d:DataContext="{d:DesignInstance Type=viewmodels:ServerConfigureViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="550"
     d:DesignWidth="800"
     Background="{StaticResource BackgroundColor}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/StagingDesign.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
     <Grid Style="{StaticResource GridStyle}">
 
@@ -51,14 +57,14 @@
                     SITE ID:
                 </Label>
                 <ComboBox
-                    ItemsSource="{Binding SiteIds}"
+                    x:Name="SiteIds"
                     SelectedItem="{Binding SelectedSiteId}"
                     Style="{StaticResource ServerConfigureComboBoxStyle}" />
         </StackPanel>
 
         <!-- Staging Tech Name Row -->
         <StackPanel
-            Style="{StaticResource ConfigureStackPanelStyle}"
+            Style="{StaticResource ServerConfigureStackPanel}"
             Grid.Row="3"
             Grid.Column="1">
                 <Label
@@ -66,8 +72,8 @@
                     STAGING TECH NAME:
                 </Label>
                 <TextBox
-                    Text="{Binding StagingTechName}"
-                    Style="{StaticResource ServerConfigureTextBox}" />
+                    x:Name="StagingTechName"
+                    Style="{StaticResource TechNameConfigureTextBox}" />
         </StackPanel>
 
         <!-- Hard Drive Replacement Row -->
@@ -75,36 +81,37 @@
             Style="{StaticResource ConfigureStackPanelStyle}"
             Grid.Row="4"
             Grid.Column="1">
-                <Label
-                    Style="{StaticResource ConfigureLabelStyle}">
-                    HARD DRIVE REPLACEMENT:
-                </Label>
-                <ComboBox
-                    ItemsSource="{Binding ReplacementSelectionsList}"
-                    SelectedItem="{Binding Path=SelectedHardDriveReplacement}"
-                    IsEditable="False"
-                    Style="{StaticResource ServerConfigureComboBoxStyle}" />
+            <Label
+                Style="{StaticResource ConfigureLabelStyle}">
+                HARD DRIVE REPLACEMENT:
+            </Label>
+            <ComboBox
+                ItemsSource="{Binding ReplacementSelectionsList}"
+                SelectedItem="{Binding Path=SelectedHardDriveReplacement}"
+                IsEditable="False"
+                Style="{StaticResource ServerConfigureComboBoxStyle}" />
         </StackPanel>
 
         <!-- Hard Drive Replacement Letter Row -->
         <StackPanel
             Style="{StaticResource ConfigureStackPanelStyle}"
+            x:Name="HardDriveLetter"
             Grid.Row="5"
             Grid.Column="1"
-            Visibility="{Binding IsHardDriveLetterVisible, Converter={StaticResource BoolToVisibilityConverter}, FallbackValue=Collapsed}">
+            Visibility="{Binding IsHardDriveLetterVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
             <Label
-                    Style="{StaticResource ConfigureLabelStyle}">
-                    HARD DRIVE LETTER:
-                </Label>
-                <ComboBox
-                    ItemsSource="{Binding HardDriveLettersList}"
-                    SelectedItem="{Binding SelectedHardDriveLetter}"
-                    Style="{StaticResource ServerConfigureComboBoxStyle}" />
+                Style="{StaticResource ConfigureLabelStyle}">
+                HARD DRIVE LETTER:
+            </Label>
+            <ComboBox
+                x:Name="HardDriveLettersList"
+                SelectedItem="{Binding SelectedHardDriveLetter}"
+                Style="{StaticResource ServerConfigureComboBoxStyle}" />
         </StackPanel>
 
         <!-- Button Row -->
         <Button
-            Command="{Binding ConfigureCommand}"
+            x:Name="ValidateInput"
             Grid.Column="1"
             Grid.Row="6"
             Style="{StaticResource ConfigureButton}" >

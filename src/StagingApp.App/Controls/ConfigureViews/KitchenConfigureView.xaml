@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:custom="clr-namespace:StagingApp.Controls.Library.Custom;assembly=StagingApp.Controls.Library"
-    xmlns:models="StagingApp.Control.Library.Models;assembly=StagingApp.Controls.Library"
+    xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels.ConfigureViewModels;assembly=StagingApp.Presentation"
     mc:Ignorable="d" 
     d:DesignHeight="650"
     d:DesignWidth="800"
@@ -17,6 +17,15 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+    <d:FrameworkElement.DataContext>
+        <viewmodels:KitchenConfigureViewModel
+            ControllerName="AK238EXPO"
+            ControllerNumber="170"
+            IpAddress="10.102.238.170"
+            TermStr="TABLE238_"
+            BohServerName="ALOHABOH238"
+            KeyNumber="123456" />
+    </d:FrameworkElement.DataContext>
 
     <Grid Style="{StaticResource GridStyle}">
 
@@ -33,73 +42,50 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!-- Header Row -->
         <Label
             Style="{StaticResource ConfigureLabelHeaderStyle}"
-            Grid.Row="2"
+            Grid.Row="1"
             Grid.Column="1">
             PLEASE ENTER THE FOLLOWING INFORMATION:
         </Label>
 
-        <!-- Data Rows -->
+        <!--Data Row-->
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="1">
+            <custom:DescriptionsListControl  />
+
+        </StackPanel>
+        
+        <!--Concept Row-->
         <StackPanel
             Style="{StaticResource ConfigureStackPanelStyle}"
             Grid.Row="3"
             Grid.Column="1">
-            <!--<ContentControl Content="{Binding}">
-                <ContentControl.ContentTemplate>
-                    <DataTemplate>
-                        <helpers:DescriptionsListControl>
-                            <Control.Template>
-                                <ControlTemplate TargetType="{x:Type custom:DescriptionsListControl}">
-                                    <ItemsControl ItemsSource="{TemplateBinding Descriptions}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate DataType="{x:Type models:}">
-                                                <helpers:DescriptionControl DescriptionSource="{Binding}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </ControlTemplate>
-                            </Control.Template>
-                        </helpers:DescriptionsListControl>
-                    </DataTemplate>
-                </ContentControl.ContentTemplate>
-            </ContentControl>-->
-            <!--<ItemsControl ItemsSource="{Binding Rows}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <common:DeviceConfigureTextRow />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate> 
-            </ItemsControl>-->
-        </StackPanel>
-
-        <!--Concept Row-->
-        <StackPanel
-            Style="{StaticResource ConfigureStackPanelStyle}"
-            Grid.Row="4"
-            Grid.Column="1">
-            <Label 
-                Style="{StaticResource ConfigureLabelStyle}">
+            <TextBlock 
+                Style="{StaticResource ConfigureTextBlockStyle}">
                 CONCEPT:
-            </Label>
+            </TextBlock>
             <ComboBox
-                ItemsSource="{Binding KitchenConceptsList}"
+                ItemsSource="{Binding Concepts}"
                 SelectedItem="{Binding SelectedConcept}"
-                Style="{StaticResource ServerConfigureComboBoxStyle}" />
+                Style="{StaticResource KitchenConfigureComboBoxStyle}" />
         </StackPanel>
 
         <!-- Button Row -->
         <Button
-                Command="{Binding ValidateInputCommand}"
+                x:Name="ValidateInput"
                 Style="{StaticResource ConfigureButton}"
-                Grid.Row="5"
+                Grid.Row="4"
                 Grid.Column="1">
             CONFIGURE
         </Button>
+
+
+
     </Grid>
 </UserControl>

@@ -1,29 +1,13 @@
 ﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
-public partial class ServerConfigureViewModel : ObservableObject
+public class ServerConfigureViewModel : BaseConfigureViewModel
 {
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof (ConfigureCommand))]
     private string? _stagingTechName;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsHardDriveLetterVisible))]
     private string? _selectedHardDriveReplacement;
-
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(ConfigureCommand))]
     private string? _selectedSiteId;
-
-    [ObservableProperty]
     private string? _selectedHardDriveLetter;
-
-    [ObservableProperty]
-    private List<string>? _siteIds;
-
-    [ObservableProperty]
-    private ObservableCollection<string>? _hardDriveLettersList;
-
-    [ObservableProperty]
-    private ObservableCollection<string>? _replacementSelectionsList;
+    private BindableCollection<string>? _siteIds;
+    private BindableCollection<string>? _hardDriveLettersList;
+    private BindableCollection<string>? _replacementSelectionsList;
 
     public bool IsHardDriveLetterVisible
     {
@@ -38,7 +22,74 @@ public partial class ServerConfigureViewModel : ObservableObject
         }
     }
 
-    private bool CanConfigure => SelectedSiteId is not null && StagingTechName is not null;
+    [Description("STAGING TECH NAME:")]
+    public string? StagingTechName
+    {
+        get => _stagingTechName;
+        set
+        {
+            _stagingTechName = value;
+            NotifyOfPropertyChange(() => StagingTechName);
+        }
+    }
+
+    public string? SelectedHardDriveReplacement
+    {
+        get => _selectedHardDriveReplacement;
+        set
+        {
+            _selectedHardDriveReplacement = value;
+            NotifyOfPropertyChange(() => SelectedHardDriveReplacement);
+            NotifyOfPropertyChange(() => IsHardDriveLetterVisible);
+        }
+    }
+
+    public string? SelectedSiteId
+    {
+        get => _selectedSiteId;
+        set
+        {
+            _selectedSiteId = value;
+            NotifyOfPropertyChange(() => SelectedSiteId);
+        }
+    }
+
+    public string? SelectedHardDriveLetter
+    {
+        get => _selectedHardDriveLetter;
+        set
+        {
+            _selectedHardDriveLetter = value;
+            NotifyOfPropertyChange(() => SelectedHardDriveLetter);
+        }
+    }
+    public BindableCollection<string>? SiteIds
+    {
+        get => _siteIds;
+        set
+        {
+            _siteIds = value;
+            NotifyOfPropertyChange(() => SiteIds);
+        }
+    }
+    public BindableCollection<string>? HardDriveLettersList
+    {
+        get => _hardDriveLettersList;
+        set
+        {
+            _hardDriveLettersList = value;
+            NotifyOfPropertyChange(() => HardDriveLettersList);
+        }
+    }
+    public BindableCollection<string>? ReplacementSelectionsList
+    {
+        get => _replacementSelectionsList;
+        set
+        {
+            _replacementSelectionsList = value;
+            NotifyOfPropertyChange(() => SiteIds);
+        }
+    }
 
     public ServerConfigureViewModel()
     {
@@ -50,12 +101,16 @@ public partial class ServerConfigureViewModel : ObservableObject
         var hdList = EnumServices.GetEnumDescriptions<HardDriveLetters>();
         var replacementSelection = EnumServices.GetEnumDescriptions<ReplacementSelections>();
 
-        HardDriveLettersList = new ObservableCollection<string>(hdList);
-        ReplacementSelectionsList = new ObservableCollection<string>(replacementSelection);
+        HardDriveLettersList = new BindableCollection<string>(hdList);
+        ReplacementSelectionsList = new BindableCollection<string>(replacementSelection);
     }
 
-    [RelayCommand(CanExecute = nameof(CanConfigure))]
-    private void Configure()
+    public override void Configure()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void ValidateInput()
     {
         throw new NotImplementedException();
     }

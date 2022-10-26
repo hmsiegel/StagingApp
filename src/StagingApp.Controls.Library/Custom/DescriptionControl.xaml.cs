@@ -3,22 +3,27 @@
 [TemplatePart(Name = _textBoxTemplateName, Type = typeof(TextBox))]
 public class DescriptionControl : Control
 {
-    private const string _textBoxTemplateName = "PART_Textbox";
+    private const string _textBoxTemplateName = "PART_TextBox";
     private TextBox? _partTextBox;
     private Binding? _textBinding;
 
     public override void OnApplyTemplate()
     {
         _partTextBox = GetTemplateChild(_textBoxTemplateName) as TextBox;
+        SetBindingPartTextbox();
+    }
+
+    private void SetBindingPartTextbox()
+    {
         if (_partTextBox is TextBox tbox)
         {
-            if (_textBinding is Binding binding)
+            if (_textBinding is null)
             {
-                tbox.SetBinding(TextBox.TextProperty, binding);
+                BindingOperations.ClearBinding(tbox, TextBox.TextProperty);
             }
             else
             {
-                BindingOperations.ClearBinding(tbox, TextBox.TextProperty);
+                tbox.SetBinding(TextBox.TextProperty, _textBinding);
             }
         }
     }
@@ -42,6 +47,8 @@ public class DescriptionControl : Control
         typeof(DescriptionControl),
         new PropertyMetadata(null, DescriptionSourceChangedCallback));
 
+    private static readonly PropertyPath NewValuePropertyPath = new PropertyPath(typeof(DescriptionDto).GetProperty(nameof(DescriptionDto.NewValue)));
+
     private static void DescriptionSourceChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         DescriptionControl control = (DescriptionControl)d;
@@ -50,29 +57,12 @@ public class DescriptionControl : Control
         {
             binding = new Binding
             {
-                Path = description.Path,
-                Source = description.Source
+                Path = NewValuePropertyPath,
+                Source = description.Source,
+                Mode = BindingMode.TwoWay
             };
-            if (description.IsReadonly)
-            {
-                binding.Mode = BindingMode.OneWay;
-            }
-            else
-            {
-                binding.Mode = BindingMode.TwoWay;
-            }
         }
         control._textBinding = binding;
-        if (control._partTextBox is TextBox tbox)
-        {
-            if (binding is null)
-            {
-                BindingOperations.ClearBinding(tbox, TextBox.TextProperty);
-            }
-            else
-            {
-                tbox.SetBinding(TextBox.TextProperty, binding);
-            }
-        }
+        control.SetBindingPartTextbox();
     }
 }
