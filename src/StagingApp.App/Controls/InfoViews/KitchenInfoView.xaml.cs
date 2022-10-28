@@ -4,9 +4,9 @@
 /// </summary>
 public partial class KitchenInfoView : UserControl
 {
-
     public KitchenInfoView()
     {
         InitializeComponent();
+        DataContext = new KitchenInfoViewModel();
     }
 }

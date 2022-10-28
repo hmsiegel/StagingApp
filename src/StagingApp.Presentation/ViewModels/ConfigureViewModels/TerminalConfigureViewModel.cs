@@ -26,13 +26,15 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         }
     }
 
-    public override void Configure()
-    {
-        throw new NotImplementedException();
-    }
-
     public override void ValidateInput()
     {
         throw new NotImplementedException();
+        // TODO: Implement data input validation
+    }
+
+    public override void Configure()
+    {
+        throw new NotImplementedException();
+        // TODO: Implement the configure method to start the configuration
     }
 }

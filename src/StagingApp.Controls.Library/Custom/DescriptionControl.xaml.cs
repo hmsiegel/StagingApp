@@ -30,7 +30,9 @@ public class DescriptionControl : Control
 
     static DescriptionControl()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(DescriptionControl), new FrameworkPropertyMetadata(typeof(DescriptionControl)));
+        DefaultStyleKeyProperty.OverrideMetadata(
+            typeof(DescriptionControl),
+            new FrameworkPropertyMetadata(typeof(DescriptionControl)));
     }
 
     public DescriptionDto DescriptionSource
@@ -47,7 +49,8 @@ public class DescriptionControl : Control
         typeof(DescriptionControl),
         new PropertyMetadata(null, DescriptionSourceChangedCallback));
 
-    private static readonly PropertyPath NewValuePropertyPath = new PropertyPath(typeof(DescriptionDto).GetProperty(nameof(DescriptionDto.NewValue)));
+    private static readonly PropertyPath _newValuePropertyPath =
+        new(typeof(DescriptionDto).GetProperty(nameof(DescriptionDto.NewValue)));
 
     private static void DescriptionSourceChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -57,7 +60,7 @@ public class DescriptionControl : Control
         {
             binding = new Binding
             {
-                Path = NewValuePropertyPath,
+                Path = _newValuePropertyPath,
                 Source = description.Source,
                 Mode = BindingMode.TwoWay
             };

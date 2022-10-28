@@ -21,4 +21,9 @@
         <Setter Property="Margin" Value="0 5 25 0" />
     </Style>
 
+    <Style TargetType="StackPanel" x:Key="EditButtonStackPanelStyle">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
 </ResourceDictionary>

@@ -4,11 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:common="clr-namespace:StagingApp.Main.Controls.Common"
-    xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels.InfoViewModels;assembly=StagingApp.Presentation"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels.InfoViewModels;assembly=StagingApp.Presentation" 
+    d:DataContext="{d:DesignInstance Type=viewmodels:KitchenInfoViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="725" 
-    d:DesignWidth="780"
+    d:DesignWidth="900"
     Background="{StaticResource Blue}">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -17,6 +19,16 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+    <!--<d:FrameworkElement.DataContext>
+        <viewmodels:KitchenInfoViewModel
+            ControllerName="" 
+            ControllerNumber=""
+            IpAddress=""
+            KeyNumber=""
+            TermStr=""
+            BohServerName=""
+            BohIpAddress="" />
+    </d:FrameworkElement.DataContext>-->
     <Grid Margin="20">
 
         <Grid.ColumnDefinitions>
@@ -27,6 +39,14 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -56,37 +76,481 @@
         </TextBlock>
 
         <!-- Data -->
+
+        <!-- Controller Name -->
         <StackPanel
-            Grid.Row="2"
-            Grid.Column="0">
-            <!--<ItemsControl ItemsSource="{Binding Rows}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <common:DeviceInfoRow />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>-->
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="2"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                CONTROLLER NAME:
+            </Label>
+            <TextBox
+                x:Name="ControllerName"
+                Text="AK238EXPO"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0">
+                    <Button
+                        Visibility="{Binding IsControllerNameEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="Edit">
+                                    <cal:Parameter Value="ControllerName" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        EDIT
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0"
+                    Visibility="{Binding IsControllerNameEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="OkEdit">
+                                    <cal:Parameter Value="ControllerName" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        OK
+                    </Button>
+                    <Button
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="CancelEdit">
+                                    <cal:Parameter Value="ControllerName" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
         </StackPanel>
+
+        <!-- Controller Number -->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="3"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                CONTROLLER NUMBER:
+            </Label>
+            <TextBox
+                x:Name="ControllerNumber"
+                Text="170"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0">
+                    <Button
+                        Visibility="{Binding IsControllerNumberEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="Edit">
+                                    <cal:Parameter Value="ControllerNumber" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        EDIT
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0"
+                    Visibility="{Binding IsControllerNumberEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="OkEdit">
+                                    <cal:Parameter Value="ControllerNumber" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        OK
+                    </Button>
+                    <Button
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="CancelEdit">
+                                    <cal:Parameter Value="ControllerNumber" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <!-- IP Address -->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="4"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                IP ADDRESS:
+            </Label>
+            <TextBox
+                x:Name="IpAddress"
+                Text="10.102.238.170"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0">
+                    <Button
+                        Visibility="{Binding IsIpAddressEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="Edit">
+                                    <cal:Parameter Value="IpAddress" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        EDIT
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0"
+                    Visibility="{Binding IsIpAddressEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="OkEdit">
+                                    <cal:Parameter Value="IpAddress" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        OK
+                    </Button>
+                    <Button
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="CancelEdit">
+                                    <cal:Parameter Value="IpAddress" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <!-- Key Number -->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="5"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                KEY NUMBER:
+            </Label>
+            <TextBox
+                x:Name="KeyNumber"
+                Text="123456"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0">
+                    <Button
+                        Visibility="{Binding IsKeyNumberEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="Edit">
+                                    <cal:Parameter Value="KeyNumber" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        EDIT
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0"
+                    Visibility="{Binding IsKeyNumberEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="OkEdit">
+                                    <cal:Parameter Value="KeyNumber" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        OK
+                    </Button>
+                    <Button
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="CancelEdit">
+                                    <cal:Parameter Value="KeyNumber" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <!-- TermStr -->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="6"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                TERMSTR:
+            </Label>
+            <TextBox
+                x:Name="TermStr"
+                Text="TABLE238_"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0">
+                    <Button
+                        Visibility="{Binding IsTermStrEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="Edit">
+                                    <cal:Parameter Value="TermStr" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        EDIT
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0"
+                    Visibility="{Binding IsTermStrEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="OkEdit">
+                                    <cal:Parameter Value="TermStr" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        OK
+                    </Button>
+                    <Button
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="CancelEdit">
+                                    <cal:Parameter Value="TermStr" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <!-- BOH Server Name -->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="7"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                BOH SERVER NAME:
+            </Label>
+            <TextBox
+                x:Name="BohServerName"
+                Text="ALOHABOH238"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0">
+                    <Button
+                        Visibility="{Binding IsBohServerNameEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="Edit">
+                                    <cal:Parameter Value="BohServerName" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        EDIT
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0"
+                    Visibility="{Binding IsBohServerNameEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="OkEdit">
+                                    <cal:Parameter Value="BohServerName" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        OK
+                    </Button>
+                    <Button
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="CancelEdit">
+                                    <cal:Parameter Value="BohServerName" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <!-- BOH IP Address -->
+        <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Grid.Row="8"
+                Grid.Column="1">
+            <Label
+                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
+                BOH IP ADDRESS:
+            </Label>
+            <TextBox
+                x:Name="BohIpAddress"
+                Text="10.102.238.81"
+                Style="{StaticResource DeviceInfoTextBoxStyle}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0">
+                    <Button
+                        Visibility="{Binding IsBohIpAddressEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
+                        Style="{StaticResource DeviceInfoEditButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="Edit">
+                                    <cal:Parameter Value="BohIpAddress" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        EDIT
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Style="{StaticResource EditButtonStackPanelStyle}"
+                    Grid.Column="0"
+                    Visibility="{Binding IsBohIpAddressEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
+                    <Button
+                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="OkEdit">
+                                    <cal:Parameter Value="BohIpAddress" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        OK
+                    </Button>
+                    <Button
+                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="CancelEdit">
+                                    <cal:Parameter Value="BohIpAddress" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        CANCEL
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
 
         <!-- Buttons -->
         <StackPanel
-            Orientation="Horizontal"
-            HorizontalAlignment="Center"
+            Style="{StaticResource EditButtonStackPanelStyle}"
             Margin="0 20 0 0"
             Grid.Row="9"
             Grid.Column="1"
             Grid.ColumnSpan="2">
 
             <Button
-                x:Name="OK"
-                IsDefault="True"
                 Style="{StaticResource DeviceInfoOkButtonStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="OK" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 OK
             </Button>
             <Button
-                x:Name="Cancel"
                 IsCancel="True"
                 Style="{StaticResource DeviceInfoCancelButtonStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Cancel" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 CANCEL
             </Button>
         </StackPanel>

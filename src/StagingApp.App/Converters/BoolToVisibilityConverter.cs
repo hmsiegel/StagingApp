@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Windows.Data;
 
 namespace StagingApp.Main.Converters;
 public class BoolToVisConverter : IValueConverter
