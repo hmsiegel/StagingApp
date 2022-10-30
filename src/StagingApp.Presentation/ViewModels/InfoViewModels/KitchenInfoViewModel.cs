@@ -1,13 +1,13 @@
 ﻿namespace StagingApp.Presentation.ViewModels.InfoViewModels;
 public sealed class KitchenInfoViewModel : BaseInfoViewModel
 {
-    [Description("Controller Name:")]
+    [Description("CONTROLLER NAME:")]
     public string? ControllerName { get; set; }
 
-    [Description("Controller Number:")]
+    [Description("CONTROLLER NUMBER:")]
     public string? ControllerNumber { get; set; }
 
-    [Description("BOH IP Address:")]
+    [Description("BOH IP ADDRESS:")]
     public string? BohIpAddress { get; set; }
 
     private bool _isControllerNameEditVisible;

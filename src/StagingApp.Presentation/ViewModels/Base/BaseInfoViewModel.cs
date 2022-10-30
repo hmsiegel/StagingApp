@@ -3,13 +3,13 @@ public abstract class BaseInfoViewModel : Screen
 {
     public string? Message { get; set; }
 
-    [Description("IP Address:")]
+    [Description("IP ADDRESS:")]
     public string? IpAddress { get; set; }
 
-    [Description("BOH Server Name:")]
+    [Description("BOH SERVER NAME:")]
     public string? BohServerName { get; set; }
 
-    [Description("Key Number:")]
+    [Description("KEY NUMBER")]
     public string? KeyNumber { get; set; }
 
     [Description("NUMTERMS:")]
