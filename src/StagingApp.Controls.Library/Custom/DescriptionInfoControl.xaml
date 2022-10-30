@@ -1,13 +1,17 @@
 ﻿<ResourceDictionary 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:desc="clr-namespace:StagingApp.Controls.Library.Custom">
+    xmlns:desc="clr-namespace:StagingApp.Controls.Library.Custom"
+    xmlns:converter="clr-namespace:StagingApp.Controls.Library.Converters"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:cal="http://www.caliburnproject.org">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.TextBlocks.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.TextBoxes.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <converter:BoolToVisConverter x:Key="BoolToVisConverter" />
     <Style TargetType="{x:Type desc:DescriptionControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -33,27 +37,45 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <StackPanel
-                                Orientation="Horizontal"
+                                Style="{StaticResource EditButtonStackPanelStyle}"
                                 Grid.Column="0">
                                 <Button
-                                    x:Name="EditButton"
-                                    Visibility="Visible"
+                                    Visibility="{Binding DescriptionSource.BindingName, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
                                     Style="{StaticResource DeviceInfoEditButtonStyle}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <cal:ActionMessage MethodName="Edit">
+                                                <cal:Parameter Value="{Binding DescriptionSource.Property.Name}" />
+                                            </cal:ActionMessage>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                     Edit
                                 </Button>
                             </StackPanel>
                             <StackPanel
-                                Orientation="Horizontal"
+                                Style="{StaticResource EditButtonStackPanelStyle}"
                                 Grid.Column="0"
-                                Visibility="Hidden">
+                                Visibility="{Binding DescriptionSource.BindingName, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}">
                                 <Button
-                                    x:Name="OkButton"
                                     Style="{StaticResource DeviceInfoEditOkButtonStyle}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <cal:ActionMessage MethodName="OkEdit">
+                                                <cal:Parameter Value="{Binding DescriptionSource.Property.Name}" />
+                                            </cal:ActionMessage>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                     OK
                                 </Button>
                                 <Button
-                                    x:Name="CancelButton"
                                     Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <cal:ActionMessage MethodName="CancelEdit">
+                                                <cal:Parameter Value="{Binding DescriptionSource.Property.Name}" />
+                                            </cal:ActionMessage>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                     CANCEL
                                 </Button>
                             </StackPanel>
