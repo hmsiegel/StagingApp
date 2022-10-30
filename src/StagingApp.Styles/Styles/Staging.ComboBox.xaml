@@ -131,7 +131,7 @@
 
     <!-- Kitchen Configure Combo Box Style -->
     <Style TargetType="{x:Type ComboBox}" x:Key="KitchenConfigureComboBoxStyle" BasedOn="{StaticResource ComboBoxStyle}">
-        <Setter Property="MinWidth" Value="323" />
+        <Setter Property="MinWidth" Value="315" />
     </Style>
 
 </ResourceDictionary>
