@@ -1,4 +1,4 @@
-﻿namespace StagingApp.Main.Controls.InfoViews;
+﻿namespace StagingApp.Main.Views.InfoViews;
 /// <summary>
 /// Interaction logic for TerminalInfoView.xaml
 /// </summary>
