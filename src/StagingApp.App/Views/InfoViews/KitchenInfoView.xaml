@@ -77,13 +77,13 @@
         </TextBlock>
 
         <!-- Data -->
-        <StackPanel
+        <!--<StackPanel
             Grid.Row="2"
             Grid.Column="1">
             <custom:DescriptionInfoListControl />
-        </StackPanel>
+        </StackPanel>-->
 
-        <!-- Controller Name --><!--
+         <!--Controller Name--> 
         <StackPanel
                 Orientation="Horizontal"
                 HorizontalAlignment="Right"
@@ -147,7 +147,7 @@
             </Grid>
         </StackPanel>
 
-        --><!-- Controller Number --><!--
+         <!--Controller Number--> 
         <StackPanel
                 Orientation="Horizontal"
                 HorizontalAlignment="Right"
@@ -211,7 +211,7 @@
             </Grid>
         </StackPanel>
 
-        --><!-- IP Address --><!--
+         <!--IP Address--> 
         <StackPanel
                 Orientation="Horizontal"
                 HorizontalAlignment="Right"
@@ -275,7 +275,7 @@
             </Grid>
         </StackPanel>
 
-        --><!-- Key Number --><!--
+         <!--Key Number--> 
         <StackPanel
                 Orientation="Horizontal"
                 HorizontalAlignment="Right"
@@ -339,7 +339,7 @@
             </Grid>
         </StackPanel>
 
-        --><!-- TermStr --><!--
+         <!--TermStr--> 
         <StackPanel
                 Orientation="Horizontal"
                 HorizontalAlignment="Right"
@@ -403,7 +403,7 @@
             </Grid>
         </StackPanel>
 
-        --><!-- BOH Server Name --><!--
+         <!--BOH Server Name--> 
         <StackPanel
                 Orientation="Horizontal"
                 HorizontalAlignment="Right"
@@ -467,7 +467,7 @@
             </Grid>
         </StackPanel>
 
-        --><!-- BOH IP Address --><!--
+         <!--BOH IP Address--> 
         <StackPanel
                 Orientation="Horizontal"
                 HorizontalAlignment="Right"
@@ -529,7 +529,7 @@
                     </Button>
                 </StackPanel>
             </Grid>
-        </StackPanel>-->
+        </StackPanel>
 
 
         <!-- Buttons -->

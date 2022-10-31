@@ -1,7 +1,8 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:desc="clr-namespace:StagingApp.Controls.Library.Custom"
-                    xmlns:models="clr-namespace:StagingApp.Controls.Library.Models">
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:desc="clr-namespace:StagingApp.Controls.Library.Custom"
+    xmlns:models="clr-namespace:StagingApp.Controls.Library.Models">
 
     <Style TargetType="{x:Type desc:DescriptionsListControl}">
         <Setter Property="Template">
