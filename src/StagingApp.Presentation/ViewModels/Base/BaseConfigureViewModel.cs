@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StagingApp.Presentation.ViewModels.Base;
-internal class BaseConfigureViewModel
+﻿namespace StagingApp.Presentation.ViewModels.Base;
+public abstract class BaseConfigureViewModel : Screen
 {
+    public abstract void Configure();
+    public abstract void ValidateInput();
 }

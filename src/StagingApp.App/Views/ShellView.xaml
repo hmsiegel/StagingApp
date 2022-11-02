@@ -14,31 +14,6 @@
         <viewmodels:ShellViewModel/>
     </Window.DataContext>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <ListBox x:Name="listBox" SelectedIndex="0">
-            <ListBox.ItemsSource>
-                <CompositeCollection>
-                    <infoVM:KitchenInfoViewModel
-                            ControllerName = "First Controller"
-                            BohServerName = "Second Server"
-                            TermStr = "Third Term"
-                            KeyNumber = "Fourth Key"
-                            IpAddress = "Fifth Address"
-                            BohIpAddress = "Sixth Address"
-                            ControllerNumber="Seventh Number"/>
-                    <confVM:KitchenConfigureViewModel
-                            ControllerName = "First Configure Controller"
-                            BohServerName = "Second Configure Server"
-                            TermStr = "Third Configure Term"
-                            KeyNumber = "Fourth Configure Key"
-                            IpAddress = "Fifth Configure Address"
-                            ControllerNumber="Seventh Configure Number"/>
-                </CompositeCollection>
-            </ListBox.ItemsSource>
-        </ListBox>
-        <controls:PropertyListEditView Grid.Column="2" DataContext="{Binding SelectedItem, ElementName=listBox}"/>
+        <ContentControl x:Name="ActiveItem" />
     </Grid>
 </Window>

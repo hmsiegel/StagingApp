@@ -1,4 +1,4 @@
-﻿namespace StagingApp.Main.Controls.ConfigureViews;
+﻿namespace StagingApp.Main.Views.ConfigureViews;
 /// <summary>
 /// Interaction logic for TerminalConfigureView.xaml
 /// </summary>

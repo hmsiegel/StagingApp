@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace StagingApp.Main.Converters;
+namespace StagingApp.Controls.Library.Converters;
 public class BoolToVisConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

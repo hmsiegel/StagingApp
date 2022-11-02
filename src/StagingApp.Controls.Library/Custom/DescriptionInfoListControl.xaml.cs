@@ -1,9 +1,9 @@
 ﻿namespace StagingApp.Controls.Library.Custom;
-public class DescriptionsListControl : Control
+public class DescriptionInfoListControl : Control
 {
-    static DescriptionsListControl()
+    static DescriptionInfoListControl()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(DescriptionsListControl), new FrameworkPropertyMetadata(typeof(DescriptionsListControl)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(DescriptionInfoListControl), new FrameworkPropertyMetadata(typeof(DescriptionInfoListControl)));
     }
 
     public ReadOnlyCollection<DescriptionDto> Descriptions
@@ -18,13 +18,13 @@ public class DescriptionsListControl : Control
         DependencyProperty.RegisterReadOnly(
             nameof(Descriptions),
             typeof(ReadOnlyCollection<DescriptionDto>),
-            typeof(DescriptionsListControl),
+            typeof(DescriptionInfoListControl),
             new PropertyMetadata(_descriptionsEmpty));
 
     // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty DescriptionsProperty = _descriptionsPropertyKey.DependencyProperty;
 
-    public DescriptionsListControl()
+    public DescriptionInfoListControl()
     {
         DataContextChanged += OnDataContextChanged;
     }

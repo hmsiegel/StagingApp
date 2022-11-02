@@ -22,10 +22,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Caliburn.Micro" Version="4.0.212" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -38,9 +40,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="appsettings.json">
+		<Content Update="appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -92,10 +94,20 @@
 		</Resource>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="appsettings.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+	<!--<ItemGroup>
+	  <Page Update="Controls\InfoViews\KitchenInfoView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>-->
+
 	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/appsscript.json" />
-		</VisualStudio>
+		<VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json" appsettings_1json__JsonSchema="https://json.schemastore.org/appsscript.json" /></VisualStudio>
 	</ProjectExtensions>
 
 </Project>

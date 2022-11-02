@@ -1,19 +1,40 @@
 ﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
-public partial class TerminalConfigureViewModel : ObservableObject
+public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 {
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(ValidateInputsCommand))]
     private string? _terminalName;
-
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(ValidateInputsCommand))]
     private string? _ipAddress;
 
-    private bool CanValidateInputs => TerminalName is not null && IpAddress is not null;
+    [Description("TERMINAL NAME:")]
+    public string? TerminalName
+    {
+        get => _terminalName;
+        set
+        {
+            _terminalName = value;
+            NotifyOfPropertyChange(() => TerminalName);
+        }
+    }
 
-    [RelayCommand(CanExecute = nameof(CanValidateInputs))]
-    private void ValidateInputs()
+    [Description("IP ADDRESS:")]
+    public string? IpAddress
+    {
+        get => _ipAddress;
+        set
+        {
+            _ipAddress = value;
+            NotifyOfPropertyChange(() => IpAddress);
+        }
+    }
+
+    public override void ValidateInput()
     {
         throw new NotImplementedException();
+        // TODO: Implement data input validation
+    }
+
+    public override void Configure()
+    {
+        throw new NotImplementedException();
+        // TODO: Implement the configure method to start the configuration
     }
 }

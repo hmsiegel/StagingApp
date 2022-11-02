@@ -1,5 +1,5 @@
 ﻿namespace StagingApp.Controls.Library.Custom;
-public static class DescriptionPropertyList
+public class DescriptionPropertyList
 {
     private static readonly Dictionary<Type, ReadOnlyCollection<(string description, PropertyInfo property)>> _typeDescriptions = new();
 
@@ -10,7 +10,7 @@ public static class DescriptionPropertyList
         if (!_typeDescriptions.TryGetValue(sourceType, out ReadOnlyCollection<(string description, PropertyInfo property)>? descriptions))
         {
             var properties = new List<PropertyInfo>(sourceType.GetProperties(BindingFlags.Instance | BindingFlags.Public));
-            List<(string description, PropertyInfo property)> descrType = new List<(string description, PropertyInfo property)>(properties.Count);
+            List<(string description, PropertyInfo property)> descrType = new(properties.Count);
             {
                 for (int i = properties.Count - 1; i >= 0; i--)
                 {
