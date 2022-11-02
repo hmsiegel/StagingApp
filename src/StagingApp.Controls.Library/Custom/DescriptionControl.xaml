@@ -19,7 +19,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding DescriptionSource.Description, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                   Style="{StaticResource ConfigureLabelStyle}"/>
+                                   Style="{StaticResource ConfigureTextBlockStyle}"/>
                         <TextBox x:Name="PART_TextBox" Grid.Column="1"
                                  Style="{StaticResource ConfigureTextBox}"
                                  IsReadOnly="{TemplateBinding IsReadOnly}"/>

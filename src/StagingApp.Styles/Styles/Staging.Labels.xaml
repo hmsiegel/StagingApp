@@ -7,32 +7,32 @@
     <Style x:Key="PrimaryLabelStyle" TargetType="Label" />
 
     <!-- Configure Label -->
-    <Style TargetType="{x:Type Label}" x:Key="ConfigureLabelStyle">
-        <Setter Property="FontSize" Value="28" />
-        <Setter Property="FontFamily" Value="{StaticResource Rubik}"/>
-        <Setter Property="FontWeight" Value="Light"/>
-        <Setter Property="HorizontalContentAlignment" Value="Right" />
+    <Style TargetType="FrameworkElement" x:Key="ConfigureLabelStyle">
+        <Setter Property="TextElement.FontSize" Value="28" />
+        <Setter Property="TextElement.FontFamily" Value="{StaticResource Rubik}"/>
+        <Setter Property="TextElement.FontWeight" Value="Light"/>
+        <Setter Property="Control.HorizontalContentAlignment" Value="Right" />
         <Setter Property="Margin" Value="0 5 10 10" />
-        <Setter Property="Foreground" Value="{StaticResource ForegroundColor}" />
+        <Setter Property="TextElement.Foreground" Value="{StaticResource ForegroundColor}" />
     </Style>
 
     <!-- Configure Label Header -->
-    <Style TargetType="{x:Type Label}" x:Key="ConfigureLabelHeaderStyle" BasedOn="{StaticResource ConfigureLabelStyle}">
-        <Setter Property="FontWeight" Value="Bold"/>
+    <Style TargetType="FrameworkElement" x:Key="ConfigureLabelHeaderStyle" BasedOn="{StaticResource ConfigureLabelStyle}">
+        <Setter Property="TextElement.FontWeight" Value="Bold"/>
     </Style>
 
     <!-- Info Label Header Style -->
-    <Style TargetType="Label" x:Key="DeviceInfoTitleStyle" BasedOn="{StaticResource ConfigureLabelHeaderStyle}">
+    <Style TargetType="FrameworkElement" x:Key="DeviceInfoTitleStyle" BasedOn="{StaticResource ConfigureLabelHeaderStyle}">
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="FontSize" Value="42" />
+        <Setter Property="TextElement.FontWeight" Value="SemiBold" />
+        <Setter Property="TextElement.FontSize" Value="42" />
     </Style>
 
     <!-- Info Property Label Style -->
-    <Style TargetType="Label" x:Key="DeviceInfoPropertyLabelStyle" BasedOn="{StaticResource ConfigureLabelStyle}">
-        <Setter Property="FontSize" Value="20" />
+    <Style TargetType="FrameworkElement" x:Key="DeviceInfoPropertyLabelStyle" BasedOn="{StaticResource ConfigureLabelStyle}">
+        <Setter Property="TextElement.FontSize" Value="20" />
         <Setter Property="Height" Value="32" />
-        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="TextElement.Foreground" Value="Black" />
         <Setter Property="Margin" Value="0 10 10 10" />
     </Style>
 

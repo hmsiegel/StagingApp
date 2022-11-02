@@ -7,8 +7,9 @@
     <StackPanel
         Style="{StaticResource ConfigureStackPanelStyle}">
         <Label
-            Style="{StaticResource ConfigureLabelStyle}"
             Content="{Binding ConfigureLabelText}" />
+        <!--Style="{StaticResource ConfigureLabelStyle}"-->
+        
         <TextBox
             Style="{StaticResource ServerConfigureTextBox}"
             Text="{Binding ConfigureTextBox}" />

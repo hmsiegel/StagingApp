@@ -71,11 +71,14 @@ public sealed class Bootstrapper : BootstrapperBase
 
         return assemblies;
     }
+
+    public const string SettingsFileName = "appsettings.json";
+    public static readonly string SettingsFileFullName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, SettingsFileName);
     private static IConfiguration AddConfiguration()
     {
         IConfigurationBuilder builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", false, false);
+            .AddJsonFile(SettingsFileFullName, false, false);
 
         return builder.Build();
 

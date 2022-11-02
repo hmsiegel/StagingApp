@@ -14,12 +14,12 @@ public partial class DescriptionControl : Control
         editCommand.Executed += OnExecuted;
 
         CommandBinding cancelCommand = new CommandBinding() { Command = Cancel };
-        editCommand.CanExecute += OnCanExecute;
-        editCommand.Executed += OnExecuted;
+        cancelCommand.CanExecute += OnCanExecute;
+        cancelCommand.Executed += OnExecuted;
 
         CommandBinding OkCommand = new CommandBinding() { Command = OK };
-        editCommand.CanExecute += OnCanExecute;
-        editCommand.Executed += OnExecuted;
+        OkCommand.CanExecute += OnCanExecute;
+        OkCommand.Executed += OnExecuted;
 
         // Save a Routed Commands Binding.
         CommandBindings.Add(editCommand);
@@ -49,7 +49,7 @@ public partial class DescriptionControl : Control
         {
             if (e.Command == Cancel)
             {
-                IsReadOnly = false;
+                IsReadOnly = true;
                 ProtectedDescriptionSource?.RefreshNewValue();
 
                 if (_partTextBox is not null)

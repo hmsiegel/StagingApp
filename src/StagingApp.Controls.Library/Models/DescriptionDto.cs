@@ -52,7 +52,7 @@ public class DescriptionDto : INotifyPropertyChanged
 
     public void RefreshNewValue()
     {
-        Property.GetValue(Source)?.ToString();
+        NewValue = Property.GetValue(Source)?.ToString();
     }
 
     public void UpdateProperty()

@@ -4,7 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels;assembly=StagingApp.Presentation" 
+    xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels;assembly=StagingApp.Presentation"
+    xmlns:infoVM="clr-namespace:StagingApp.Presentation.ViewModels.InfoViewModels;assembly=StagingApp.Presentation"
+    xmlns:confVM="clr-namespace:StagingApp.Presentation.ViewModels.ConfigureViewModels;assembly=StagingApp.Presentation"
+    xmlns:controls="clr-namespace:StagingApp.Main.Controls"
     mc:Ignorable="d"
     Background="{StaticResource BackgroundColor}"
     WindowStyle="ToolWindow"
@@ -14,6 +17,32 @@
         <viewmodels:ShellViewModel/>
     </Window.DataContext>
     <Grid>
-        <ContentControl x:Name="ActiveItem" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="listBox" SelectedIndex="0"
+                 DisplayMemberPath="ControllerName">
+            <ListBox.ItemsSource>
+                <CompositeCollection>
+                    <infoVM:KitchenInfoViewModel
+                            ControllerName = "First Controller"
+                            BohServerName = "Second Server"
+                            TermStr = "Third Term"
+                            KeyNumber = "Fourth Key"
+                            IpAddress = "Fifth Address"
+                            BohIpAddress = "Sixth Address"
+                            ControllerNumber="Seventh Number"/>
+                    <confVM:KitchenConfigureViewModel
+                            ControllerName = "First Configure Controller"
+                            BohServerName = "Second Configure Server"
+                            TermStr = "Third Configure Term"
+                            KeyNumber = "Fourth Configure Key"
+                            IpAddress = "Fifth Configure Address"
+                            ControllerNumber="Seventh Configure Number"/>
+                </CompositeCollection>
+            </ListBox.ItemsSource>
+        </ListBox>
+        <controls:PropertyListEditView Grid.Column="2" DataContext="{Binding SelectedItem, ElementName=listBox}"/>
     </Grid>
 </Window>

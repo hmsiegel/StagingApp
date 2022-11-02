@@ -63,8 +63,8 @@ public partial class DescriptionControl : Control
         {
             binding = new Binding
             {
-                Path = _newValuePropertyPath,
-                Source = description.Source,
+                Path = NewValuePropertyPath,
+                Source = description,
                 Mode = BindingMode.TwoWay
             };
         }
