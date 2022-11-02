@@ -7,6 +7,8 @@ public partial class ServerConfigureView : UserControl
     public ServerConfigureView()
     {
         InitializeComponent();
-        DataContext = new ServerConfigureViewModel();
+
+        // This simple initialization needs to be done in XAML
+        //DataContext = new ServerConfigureViewModel();
     }
 }

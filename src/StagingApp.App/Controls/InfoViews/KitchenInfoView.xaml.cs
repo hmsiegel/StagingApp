@@ -8,6 +8,8 @@ public partial class KitchenInfoView : UserControl
     public KitchenInfoView()
     {
         InitializeComponent();
-        //DataContext = new KitchenInfoViewModel();
+
+        // This simple initialization needs to be done in XAML
+        // DataContext = new KitchenInfoViewModel();
     }
 }

@@ -1,19 +1,18 @@
-﻿<Window x:Class="StagingApp.Main.Views.ShellView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:configureviews="clr-namespace:StagingApp.Main.Controls.ConfigureViews"
-        xmlns:infoviews="clr-namespace:StagingApp.Main.Controls.InfoViews"
-        xmlns:local="clr-namespace:StagingApp.Main.Views"
-        xmlns:controls="clr-namespace:StagingApp.Main.Controls"
-        xmlns:infoVM="clr-namespace:StagingApp.Presentation.ViewModels.InfoViewModels;assembly=StagingApp.Presentation"
-        xmlns:confVM="clr-namespace:StagingApp.Presentation.ViewModels.ConfigureViewModels;assembly=StagingApp.Presentation"
-        mc:Ignorable="d"
-        Background="{StaticResource BackgroundColor}"
-        WindowStyle="ToolWindow"
-        WindowStartupLocation="CenterScreen"
-        Title="TA Staging" Width="1200" SizeToContent="Height">
+﻿<Window 
+    x:Class="StagingApp.Main.Views.ShellView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:StagingApp.Presentation.ViewModels;assembly=StagingApp.Presentation" 
+    mc:Ignorable="d"
+    Background="{StaticResource BackgroundColor}"
+    WindowStyle="ToolWindow"
+    WindowStartupLocation="CenterScreen"
+    Title="TA Staging" Height="800" Width="900">
+    <Window.DataContext>
+        <viewmodels:ShellViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>

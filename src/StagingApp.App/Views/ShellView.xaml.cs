@@ -9,5 +9,8 @@ public partial class ShellView : Window
     public ShellView()
     {
         InitializeComponent();
+
+        // This simple initialization needs to be done in XAML
+        // DataContext = new ShellViewModel();
     }
 }
