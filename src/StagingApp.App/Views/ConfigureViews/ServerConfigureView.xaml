@@ -5,11 +5,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:configureviewmodels="clr-namespace:StagingApp.Presentation.ViewModels.ConfigureViewModels;assembly=StagingApp.Presentation" 
-    d:DataContext="{d:DesignInstance Type=configureviewmodels:ServerConfigureViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="550"
     d:DesignWidth="800"
     Background="{StaticResource BackgroundColor}">
+    <UserControl.DataContext>
+        <configureviewmodels:ServerConfigureViewModel/>
+    </UserControl.DataContext>
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

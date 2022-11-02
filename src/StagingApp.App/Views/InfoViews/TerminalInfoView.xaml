@@ -7,11 +7,13 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:cal="http://www.caliburnproject.org"
     xmlns:infoviewmodels="clr-namespace:StagingApp.Presentation.ViewModels.InfoViewModels;assembly=StagingApp.Presentation" 
-    d:DataContext="{d:DesignInstance Type=infoviewmodels:TerminalInfoViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="550"
     d:DesignWidth="900"
     Background="{StaticResource Blue}">
+    <UserControl.DataContext>
+        <infoviewmodels:TerminalInfoViewModel/>
+    </UserControl.DataContext>
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

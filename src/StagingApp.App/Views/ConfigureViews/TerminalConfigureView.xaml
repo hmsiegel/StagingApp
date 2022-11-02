@@ -17,11 +17,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <d:FrameworkElement.DataContext>
+    <FrameworkElement.DataContext>
         <viewmodels:TerminalConfigureViewModel
             TerminalName="TABLE238_1"
             IpAddress="10.102.238.82" />
-    </d:FrameworkElement.DataContext>
+    </FrameworkElement.DataContext>
 
     <Grid Style="{StaticResource GridStyle}">
         <Grid.ColumnDefinitions>

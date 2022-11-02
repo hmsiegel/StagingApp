@@ -17,7 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <d:FrameworkElement.DataContext>
+    <FrameworkElement.DataContext>
         <viewmodels:KitchenConfigureViewModel
             ControllerName="AK238EXPO"
             ControllerNumber="170"
@@ -25,7 +25,7 @@
             TermStr="TABLE238_"
             BohServerName="ALOHABOH238"
             KeyNumber="123456" />
-    </d:FrameworkElement.DataContext>
+    </FrameworkElement.DataContext>
 
     <Grid Style="{StaticResource GridStyle}">
 

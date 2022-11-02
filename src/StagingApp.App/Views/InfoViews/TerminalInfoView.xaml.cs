@@ -7,6 +7,8 @@ public partial class TerminalInfoView : UserControl
     public TerminalInfoView()
     {
         InitializeComponent();
-        DataContext = new TerminalInfoViewModel();
+
+        // This simple initialization needs to be done in XAML
+        //DataContext = new TerminalInfoViewModel();
     }
 }

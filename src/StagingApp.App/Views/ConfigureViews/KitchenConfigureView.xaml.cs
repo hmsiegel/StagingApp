@@ -7,6 +7,8 @@ public partial class KitchenConfigureView : UserControl
     public KitchenConfigureView()
     {
         InitializeComponent();
-        DataContext = new KitchenConfigureViewModel();
+
+        // This simple initialization needs to be done in XAML
+        //DataContext = new KitchenConfigureViewModel();
     }
 }

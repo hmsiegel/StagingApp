@@ -20,7 +20,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <d:FrameworkElement.DataContext>
+    <FrameworkElement.DataContext>
         <viewmodels:KitchenInfoViewModel
             ControllerName="" 
             ControllerNumber=""
@@ -29,7 +29,7 @@
             TermStr=""
             BohServerName=""
             BohIpAddress="" />
-    </d:FrameworkElement.DataContext>
+    </FrameworkElement.DataContext>
     <Grid Margin="20">
 
         <Grid.ColumnDefinitions>
