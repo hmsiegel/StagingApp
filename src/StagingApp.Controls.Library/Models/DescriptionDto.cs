@@ -1,9 +1,10 @@
 ﻿namespace StagingApp.Controls.Library.Models;
-public class DescriptionDto
+public class DescriptionDto : INotifyPropertyChanged
 {
+
     public DescriptionDto(string? description,
-                          PropertyInfo property,
-                          object? source)
+                              PropertyInfo property,
+                              object? source)
     {
         if (property.GetGetMethod() is not MethodInfo method)
         {
@@ -21,18 +22,42 @@ public class DescriptionDto
         Description = description ?? string.Empty;
         Property = property;
         Source = source;
-        NewValue = property.GetValue(source)?.ToString();
+        RefreshNewValue();
     }
 
     public string? Description { get; }
     public PropertyInfo Property { get; }
     public object? Source { get; }
 
-    public string? NewValue { get; set; }
+    private string? _newValue;
+    public string? NewValue
+    {
+        get => _newValue;
+        set
+        {
+            _newValue = value;
+            PropertyChanged?.Invoke(this, NewValueEventArgs);
+        }
+    }
+    private static readonly PropertyChangedEventArgs NewValueEventArgs = new PropertyChangedEventArgs(nameof(NewValue));
+
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     public DescriptionDto SetSource(object? newSource) =>
         new(Description!, Property, newSource);
 
     public override string ToString() =>
         $"{(string.IsNullOrWhiteSpace(Description) ? string.Empty : $"[{Description}] ")}({Source?.GetType().Name}).{Property.Name}: {NewValue}";
+
+
+    public void RefreshNewValue()
+    {
+        Property.GetValue(Source)?.ToString();
+    }
+
+    public void UpdateProperty()
+    {
+        Property.SetValue(Source, NewValue);
+    }
+
 }

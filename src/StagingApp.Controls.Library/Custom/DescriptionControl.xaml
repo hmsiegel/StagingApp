@@ -6,7 +6,7 @@
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.Labels.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.TextBoxes.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
+    <BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
     <Style TargetType="{x:Type desc:DescriptionControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -15,12 +15,30 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" SharedSizeGroup="DescriptionsColumn"/>
                             <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding DescriptionSource.Description, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                    Style="{StaticResource ConfigureLabelStyle}"/>
                         <TextBox x:Name="PART_TextBox" Grid.Column="1"
                                  Style="{StaticResource ConfigureTextBox}"
                                  IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                        <Button Grid.Column="2" Padding="15 5" 
+                                Command="{x:Static desc:DescriptionControl.Edit}"
+                                Content="{Binding Command.Name, RelativeSource={RelativeSource Self}}"
+                                ToolTip="{Binding Command.Text, RelativeSource={RelativeSource Self}}"
+                                Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource booleanToVisibility}}"/>
+                        <Button Grid.Column="2" Padding="15 5" 
+                                Command="{x:Static desc:DescriptionControl.OK}"
+                                Content="{Binding Command.Name, RelativeSource={RelativeSource Self}}"
+                                ToolTip="{Binding Command.Text, RelativeSource={RelativeSource Self}}"
+                                Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource booleanToVisibility}}"/>
+                        <Button Grid.Column="3" Padding="15 5" 
+                                Command="{x:Static desc:DescriptionControl.Cancel}"
+                                Content="{Binding Command.Name, RelativeSource={RelativeSource Self}}"
+                                ToolTip="{Binding Command.Text, RelativeSource={RelativeSource Self}}"
+                                Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource booleanToVisibility}}"/>
+
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

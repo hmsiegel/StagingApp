@@ -1,7 +1,7 @@
 ﻿namespace StagingApp.Controls.Library.Custom;
 
 [TemplatePart(Name = _textBoxTemplateName, Type = typeof(TextBox))]
-public class DescriptionControl : Control
+public partial class DescriptionControl : Control
 {
     private const string _textBoxTemplateName = "PART_TextBox";
     private TextBox? _partTextBox;
@@ -32,13 +32,17 @@ public class DescriptionControl : Control
         typeof(DescriptionControl),
         new PropertyMetadata(null, DescriptionSourceChangedCallback));
 
+
     private static readonly PropertyPath NewValuePropertyPath = new PropertyPath(typeof(DescriptionDto).GetProperty(nameof(DescriptionDto.NewValue)));
-    
+
     private static void DescriptionSourceChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         DescriptionControl control = (DescriptionControl)d;
+        DescriptionDto description = (DescriptionDto)e.NewValue;
+        control.ProtectedDescriptionSource = description;
+
         Binding? binding = null;
-        if (e.NewValue is DescriptionDto description)
+        if (description is not null)
         {
             binding = new Binding
             {
@@ -51,6 +55,7 @@ public class DescriptionControl : Control
 
         control.SetBindingPartTextBox();
     }
+    protected DescriptionDto? ProtectedDescriptionSource { get; private set; }
 
     private void SetBindingPartTextBox()
     {
@@ -79,5 +84,11 @@ public class DescriptionControl : Control
 
     /// <summary><see cref="DependencyProperty"/> for property <see cref="IsReadOnly"/>.</summary>
     public static readonly DependencyProperty IsReadOnlyProperty =
-        DependencyProperty.Register(nameof(IsReadOnly), typeof(bool), typeof(DescriptionControl), new PropertyMetadata(true));
+        DependencyProperty.Register(
+            nameof(IsReadOnly),
+            typeof(bool),
+            typeof(DescriptionControl),
+            new PropertyMetadata(true, (d, e) => ((DescriptionControl)d).ProtectedIsReadOnly = (bool)e.NewValue));
+
+    protected bool ProtectedIsReadOnly { get; private set; }
 }

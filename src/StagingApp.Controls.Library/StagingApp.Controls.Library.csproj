@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Custom\BoolToVisibleConverter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\StagingApp.Styles\StagingApp.Styling.csproj" />
   </ItemGroup>
 
