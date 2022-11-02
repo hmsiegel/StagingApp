@@ -22,15 +22,12 @@ public class DescriptionDto
         Property = property;
         Source = source;
         NewValue = property.GetValue(source)?.ToString();
-        BindingName = VisibilityBindingName();
     }
 
     public string? Description { get; }
     public PropertyInfo Property { get; }
     public object? Source { get; }
-
     public string? NewValue { get; set; }
-    public string? BindingName { get; }
 
     public DescriptionDto SetSource(object? newSource) =>
         new(Description!, Property, newSource);
@@ -38,6 +35,4 @@ public class DescriptionDto
     public override string ToString() =>
         $"{(string.IsNullOrWhiteSpace(Description) ? string.Empty : $"[{Description}] ")}({Source?.GetType().Name}).{Property.Name}: {NewValue}";
 
-    public string VisibilityBindingName() => 
-        string.IsNullOrWhiteSpace(Description) ? string.Empty : $"Is{Property.Name}EditVisible";
 }

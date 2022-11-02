@@ -50,25 +50,6 @@ public sealed class KitchenInfoViewModel : BaseInfoViewModel
 
     }
 
-    public KitchenInfoViewModel(
-        string? controllerName,
-        string? controllerNumber,
-        string? ipAddress,
-        string? keyNumber,
-        string? termStr,
-        string? bohServerName,
-        string? bohIpAddress,
-        string? message)
-    {
-        ControllerName = controllerName;
-        ControllerNumber = controllerNumber;
-        IpAddress = ipAddress;
-        KeyNumber = keyNumber;
-        TermStr = termStr;
-        BohServerName = bohServerName;
-        BohIpAddress = bohIpAddress;
-        Message = message;
-    }
 
 
     public override void OK()

@@ -1,9 +1,12 @@
-﻿using System.Reflection;
+﻿using StagingApp.Presentation.ViewModels.InfoViewModels;
 
 namespace StagingApp.Main;
+[SupportedOSPlatform("Windows7.0")]
 public sealed class Bootstrapper : BootstrapperBase
 {
     private readonly SimpleContainer _container = new();
+    public const string SettingsFileName = "appsettings.json";
+    public static readonly string SettingsFileFullName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, SettingsFileName);
 
     public Bootstrapper()
     {
@@ -27,6 +30,7 @@ public sealed class Bootstrapper : BootstrapperBase
 
         _container
             .Singleton<IWindowManager, WindowManager>()
+            .Singleton<KitchenInfoViewModel>()
             .Singleton<TerminalConfigureViewModel>()
             .Singleton<KitchenConfigureViewModel>()
             .Singleton<ServerConfigureViewModel>();
@@ -75,7 +79,7 @@ public sealed class Bootstrapper : BootstrapperBase
     {
         IConfigurationBuilder builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", false, false);
+            .AddJsonFile(SettingsFileFullName, false, false);
 
         return builder.Build();
 

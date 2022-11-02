@@ -9,6 +9,6 @@ public partial class ServerInfoView : UserControl
         InitializeComponent();
 
         // This simple initialization needs to be done in XAML
-        DataContext = new ServerInfoViewModel();
+        //DataContext = new ServerInfoViewModel();
     }
 }

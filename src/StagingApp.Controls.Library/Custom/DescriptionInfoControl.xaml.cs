@@ -1,7 +1,7 @@
 ﻿namespace StagingApp.Controls.Library.Custom;
 
 [TemplatePart(Name = _textBoxTemplateName, Type = typeof(TextBox))]
-public class DescriptionInfoControl : Control
+public partial class DescriptionInfoControl : Control
 {
     private const string _textBoxTemplateName = "PART_TextBox";
     private TextBox? _partTextBox;
@@ -55,17 +55,42 @@ public class DescriptionInfoControl : Control
     private static void DescriptionSourceChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         DescriptionInfoControl control = (DescriptionInfoControl)d;
+        DescriptionInfoDto description = (DescriptionInfoDto)e.NewValue;
+        control.ProtectedDescriptionSource = description;
         Binding? binding = null;
-        if (e.NewValue is DescriptionDto description)
+        
+        if (description is not null)
         {
             binding = new Binding
             {
                 Path = _newValuePropertyPath,
-                Source = description.Source,
+                Source = description,
                 Mode = BindingMode.TwoWay
             };
         }
         control._textBinding = binding;
         control.SetBindingPartTextbox();
     }
+
+    protected DescriptionInfoDto? ProtectedDescriptionSource { get; private set; }
+
+
+
+    public bool IsReadOnly
+    {
+        get { return (bool)GetValue(IsReadOnlyProperty); }
+        set { SetValue(IsReadOnlyProperty, value); }
+    }
+
+    protected bool ProtectedIsReadOnly { get; private set; }
+
+    // Using a DependencyProperty as the backing store for IsReadOnly.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty IsReadOnlyProperty =
+        DependencyProperty.Register(
+           nameof(IsReadOnly), 
+           typeof(bool),
+           typeof(DescriptionInfoControl),
+           new PropertyMetadata(true, (d,e) => ((DescriptionInfoControl)d).ProtectedIsReadOnly = (bool)e.NewValue));
+
+
 }
