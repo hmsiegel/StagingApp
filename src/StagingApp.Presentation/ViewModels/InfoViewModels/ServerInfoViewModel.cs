@@ -57,30 +57,30 @@ public sealed class ServerInfoViewModel : BaseInfoViewModel
     }
 
 
-    public override void ToggleButtonVisibility(string parameter, bool isVisible)
-    {
-        switch (parameter)
-        {
-            case nameof(SiteId):
-                IsSiteIdEditVisible = isVisible;
-                break;
-            case nameof(BohServerName):
-                IsBohServerNameEditVisible = isVisible;
-                break;
-            case nameof(KeyNumber):
-                IsKeyNumberEditVisible = isVisible;
-                break;
-            case nameof(IpAddress):
-                IsIpAddressEditVisible = isVisible;
-                break;
-            case nameof(TermStr):
-                IsTermStrEditVisible = isVisible;
-                break;
-            case nameof(NumTerms):
-                IsNumTermsEditVisible = isVisible;
-                break;
-            default:
-                break;
-        }
-    }
+    //public void ToggleButtonVisibility(string parameter, bool isVisible)
+    //{
+    //    switch (parameter)
+    //    {
+    //        case nameof(SiteId):
+    //            IsSiteIdEditVisible = isVisible;
+    //            break;
+    //        case nameof(BohServerName):
+    //            IsBohServerNameEditVisible = isVisible;
+    //            break;
+    //        case nameof(KeyNumber):
+    //            IsKeyNumberEditVisible = isVisible;
+    //            break;
+    //        case nameof(IpAddress):
+    //            IsIpAddressEditVisible = isVisible;
+    //            break;
+    //        case nameof(TermStr):
+    //            IsTermStrEditVisible = isVisible;
+    //            break;
+    //        case nameof(NumTerms):
+    //            IsNumTermsEditVisible = isVisible;
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
 }

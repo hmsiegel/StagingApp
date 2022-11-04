@@ -11,7 +11,7 @@ public sealed class ShellViewModel : Conductor<object>
 	protected override async void OnViewLoaded(object view)
 	{
 		base.OnViewLoaded(view);
-		var viewModel = IoC.Get<KitchenConfigureViewModel>();
+		var viewModel = IoC.Get<KitchenInfoViewModel>();
 		await ActivateItemAsync(viewModel, new CancellationToken());
 	}
 }

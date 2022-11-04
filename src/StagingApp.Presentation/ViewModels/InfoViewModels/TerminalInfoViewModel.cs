@@ -53,24 +53,24 @@ public sealed class TerminalInfoViewModel : BaseInfoViewModel
         throw new NotImplementedException();
     }
 
-    public override void ToggleButtonVisibility(string parameter, bool isVisible)
-    {
-        switch (parameter)
-        {
-            case nameof(TerminalName):
-                IsTemrinalNameEditVisible = isVisible;
-                break;
-            case nameof(TerminalNumber):
-                IsTerminalNumberEditVisible = isVisible;
-                break;
-            case nameof(IpAddress):
-                IsIpAddressEditVisible = isVisible;
-                break;
-            case nameof(Gateway):
-                IsGatewayEditVisible = isVisible;
-                break;
-            default:
-                break;
-        }
-    }
+    //public override void ToggleButtonVisibility(string parameter, bool isVisible)
+    //{
+    //    switch (parameter)
+    //    {
+    //        case nameof(TerminalName):
+    //            IsTemrinalNameEditVisible = isVisible;
+    //            break;
+    //        case nameof(TerminalNumber):
+    //            IsTerminalNumberEditVisible = isVisible;
+    //            break;
+    //        case nameof(IpAddress):
+    //            IsIpAddressEditVisible = isVisible;
+    //            break;
+    //        case nameof(Gateway):
+    //            IsGatewayEditVisible = isVisible;
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
 }

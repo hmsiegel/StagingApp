@@ -7,8 +7,6 @@ public static class EnumServices
             .SelectMany(member => member.GetCustomAttributes(typeof(DescriptionAttribute), true).Cast<DescriptionAttribute>())
             .ToList();
 
-
         return attributes.Select(x => x.Description);
-
     }
 }
