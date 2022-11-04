@@ -5,6 +5,7 @@ namespace StagingApp.Main;
 public sealed class Bootstrapper : BootstrapperBase
 {
     private readonly SimpleContainer _container = new();
+    private const string _viewModel = "ViewModel";
     public const string SettingsFileName = "appsettings.json";
     public static readonly string SettingsFileFullName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, SettingsFileName);
 
@@ -40,7 +41,7 @@ public sealed class Bootstrapper : BootstrapperBase
 
         GetType().Assembly.GetTypes()
             .Where(t => t.IsClass)
-            .Where(t => t.Name.EndsWith("ViewModel"))
+            .Where(t => t.Name.EndsWith(_viewModel))
             .ToList()
             .ForEach(vm => _container.RegisterPerRequest(
                 vm, vm.ToString(), vm));
