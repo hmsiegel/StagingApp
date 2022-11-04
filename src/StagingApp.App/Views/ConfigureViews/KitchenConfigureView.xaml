@@ -54,13 +54,11 @@
         </Label>
 
         <!--Data Row-->
-        <StackPanel
+        <custom:DescriptionsInfoListControl
             Grid.Row="2"
-            Grid.Column="1">
-            <custom:DescriptionsListControl  />
+            Grid.Column="1"/>
 
-        </StackPanel>
-        
+
         <!--Concept Row-->
         <StackPanel
             Style="{StaticResource ConfigureStackPanelStyle}"

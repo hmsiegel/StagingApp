@@ -34,7 +34,7 @@ public partial class DescriptionInfoControl : Control
 		{
 			if (e.Command == CancelEdit)
 			{
-				IsReadOnly = false;
+				IsReadOnly = true;
 				ProtectedDescriptionSource?.RefreshNewValue();
 
 				if (_partTextBox is not null)
