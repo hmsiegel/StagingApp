@@ -35,9 +35,9 @@ public partial class DescriptionInfoControl : Control
             new FrameworkPropertyMetadata(typeof(DescriptionInfoControl)));
     }
 
-    public DescriptionDto DescriptionSource
+    public DescriptionInfoDto DescriptionSource
     {
-        get => (DescriptionDto)GetValue(DescriptionSourceProperty);
+        get => (DescriptionInfoDto)GetValue(DescriptionSourceProperty);
         set => SetValue(DescriptionSourceProperty, value);
     }
 
@@ -45,12 +45,12 @@ public partial class DescriptionInfoControl : Control
     public static readonly DependencyProperty DescriptionSourceProperty =
         DependencyProperty.Register(
         nameof(DescriptionSource),
-        typeof(DescriptionDto),
+        typeof(DescriptionInfoDto),
         typeof(DescriptionInfoControl),
         new PropertyMetadata(null, DescriptionSourceChangedCallback));
 
     private static readonly PropertyPath _newValuePropertyPath =
-        new(typeof(DescriptionDto).GetProperty(nameof(DescriptionDto.NewValue)));
+        new(typeof(DescriptionInfoDto).GetProperty(nameof(DescriptionInfoDto.NewValue)));
 
     private static void DescriptionSourceChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -73,8 +73,6 @@ public partial class DescriptionInfoControl : Control
     }
 
     protected DescriptionInfoDto? ProtectedDescriptionSource { get; private set; }
-
-
 
     public bool IsReadOnly
     {

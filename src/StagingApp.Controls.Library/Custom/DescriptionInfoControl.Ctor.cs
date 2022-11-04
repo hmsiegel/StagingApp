@@ -10,11 +10,11 @@ public partial class DescriptionInfoControl : Control
 		editCommand.CanExecute += OnCanExecute;
 		editCommand.Executed += OnExecuted;
 
-		CommandBinding cancelCommand = new() { Command = Cancel };
+		CommandBinding cancelCommand = new() { Command = CancelEdit };
 		cancelCommand.CanExecute += OnCanExecute;
 		cancelCommand.Executed += OnExecuted;
 
-		CommandBinding okCommand = new() { Command = OK };
+		CommandBinding okCommand = new() { Command = OkEdit };
 		okCommand.CanExecute += OnCanExecute;
 		okCommand.Executed += OnExecuted;
 
@@ -30,9 +30,9 @@ public partial class DescriptionInfoControl : Control
 		{
 			IsReadOnly = false;
 	 	}
-		else if (e.Command == Cancel || e.Command == OK)
+		else if (e.Command == CancelEdit || e.Command == OkEdit)
 		{
-			if (e.Command == Cancel)
+			if (e.Command == CancelEdit)
 			{
 				IsReadOnly = false;
 				ProtectedDescriptionSource?.RefreshNewValue();
@@ -56,7 +56,7 @@ public partial class DescriptionInfoControl : Control
 		{
 			e.CanExecute = ProtectedIsReadOnly;
 		}
-		else if (e.Command == Cancel || e.Command == OK)
+		else if (e.Command == CancelEdit || e.Command == OkEdit)
 		{
 			e.CanExecute = !ProtectedIsReadOnly;
 		}

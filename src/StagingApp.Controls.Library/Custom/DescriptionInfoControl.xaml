@@ -38,14 +38,14 @@
                             Style="{StaticResource DeviceInfoEditButtonStyle}" />
                         <Button
                             Grid.Column="2"
-                            Command="{x:Static desc:DescriptionInfoControl.OK}"
+                            Command="{x:Static desc:DescriptionInfoControl.OkEdit}"
                             Content="{Binding Command.Name, RelativeSource={RelativeSource Self}}"
                             ToolTip="{Binding Command.Text, RelativeSource={RelativeSource Self}}"
                             Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource booleanToVisibility}}"
                             Style="{StaticResource DeviceInfoEditOkButtonStyle}" />
                         <Button
                             Grid.Column="3"
-                            Command="{x:Static desc:DescriptionInfoControl.Cancel}"
+                            Command="{x:Static desc:DescriptionInfoControl.CancelEdit}"
                             Content="{Binding Command.Name, RelativeSource={RelativeSource Self}}"
                             ToolTip="{Binding Command.Text, RelativeSource={RelativeSource Self}}"
                             Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource booleanToVisibility}}"
