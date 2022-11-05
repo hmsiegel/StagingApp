@@ -21,4 +21,8 @@
     <PackageReference Include="Caliburn.Micro.Core" Version="4.0.212" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\InfoModels\" />
+  </ItemGroup>
+
 </Project>

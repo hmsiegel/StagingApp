@@ -1,17 +1,23 @@
-﻿using StagingApp.Presentation.ViewModels.ConfigureViewModels;
+﻿using StagingApp.Domain.EventModels;
+using StagingApp.Presentation.ViewModels.ConfigureViewModels;
 using StagingApp.Presentation.ViewModels.InfoViewModels;
 
 namespace StagingApp.Presentation.ViewModels;
-public sealed class ShellViewModel : Conductor<object>
+public sealed class ShellViewModel : Conductor<object>, IHandle<CloseApplicationEvent>
 {
 	public ShellViewModel()
 	{
 	}
 
-	protected override async void OnViewLoaded(object view)
+	public Task HandleAsync(CloseApplicationEvent message, CancellationToken cancellationToken)
 	{
-		base.OnViewLoaded(view);
-		var viewModel = IoC.Get<KitchenInfoViewModel>();
-		await ActivateItemAsync(viewModel, new CancellationToken());
+		throw new NotImplementedException();
 	}
+
+	//protected override async void OnViewLoaded(object view)
+	//{
+	//	base.OnViewLoaded(view);
+	//	var viewModel = IoC.Get<KitchenInfoViewModel>();
+	//	await ActivateItemAsync(viewModel, new CancellationToken());
+	//}
 }

@@ -6,5 +6,6 @@ global using Caliburn.Micro;
 
 global using StagingApp.Presentation.ViewModels.Base;
 
+global using StagingApp.Domain.Attributes;
 global using StagingApp.Domain.Enums;
 global using StagingApp.Domain.Services;
