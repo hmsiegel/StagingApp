@@ -1,10 +1,13 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/StagingApp.Controls.Library;component/Custom/DescriptionInfoControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/StagingApp.Controls.Library;component/Custom/DescriptionsInfoListControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Controls.Library;component/Custom/DescriptionControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Controls.Library;component/Custom/DescriptionsListControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.Labels.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.TextBoxes.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.TextBlocks.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.StackPanels.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

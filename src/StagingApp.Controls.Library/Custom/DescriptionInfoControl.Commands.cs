@@ -10,13 +10,13 @@ public partial class DescriptionInfoControl : Control
     /// Updates the value of the source property <see cref="DescriptionInfoDto.Property"/> with the value received
     /// from the input field <see cref="DescriptionInfoDto.NewValue"./>
     /// </summary>
-    public static RoutedUICommand OkEdit { get; } = new RoutedUICommand("Accept changes.", nameof(OkEdit), typeof(DescriptionInfoControl));
+    public static RoutedUICommand OkEdit { get; } = new RoutedUICommand("Accept changes.", "OK", typeof(DescriptionInfoControl));
 
     /// <summary>
     /// Returns the value of the input field <see cref="DescriptionDto.NewValue"/>
     /// to the value of the source property <see cref="DescriptionDto.Property"/>
     /// and cancels the edit mode: <see cref="DescriptionControl.IsReadOnly"/> = <see langword="true"/>.
     /// </summary>    
-    public static RoutedUICommand CancelEdit { get; } = new RoutedUICommand("Undo changes and exit edit mode.", nameof(CancelEdit), typeof(DescriptionInfoControl));
+    public static RoutedUICommand CancelEdit { get; } = new RoutedUICommand("Undo changes and exit edit mode.", "Cancel", typeof(DescriptionInfoControl));
 
 }

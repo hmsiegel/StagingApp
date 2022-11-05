@@ -12,6 +12,7 @@ public class KitchenConfigureViewModel : BaseConfigureViewModel
     private ObservableCollection<string>? _concepts;
 
     [Description("CONTROLLER NAME:")]
+    [Sort(SortOrder = 1)]
     public string? ControllerName
     {
         get => _controllerName;
@@ -23,6 +24,7 @@ public class KitchenConfigureViewModel : BaseConfigureViewModel
     }
 
     [Description("CONTROLLER NUMBER:")]
+    [Sort(SortOrder = 2)]
     public string? ControllerNumber
     {
         get => _controllerNumber;
@@ -34,6 +36,7 @@ public class KitchenConfigureViewModel : BaseConfigureViewModel
     }
 
     [Description("TERMSTR:")]
+    [Sort(SortOrder = 3)]
     public string? TermStr
     {
         get => _termStr;
@@ -45,6 +48,7 @@ public class KitchenConfigureViewModel : BaseConfigureViewModel
     }
 
     [Description("BOH SERVER NAME:")]
+    [Sort(SortOrder = 4)]
     public string? BohServerName
     {
         get => _bohServerName;
@@ -56,6 +60,7 @@ public class KitchenConfigureViewModel : BaseConfigureViewModel
     }
 
     [Description("IP ADDRESS:")]
+    [Sort(SortOrder = 5)]
     public string? IpAddress
     {
         get => _ipAddress;
@@ -67,6 +72,7 @@ public class KitchenConfigureViewModel : BaseConfigureViewModel
     }
 
     [Description("KEY NUMBER:")]
+    [Sort(SortOrder = 6)]
     public string? KeyNumber
     {
         get => _keyNumber;

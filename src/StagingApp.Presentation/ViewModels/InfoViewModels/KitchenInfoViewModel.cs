@@ -5,11 +5,8 @@ public sealed class KitchenInfoViewModel : BaseInfoViewModel
     private string? _controllerNumber;
     private string? _bohIpAddress;
 
-    //private bool _isControllerNameEditVisible;
-    //private bool _isControllerNumberEditVisible;
-    //private bool _isBohIpAddressEditVisible;
-
     [Description("CONTROLLER NAME:")]
+    [Sort(SortOrder = 1)]
     public string? ControllerName
     {
         get { return _controllerName; }
@@ -21,6 +18,7 @@ public sealed class KitchenInfoViewModel : BaseInfoViewModel
     }
 
     [Description("CONTROLLER NUMBER:")]
+    [Sort(SortOrder = 2)]
     public string? ControllerNumber
     {
         get { return _controllerNumber; }
@@ -32,6 +30,7 @@ public sealed class KitchenInfoViewModel : BaseInfoViewModel
     }
 
     [Description("BOH IP ADDRESS:")]
+    [Sort(SortOrder = 7)]
     public string? BohIpAddress
     {
         get { return _bohIpAddress; }
@@ -42,68 +41,8 @@ public sealed class KitchenInfoViewModel : BaseInfoViewModel
         }
     }
 
-    //public bool IsControllerNameEditVisible
-    //{
-    //    get { return _isControllerNameEditVisible; }
-    //    set 
-    //    {
-    //        _isControllerNameEditVisible = value;
-    //        NotifyOfPropertyChange(() => IsControllerNameEditVisible);
-    //    }
-    //}
-
-    //public bool IsControllerNumberEditVisible
-    //{
-    //    get { return _isControllerNumberEditVisible; }
-    //    set 
-    //    {
-    //        _isControllerNumberEditVisible = value;
-    //        NotifyOfPropertyChange(() => IsControllerNumberEditVisible);
-    //    }
-    //}
-
-    //public bool IsBohIpAddressEditVisible
-    //{
-    //    get { return _isBohIpAddressEditVisible; }
-    //    set 
-    //    {
-    //        _isBohIpAddressEditVisible = value;
-    //        NotifyOfPropertyChange(() => IsBohIpAddressEditVisible);
-    //    }
-    //}
-
     public override void OK()
     {
         throw new NotImplementedException();
     }
-
-    //public override void ToggleButtonVisibility(string parameter, bool isVisible)
-    //{
-    //    switch (parameter)
-    //    {
-    //        case nameof(ControllerName):
-    //            IsControllerNameEditVisible = isVisible;
-    //            break;
-    //        case nameof(BohServerName):
-    //            IsBohServerNameEditVisible = isVisible;
-    //            break;
-    //        case nameof(KeyNumber):
-    //            IsKeyNumberEditVisible = isVisible;
-    //            break;
-    //        case nameof(IpAddress):
-    //            IsIpAddressEditVisible = isVisible;
-    //            break;
-    //        case nameof(TermStr):
-    //            IsTermStrEditVisible = isVisible;
-    //            break;
-    //        case nameof(ControllerNumber):
-    //            IsControllerNumberEditVisible = isVisible;
-    //            break;
-    //        case nameof(BohIpAddress):
-    //            IsBohIpAddressEditVisible = isVisible;
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
 }

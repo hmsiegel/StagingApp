@@ -10,17 +10,21 @@ public class DescriptionPropertyList
         if (!_typeDescriptions.TryGetValue(sourceType, out ReadOnlyCollection<(string description, PropertyInfo property)>? descriptions))
         {
             var properties = new List<PropertyInfo>(sourceType.GetProperties(BindingFlags.Instance | BindingFlags.Public));
-            List<(string description, PropertyInfo property)> descrType = new(properties.Count);
+            var sortedProperties = properties.OrderByDescending(x => x.GetCustomAttribute<SortAttribute>() == null ? -1 :
+                    x.GetCustomAttribute<SortAttribute>()?.SortOrder).ToList();
+            List<(string description, PropertyInfo property)> descrType = new(sortedProperties.Count);
             {
-                for (int i = properties.Count - 1; i >= 0; i--)
+                for (int i = sortedProperties.Count - 1; i >= 0; i--)
                 {
-                    PropertyInfo property = properties[i];
+                    PropertyInfo property = sortedProperties[i];
                     var descr = property.GetCustomAttribute<DescriptionAttribute>();
                     if (descr is null)
+                    {
                         continue;
+                    }
 
                     descrType.Add((descr.Description, property));
-                    properties.RemoveAt(i);
+                    sortedProperties.RemoveAt(i);
                 }
             }
             {
@@ -30,14 +34,19 @@ public class DescriptionPropertyList
                     FieldInfo fieled = fields[i];
                     var descr = fieled.GetCustomAttribute<DescriptionAttribute>();
                     if (descr is null)
+                    {
                         continue;
+                    }
+
                     string fieldName = fields[i].Name.Trim('_');
 
-                    if (properties.Find(pr => pr.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase)) is not PropertyInfo property)
+                    if (sortedProperties.Find(pr => pr.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase)) is not PropertyInfo property)
+                    {
                         continue;
+                    }
 
                     descrType.Add((descr.Description, property));
-                    properties.Remove(property);
+                    sortedProperties.Remove(property);
                 }
             }
 

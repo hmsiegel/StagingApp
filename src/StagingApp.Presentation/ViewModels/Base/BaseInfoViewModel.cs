@@ -10,12 +10,8 @@ public abstract class BaseInfoViewModel : Screen
     private string? _numTerms;
     private string? _termStr;
 
-    //private bool _isIpAddressEditVisible;
-    //private bool _isKeyNumberEditVisible;
-    //private bool _isTermStrEditVisible;
-    //private bool _isBohServerNameEditVisible;
-
     [Description("IP ADDRESS:")]
+    [Sort(SortOrder = 3)]
     public string? IpAddress
     {
         get { return _ipAddress; }
@@ -27,6 +23,7 @@ public abstract class BaseInfoViewModel : Screen
     }
 
     [Description("BOH SERVER NAME:")]
+    [Sort(SortOrder = 6)]
     public string? BohServerName
     {
         get { return _bohServerName; }
@@ -38,6 +35,7 @@ public abstract class BaseInfoViewModel : Screen
     }
 
     [Description("KEY NUMBER")]
+    [Sort(SortOrder = 3)]
     public string? KeyNumber
     {
         get { return _keyNumber; }
@@ -49,6 +47,7 @@ public abstract class BaseInfoViewModel : Screen
     }
 
     [Description("NUMTERMS:")]
+    [Sort(SortOrder = 4)]
     public string? NumTerms
     {
         get { return _numTerms; }
@@ -60,6 +59,7 @@ public abstract class BaseInfoViewModel : Screen
     }
 
     [Description("TERMSTR:")]
+    [Sort(SortOrder = 5)]
     public string? TermStr
     {
         get { return _termStr; }
@@ -70,68 +70,9 @@ public abstract class BaseInfoViewModel : Screen
         }
     }
 
-
-    //public bool IsIpAddressEditVisible
-    //{
-    //    get { return _isIpAddressEditVisible; }
-    //    set 
-    //    {
-    //        _isIpAddressEditVisible = value;
-    //        NotifyOfPropertyChange(() => IsIpAddressEditVisible);
-    //    }
-    //}
-
-    //public bool IsKeyNumberEditVisible
-    //{
-    //    get { return _isKeyNumberEditVisible; }
-    //    set 
-    //    {
-    //        _isKeyNumberEditVisible = value;
-    //        NotifyOfPropertyChange(() => IsKeyNumberEditVisible);
-    //    }
-    //}
-
-    //public bool IsTermStrEditVisible
-    //{
-    //    get { return _isTermStrEditVisible; }
-    //    set 
-    //    {
-    //        _isTermStrEditVisible = value;
-    //        NotifyOfPropertyChange(() => IsTermStrEditVisible);
-    //    }
-    //}
-
-    //public bool IsBohServerNameEditVisible
-    //{
-    //    get { return _isBohServerNameEditVisible; }
-    //    set 
-    //    {
-    //        _isBohServerNameEditVisible = value;
-    //        NotifyOfPropertyChange(() => IsBohServerNameEditVisible);
-    //    }
-    //}
-
     public abstract void OK();
     public void Cancel()
     {
         TryCloseAsync();
     }
-
-    //public void Edit(string parameter)
-    //{
-    //    bool isVisible = true;
-    //    ToggleButtonVisibility(parameter, isVisible);
-    //}
-    //public void OkEdit(string parameter)
-    //{
-    //    bool isVisible = false;
-    //    ToggleButtonVisibility(parameter, isVisible);
-    //}
-    //public void CancelEdit(string parameter)
-    //{
-    //    bool isVisible = false;
-    //    ToggleButtonVisibility(parameter, isVisible);
-    //}
-
-    //public abstract void ToggleButtonVisibility(string parameter, bool isVisible);
 }

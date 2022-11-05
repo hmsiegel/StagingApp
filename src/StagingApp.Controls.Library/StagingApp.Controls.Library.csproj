@@ -12,6 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\StagingApp.Domain\StagingApp.Domain.csproj" />
 		<ProjectReference Include="..\StagingApp.Styles\StagingApp.Styling.csproj" />
 	</ItemGroup>
 

@@ -77,7 +77,8 @@
         <!-- Data -->
         <StackPanel
             Grid.Row="2"
-            Grid.Column="1">
+            Grid.Column="0"
+            Grid.ColumnSpan="4">
             <custom:DescriptionsInfoListControl />
         </StackPanel>
 
