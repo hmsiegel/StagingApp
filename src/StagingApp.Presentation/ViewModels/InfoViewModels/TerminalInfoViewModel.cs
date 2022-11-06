@@ -1,46 +1,57 @@
 ﻿namespace StagingApp.Presentation.ViewModels.InfoViewModels;
-public sealed class TerminalInfoViewModel : BaseInfoViewModel
+public sealed class TerminalInfoViewModel : Screen
 {
-    [Description("Terminal Name:")]
-    public string? TerminalName { get; set; }
+    private string? _terminalName;
+    private string? _terminalNumber;
+    private string? _gateway;
+    private string? _ipAddress;
 
-    [Description("Terminal Number:")]
-    public string? TerminalNumber { get; set; }
-
-    [Description("Gateay:")]
-    public string? Gateway { get; set; }
-
-
-    private bool _isTerminalNameEditVisible;
-
-    public bool IsTemrinalNameEditVisible
+    [Description("TERMINAL NAME:")]
+    [Sort(SortOrder = 1)]
+    public string? TerminalName
     {
-        get { return _isTerminalNameEditVisible; }
+        get => _terminalName;
         set
         {
-            _isTerminalNameEditVisible = value;
-            NotifyOfPropertyChange(() => IsTemrinalNameEditVisible);
+            _terminalName = value;
+            NotifyOfPropertyChange(() => TerminalName);
         }
     }
 
-    private bool _isTerminalNumberEditVisible;
-
-    public bool IsTerminalNumberEditVisible
+    [Description("TERMINAL NUMBER:")]
+    [Sort(SortOrder = 2)]
+    public string? TerminalNumber
     {
-        get { return _isTerminalNumberEditVisible; }
+        get => _terminalNumber;
         set
         {
-            _isTerminalNumberEditVisible = value;
-            NotifyOfPropertyChange(() => IsTerminalNumberEditVisible);
+            _terminalNumber = value;
+            NotifyOfPropertyChange(() => TerminalNumber);
         }
     }
 
-    private bool _isGatewayEditVisible;
-
-    public bool IsGatewayEditVisible
+    [Description("GATEWAY:")]
+    [Sort(SortOrder = 4)]
+    public string? Gateway
     {
-        get { return _isGatewayEditVisible; }
-        set { _isGatewayEditVisible = value; }
+        get => _gateway;
+        set
+        {
+            _gateway = value;
+            NotifyOfPropertyChange(() => Gateway);
+        }
+    }
+
+    [Description("IP ADDRESS:")]
+    [Sort(SortOrder = 3)]
+    public string? IpAddress
+    {
+        get => _ipAddress;
+        set
+        {
+            _ipAddress = value;
+            NotifyOfPropertyChange(() => IpAddress);
+        }
     }
 
     public TerminalInfoViewModel()
@@ -48,29 +59,12 @@ public sealed class TerminalInfoViewModel : BaseInfoViewModel
 
     }
 
-    public override void OK()
+    public void OK()
     {
         throw new NotImplementedException();
     }
-
-    //public override void ToggleButtonVisibility(string parameter, bool isVisible)
-    //{
-    //    switch (parameter)
-    //    {
-    //        case nameof(TerminalName):
-    //            IsTemrinalNameEditVisible = isVisible;
-    //            break;
-    //        case nameof(TerminalNumber):
-    //            IsTerminalNumberEditVisible = isVisible;
-    //            break;
-    //        case nameof(IpAddress):
-    //            IsIpAddressEditVisible = isVisible;
-    //            break;
-    //        case nameof(Gateway):
-    //            IsGatewayEditVisible = isVisible;
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
+    public void Cancel()
+    {
+        throw new NotImplementedException();
+    }
 }

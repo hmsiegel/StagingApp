@@ -117,10 +117,6 @@
                             Focusable="False"
                             HorizontalScrollBarVisibility="Hidden"
                             VerticalScrollBarVisibility="Hidden" />
-                        <!--<ContentPresenter
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Content="{TemplateBinding Text}"/>-->
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

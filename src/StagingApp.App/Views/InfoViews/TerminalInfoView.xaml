@@ -6,14 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:cal="http://www.caliburnproject.org"
+    xmlns:custom="clr-namespace:StagingApp.Controls.Library.Custom;assembly=StagingApp.Controls.Library"
     xmlns:infoviewmodels="clr-namespace:StagingApp.Presentation.ViewModels.InfoViewModels;assembly=StagingApp.Presentation" 
     mc:Ignorable="d" 
     d:DesignHeight="550"
     d:DesignWidth="900"
     Background="{StaticResource Blue}">
-    <UserControl.DataContext>
-        <infoviewmodels:TerminalInfoViewModel/>
-    </UserControl.DataContext>
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,6 +19,13 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+    <FrameworkElement.DataContext>
+        <infoviewmodels:TerminalInfoViewModel
+            TerminalName=""
+            TerminalNumber=""
+            IpAddress=""
+            Gateway="" />
+    </FrameworkElement.DataContext>
     <Grid Margin="20">
 
         <Grid.ColumnDefinitions>
@@ -31,12 +36,6 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -66,262 +65,12 @@
         </TextBlock>
 
         <!-- Data -->
-        <!-- Terminal Name -->
         <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
-                Grid.Row="2"
-                Grid.Column="1">
-            <Label
-                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
-                TERMINAL NAME:
-            </Label>
-            <TextBox
-                x:Name="TerminalName"
-                Text="TABLE180_1"
-                Style="{StaticResource DeviceInfoTextBoxStyle}" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel
-                    Orientation="Horizontal"
-                    Grid.Column="0">
-                    <Button
-                        Visibility="{Binding IsTemrinalNameEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
-                        Style="{StaticResource DeviceInfoEditButtonStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="Edit">
-                                    <cal:Parameter Value="TerminalName" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        EDIT
-                    </Button>
-                </StackPanel>
-                <StackPanel
-                    Orientation="Horizontal"
-                    Grid.Column="0"
-                    Visibility="{Binding IsTemrinalNameEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
-                    <Button
-                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="OkEdit">
-                                    <cal:Parameter Value="TerminalName" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        OK
-                    </Button>
-                    <Button
-                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="CancelEdit">
-                                    <cal:Parameter Value="TerminalName" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        CANCEL
-                    </Button>
-                </StackPanel>
-            </Grid>
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="4">
+            <custom:DescriptionsInfoListControl />
         </StackPanel>
-
-        <!-- Terminal Number -->
-        <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
-                Grid.Row="3"
-                Grid.Column="1">
-            <Label
-                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
-                TERMINAL NUMBER:
-            </Label>
-            <TextBox
-                x:Name="TerminalNumber"
-                Text="1"
-                Style="{StaticResource DeviceInfoTextBoxStyle}" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel
-                    Orientation="Horizontal"
-                    Grid.Column="0">
-                    <Button
-                        Visibility="{Binding IsTerminalNumberEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
-                        Style="{StaticResource DeviceInfoEditButtonStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="Edit">
-                                    <cal:Parameter Value="TerminalNumber" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        EDIT
-                    </Button>
-                </StackPanel>
-                <StackPanel
-                    Orientation="Horizontal"
-                    Grid.Column="0"
-                    Visibility="{Binding IsTerminalNumberEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
-                    <Button
-                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="OkEdit">
-                                    <cal:Parameter Value="TerminalNumber" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        OK
-                    </Button>
-                    <Button
-                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="CancelEdit">
-                                    <cal:Parameter Value="TerminalNumber" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        CANCEL
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </StackPanel>
-
-        <!-- IP Address-->
-        <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
-                Grid.Row="4"
-                Grid.Column="1">
-            <Label
-                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
-                IP ADDRESS:
-            </Label>
-            <TextBox
-                x:Name="IpAddress"
-                Text="10.102.180.82"
-                Style="{StaticResource DeviceInfoTextBoxStyle}" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel
-                    Orientation="Horizontal"
-                    Grid.Column="0">
-                    <Button
-                        Visibility="{Binding IsIpAddressEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
-                        Style="{StaticResource DeviceInfoEditButtonStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="Edit">
-                                    <cal:Parameter Value="IpAddress" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        EDIT
-                    </Button>
-                </StackPanel>
-                <StackPanel
-                    Orientation="Horizontal"
-                    Grid.Column="0"
-                    Visibility="{Binding IsIpAddressEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
-                    <Button
-                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="OkEdit">
-                                    <cal:Parameter Value="IpAddress" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        OK
-                    </Button>
-                    <Button
-                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="CancelEdit">
-                                    <cal:Parameter Value="IpAddress" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        CANCEL
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </StackPanel>
-
-        <!-- Gateway -->
-        <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
-                Grid.Row="5"
-                Grid.Column="1">
-            <Label
-                Style="{StaticResource DeviceInfoPropertyLabelStyle}">
-                GATEWAY:
-            </Label>
-            <TextBox
-                x:Name="Gateway"
-                Text="10.102.180.1"
-                Style="{StaticResource DeviceInfoTextBoxStyle}" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel
-                    Orientation="Horizontal"
-                    Grid.Column="0">
-                    <Button
-                        Visibility="{Binding IsGatewayEditVisible, Converter={StaticResource BoolToVisConverter}, FallbackValue=Visible}"
-                        Style="{StaticResource DeviceInfoEditButtonStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="Edit">
-                                    <cal:Parameter Value="Gateway" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        EDIT
-                    </Button>
-                </StackPanel>
-                <StackPanel
-                    Orientation="Horizontal"
-                    Grid.Column="0"
-                    Visibility="{Binding IsGatewayEditVisible, Converter={StaticResource BoolToVisConverter}, ConverterParameter=Inverse, FallbackValue=Hidden}">
-                    <Button
-                        Style="{StaticResource DeviceInfoEditOkButtonStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="OkEdit">
-                                    <cal:Parameter Value="Gateway" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        OK
-                    </Button>
-                    <Button
-                        Style="{StaticResource DeviceInfoEditCancelButtonStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="CancelEdit">
-                                    <cal:Parameter Value="SiteId" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        CANCEL
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </StackPanel>
-
 
         <!-- Buttons -->
         <StackPanel

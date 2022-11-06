@@ -8,7 +8,6 @@
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.Buttons.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StagingApp.Styling;component/Styles/Staging.StackPanels.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    <BooleanToVisibilityConverter x:Key="booleanToVisibility" />
     <Style TargetType="{x:Type desc:DescriptionInfoControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -25,7 +24,7 @@
                             IsReadOnly="{TemplateBinding IsReadOnly}"
                             Style="{StaticResource DeviceInfoTextBoxStyle}" />
                         <Grid
-                            Margin="60 0">
+                            Margin="10 0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
@@ -36,7 +35,6 @@
                                     Command="{x:Static desc:DescriptionInfoControl.Edit}"
                                     Content="{Binding Command.Name, RelativeSource={RelativeSource Self}}"
                                     ToolTip="{Binding Command.Text, RelativeSource={RelativeSource Self}}"
-                                    Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource booleanToVisibility}}"
                                     Style="{StaticResource DeviceInfoEditButtonStyle}" />
                             </StackPanel>
                             <StackPanel
@@ -46,13 +44,11 @@
                                     Command="{x:Static desc:DescriptionInfoControl.OkEdit}"
                                     Content="{Binding Command.Name, RelativeSource={RelativeSource Self}}"
                                     ToolTip="{Binding Command.Text, RelativeSource={RelativeSource Self}}"
-                                    Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource booleanToVisibility}}"
                                     Style="{StaticResource DeviceInfoEditOkButtonStyle}" />
                                 <Button
                                     Command="{x:Static desc:DescriptionInfoControl.CancelEdit}"
                                     Content="{Binding Command.Name, RelativeSource={RelativeSource Self}}"
                                     ToolTip="{Binding Command.Text, RelativeSource={RelativeSource Self}}"
-                                    Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource booleanToVisibility}}"
                                     Style="{StaticResource DeviceInfoEditCancelButtonStyle}" />
                             </StackPanel>
                         </Grid>

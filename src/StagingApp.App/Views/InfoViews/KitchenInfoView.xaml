@@ -43,14 +43,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!-- Title -->
@@ -86,7 +78,7 @@
         <StackPanel
             Style="{StaticResource EditButtonStackPanelStyle}"
             Margin="0 20 0 0"
-            Grid.Row="9"
+            Grid.Row="3"
             Grid.Column="1"
             Grid.ColumnSpan="2">
 

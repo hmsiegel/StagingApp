@@ -16,6 +16,6 @@
     </Window.DataContext>
     <Grid>
         <!--<ContentControl x:Name="ActiveItem" />-->
-        <info:KitchenInfoView />
+        <info:TerminalInfoView />
     </Grid>
 </Window>

@@ -1,4 +1,6 @@
-﻿namespace StagingApp.Presentation.ViewModels.InfoViewModels;
+﻿using StagingApp.Domain.Attributes;
+
+namespace StagingApp.Presentation.ViewModels.InfoViewModels;
 public sealed class KitchenInfoViewModel : BaseInfoViewModel
 {
     private string? _controllerName;
@@ -10,7 +12,7 @@ public sealed class KitchenInfoViewModel : BaseInfoViewModel
     public string? ControllerName
     {
         get { return _controllerName; }
-        set 
+        set
         {
             _controllerName = value;
             NotifyOfPropertyChange(() => ControllerName);
@@ -22,7 +24,7 @@ public sealed class KitchenInfoViewModel : BaseInfoViewModel
     public string? ControllerNumber
     {
         get { return _controllerNumber; }
-        set 
+        set
         {
             _controllerNumber = value;
             NotifyOfPropertyChange(() => ControllerNumber);
@@ -34,7 +36,7 @@ public sealed class KitchenInfoViewModel : BaseInfoViewModel
     public string? BohIpAddress
     {
         get { return _bohIpAddress; }
-        set 
+        set
         {
             _bohIpAddress = value;
             NotifyOfPropertyChange(() => BohIpAddress);

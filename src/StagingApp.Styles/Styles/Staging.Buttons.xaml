@@ -52,8 +52,17 @@
         </Setter>
     </Style>
 
+    <!-- Button Style Assigning Visibility="Hidden" if IsEnabled="False"-->
+    <Style TargetType="Button" x:Key="DisabledToHiddenButtonStyle">
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Visibility" Value="Hidden" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!-- Info Edit Button Style -->
-    <Style TargetType="Button" x:Key="DeviceInfoEditButtonStyle">
+    <Style TargetType="Button" x:Key="DeviceInfoEditButtonStyle" BasedOn="{StaticResource DisabledToHiddenButtonStyle}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
         <Setter Property="Margin" Value="25 10 10 10" />
         <Setter Property="Width" Value="100" />
@@ -121,7 +130,7 @@
     </Style>
 
     <!-- Info Cancel Button Style -->
-    <Style TargetType="Button" x:Key="DeviceInfoCancelButtonStyle" BasedOn="{StaticResource DeviceInfoOkButtonStyle}">
+    <Style TargetType="Button" x:Key="DeviceInfoCancelButtonStyle" BasedOn="{StaticResource DeviceInfoEditButtonStyle}">
         <Setter Property="Background" Value="{StaticResource Red}" />
         <Setter Property="Width" Value="150" />
         <Setter Property="Template">
