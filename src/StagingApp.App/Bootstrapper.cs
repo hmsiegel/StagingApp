@@ -1,18 +1,49 @@
-﻿using StagingApp.Presentation.ViewModels.InfoViewModels;
-
-namespace StagingApp.Main;
+﻿namespace StagingApp.Main;
 [SupportedOSPlatform("Windows7.0")]
 public sealed class Bootstrapper : BootstrapperBase
 {
     private readonly SimpleContainer _container = new();
     private const string _viewModel = "ViewModel";
+    private const string _deviceType = "DeviceType";
     public const string SettingsFileName = "appsettings.json";
+    private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
     public static readonly string SettingsFileFullName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, SettingsFileName);
 
     public Bootstrapper()
     {
         Initialize();
         LogManager.GetLog = type => new DebugLog(type);
+
+        if (!Directory.Exists(GlobalConfig.ScriptPath))
+        {
+            Directory.CreateDirectory(GlobalConfig.ScriptPath);
+        }
+
+        UpdateLogConfig();
+
+        _logger.Info("********************************************************************");
+        _logger.Info("Starting application.");
+        _logger.Info("Current logged in user: {user}", WindowsIdentity.GetCurrent().Name);
+    }
+
+    private static void UpdateLogConfig()
+    {
+        string? deviceType = StagingHelper.DetermineDeviceType();
+
+        switch (deviceType)
+        {
+            case var type when type.Equals(DeviceType.Server.ToString()):
+                GlobalDiagnosticsContext.Set(_deviceType, StagingRegistryKey.ServerStaging.ToString());
+                break;
+            case var type when type.Equals(DeviceType.Terminal.ToString()):
+                GlobalDiagnosticsContext.Set(_deviceType, StagingRegistryKey.TerminalStaging.ToString());
+                break;
+            case var type when type.Equals(DeviceType.Kitchen.ToString()):
+                GlobalDiagnosticsContext.Set(_deviceType, StagingRegistryKey.AKStaging.ToString());
+                break;
+            default:
+                break;
+        }
     }
 
     protected override void Configure()
@@ -31,7 +62,7 @@ public sealed class Bootstrapper : BootstrapperBase
 
         _container
             .Singleton<IWindowManager, WindowManager>()
-            .Singleton<KitchenInfoViewModel>()
+            .Singleton<IEventAggregator, EventAggregator>()
             .Singleton<TerminalConfigureViewModel>()
             .Singleton<KitchenConfigureViewModel>()
             .Singleton<ServerConfigureViewModel>();
