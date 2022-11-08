@@ -8,7 +8,7 @@ public static class GlobalConfig
     /// <summary>
     /// The name of the computer that the application is being run on.
     /// </summary>
-    public static string? ComputerName { get; set; } = Environment.MachineName;
+    public static string ComputerName { get; set; } = Environment.MachineName;
 
     /// <summary>
     /// The name of the application.

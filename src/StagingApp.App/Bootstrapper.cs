@@ -1,8 +1,12 @@
-﻿namespace StagingApp.Main;
+﻿using Autofac;
+
+namespace StagingApp.Main;
 [SupportedOSPlatform("Windows7.0")]
 public sealed class Bootstrapper : BootstrapperBase
 {
     private readonly SimpleContainer _container = new();
+    private readonly IContainer _autofacContainer;
+    private const string _applicationPrefix = "StagingApp";
     private const string _viewModel = "ViewModel";
     private const string _deviceType = "DeviceType";
     public const string SettingsFileName = "appsettings.json";
@@ -26,26 +30,6 @@ public sealed class Bootstrapper : BootstrapperBase
         _logger.Info("Current logged in user: {user}", WindowsIdentity.GetCurrent().Name);
     }
 
-    private static void UpdateLogConfig()
-    {
-        string? deviceType = DeviceTypeHelper.DetermineDeviceType();
-
-        switch (deviceType)
-        {
-            case var type when type.Equals(DeviceType.Server.ToString()):
-                GlobalDiagnosticsContext.Set(_deviceType, StagingRegistryKey.ServerStaging.ToString());
-                break;
-            case var type when type.Equals(DeviceType.Terminal.ToString()):
-                GlobalDiagnosticsContext.Set(_deviceType, StagingRegistryKey.TerminalStaging.ToString());
-                break;
-            case var type when type.Equals(DeviceType.Kitchen.ToString()):
-                GlobalDiagnosticsContext.Set(_deviceType, StagingRegistryKey.AKStaging.ToString());
-                break;
-            default:
-                // Throw Exception
-                break;
-        }
-    }
 
     protected override void Configure()
     {
@@ -124,6 +108,26 @@ public sealed class Bootstrapper : BootstrapperBase
 
         return assemblies;
     }
+    private static void UpdateLogConfig()
+    {
+        string deviceType = DeviceTypeHelper.DetermineDeviceType();
+
+        switch (deviceType)
+        {
+            case var type when type.Equals(DeviceType.Server.ToString()):
+                GlobalDiagnosticsContext.Set(_deviceType, StagingRegistryKey.ServerStaging.ToString());
+                break;
+            case var type when type.Equals(DeviceType.Terminal.ToString()):
+                GlobalDiagnosticsContext.Set(_deviceType, StagingRegistryKey.TerminalStaging.ToString());
+                break;
+            case var type when type.Equals(DeviceType.Kitchen.ToString()):
+                GlobalDiagnosticsContext.Set(_deviceType, StagingRegistryKey.AKStaging.ToString());
+                break;
+            default:
+                // Throw Exception
+                break;
+        }
+    }
     private static IConfiguration AddConfiguration()
     {
         IConfigurationBuilder builder = new ConfigurationBuilder()
@@ -141,7 +145,7 @@ public sealed class Bootstrapper : BootstrapperBase
         return principal.IsInRole(WindowsBuiltInRole.Administrator);
     }
 
-    private void RestartApplicationAsAdministrator(string? exeName)
+    private void RestartApplicationAsAdministrator(string exeName)
     {
         ProcessStartInfo startInfo = new(exeName)
         {

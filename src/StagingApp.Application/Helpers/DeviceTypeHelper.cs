@@ -1,7 +1,7 @@
 ﻿namespace StagingApp.Application.Helpers;
 public static class DeviceTypeHelper
 {
-    public static bool IsThisATerminal(string? computerName)
+    public static bool IsThisATerminal(string computerName)
     {
         List<string> termPrefixes = Enum.GetNames(typeof(TermPrefix))
             .Cast<string>()
@@ -14,7 +14,7 @@ public static class DeviceTypeHelper
 
         return pattern.IsMatch(computerName);
     }
-    public static string? DetermineDeviceType()
+    public static string DetermineDeviceType()
     {
         string? computerName = GlobalConfig.ComputerName;
         string? stagingMarkerFile = Directory.GetFiles(
@@ -34,7 +34,7 @@ public static class DeviceTypeHelper
         return stagingViewModelName;
     }
 
-    private static string? CheckComputerName(string? computerName)
+    private static string? CheckComputerName(string computerName)
     {
         List<string> termPrefixes = Enum.GetValues(typeof(TermPrefix))
             .Cast<TermPrefix>()
