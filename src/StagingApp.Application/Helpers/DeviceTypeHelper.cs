@@ -3,9 +3,9 @@ public static class DeviceTypeHelper
 {
     public static bool IsThisATerminal(string? computerName)
     {
-        List<string?> termPrefixes = Enum.GetNames(typeof(TermPrefix))
+        List<string> termPrefixes = Enum.GetNames(typeof(TermPrefix))
             .Cast<string>()
-            .Select(x => x.ToString()
+            .Select(x => x.ToString())
             .ToList();
 
         IEnumerable<string?> escapedWords = termPrefixes
