@@ -1,5 +1,5 @@
 ﻿namespace StagingApp.Application.Helpers;
-public static class StagingHelper
+public static class DeviceTypeHelper
 {
     public static bool IsThisATerminal(string? computerName)
     {
@@ -43,7 +43,7 @@ public static class StagingHelper
 
         string? stagingViewModel = string.Empty;
 
-        if (StagingHelper.IsThisATerminal(computerName))
+        if (DeviceTypeHelper.IsThisATerminal(computerName))
         {
             stagingViewModel = DeviceType.Terminal.ToString();
         }

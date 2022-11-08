@@ -18,7 +18,7 @@ public sealed class ShellViewModel : Conductor<object>, IHandle<CloseApplication
     protected override async void OnViewLoaded(object view)
     {
         base.OnViewLoaded(view);
-        string? viewModelName = StagingHelper.DetermineDeviceType();
+        string? viewModelName = DeviceTypeHelper.DetermineDeviceType();
 
         if (viewModelName == null)
         {

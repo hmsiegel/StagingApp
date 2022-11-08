@@ -28,7 +28,7 @@ public sealed class Bootstrapper : BootstrapperBase
 
     private static void UpdateLogConfig()
     {
-        string? deviceType = StagingHelper.DetermineDeviceType();
+        string? deviceType = DeviceTypeHelper.DetermineDeviceType();
 
         switch (deviceType)
         {
@@ -42,6 +42,7 @@ public sealed class Bootstrapper : BootstrapperBase
                 GlobalDiagnosticsContext.Set(_deviceType, StagingRegistryKey.AKStaging.ToString());
                 break;
             default:
+                // Throw Exception
                 break;
         }
     }
@@ -81,7 +82,23 @@ public sealed class Bootstrapper : BootstrapperBase
 
     protected override async void OnStartup(object sender, StartupEventArgs e)
     {
-        await DisplayRootViewForAsync(typeof(ShellViewModel));
+        _logger.Info("Checking if the application is running as an administrator...");
+
+        bool isAdmin = IsAdmin();
+
+        if (isAdmin == false)
+        {
+            _logger.Info("Application is not running as administrator. Restarting application as administrator...");
+            string? exeName = Environment.ProcessPath;
+            RestartApplicationAsAdministrator(exeName);
+            return;
+        }
+        else
+        {
+            _logger.Info("Application is running as administrator.");
+            await DisplayRootViewForAsync<ShellViewModel>();
+        }
+
     }
 
     protected override object GetInstance(Type service, string key)
@@ -115,5 +132,25 @@ public sealed class Bootstrapper : BootstrapperBase
 
         return builder.Build();
 
+    }
+
+    private static bool IsAdmin()
+    {
+        WindowsIdentity identity = WindowsIdentity.GetCurrent();
+        WindowsPrincipal principal = new(identity);
+        return principal.IsInRole(WindowsBuiltInRole.Administrator);
+    }
+
+    private void RestartApplicationAsAdministrator(string? exeName)
+    {
+        ProcessStartInfo startInfo = new(exeName)
+        {
+            UseShellExecute = true,
+            WorkingDirectory = Environment.CurrentDirectory,
+            FileName = exeName,
+            Verb = "runas"
+        };
+        Process.Start(startInfo);
+        Application.Shutdown();
     }
 }
