@@ -4,8 +4,8 @@ global using System.Reflection;
 
 global using Caliburn.Micro;
 global using NLog;
+global using Autofac;
 
-global using StagingApp.Application;
 global using StagingApp.Application.Helpers;
 
 global using StagingApp.Presentation.ViewModels.Base;

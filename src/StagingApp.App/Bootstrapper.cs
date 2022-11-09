@@ -1,17 +1,19 @@
-﻿using Autofac;
-
-namespace StagingApp.Main;
+﻿namespace StagingApp.Main;
 [SupportedOSPlatform("Windows7.0")]
-public sealed class Bootstrapper : BootstrapperBase
+public sealed partial class Bootstrapper : BootstrapperBase
 {
-    private readonly SimpleContainer _container = new();
-    private readonly IContainer _autofacContainer;
+    private IContainer _container;
+
     private const string _applicationPrefix = "StagingApp";
-    private const string _viewModel = "ViewModel";
     private const string _deviceType = "DeviceType";
-    public const string SettingsFileName = "appsettings.json";
+
     private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
-    public static readonly string SettingsFileFullName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, SettingsFileName);
+
+    public const string SettingsFileName = "appsettings.json";
+
+    public static readonly string SettingsFileFullName =
+        Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+                     ?? string.Empty, SettingsFileName);
 
     public Bootstrapper()
     {
@@ -42,27 +44,16 @@ public sealed class Bootstrapper : BootstrapperBase
         ViewModelLocator.ConfigureTypeMappings(config);
         ViewLocator.AddSubNamespaceMapping("Presentation.ViewModels.*", new[] { "Main.Views.ConfigureViews", "Main.Views.InfoViews" });
 
-        _container.Instance(_container)
-            .PerRequest<ShellViewModel>();
+        ConfigurationModule module = AddConfiguration();
 
-        _container
-            .Singleton<IWindowManager, WindowManager>()
-            .Singleton<IEventAggregator, EventAggregator>()
-            .Singleton<TerminalConfigureViewModel>()
-            .Singleton<KitchenConfigureViewModel>()
-            .Singleton<ServerConfigureViewModel>();
-
-        _container
-            .RegisterInstance(typeof(IConfiguration), nameof(IConfiguration), AddConfiguration());
-
-        GetType().Assembly.GetTypes()
-            .Where(t => t.IsClass)
-            .Where(t => t.Name.EndsWith(_viewModel))
-            .ToList()
-            .ForEach(vm => _container.RegisterPerRequest(
-                vm, vm.ToString(), vm));
-
+        var builder = new ContainerBuilder();
+        builder.RegisterModule(module);
+        RegisterClass<ShellViewModel>(builder);
+        RegisterTypes(builder);
+        RegisterModules(builder);
+        _container = builder.Build();
     }
+
 
     protected override async void OnStartup(object sender, StartupEventArgs e)
     {
@@ -85,29 +76,67 @@ public sealed class Bootstrapper : BootstrapperBase
 
     }
 
-    protected override object GetInstance(Type service, string key)
-    {
-        return _container.GetInstance(service, key);
-    }
+    protected override object GetInstance(Type service, string key) =>
+        key == null ? _container.Resolve(service) : _container.ResolveKeyed(key, service);
 
     protected override IEnumerable<object> GetAllInstances(Type service)
     {
-        return _container.GetAllInstances(service);
+        var enumerableOfServiceType = typeof(IEnumerable<>).MakeGenericType(service);
+        return (IEnumerable<object>)_container.Resolve(enumerableOfServiceType);
     }
 
     protected override void BuildUp(object instance)
     {
-        _container.BuildUp(instance);
+        _container.InjectProperties(instance);
     }
 
     protected override IEnumerable<Assembly> SelectAssemblies()
     {
-        var assemblies = base.SelectAssemblies().ToList();
-        assemblies.Add(typeof(Presentation.AssemblyReference).Assembly);
-        assemblies.Add(typeof(AssemblyReference).Assembly);
-
-        return assemblies;
+        return GetAllDllEntries().Select(Assembly.LoadFrom);
     }
+
+    private static ConfigurationModule AddConfiguration()
+    {
+        var configuration = new ConfigurationBuilder();
+        configuration
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile(SettingsFileFullName, false, false);
+
+        var module = new ConfigurationModule(configuration.Build());
+        return module;
+    }
+
+    private static void RegisterModules(ContainerBuilder builder)
+    {
+        builder.RegisterModule<ModuleLoader>();
+    }
+
+    private static void RegisterTypes(ContainerBuilder builder)
+    {
+        builder.RegisterType<WindowManager>().As<IWindowManager>();
+        builder.RegisterType<EventAggregator>().As<IEventAggregator>();
+    }
+
+    private static void RegisterClass<T>(ContainerBuilder builder)
+    {
+        builder.RegisterType<T>().SingleInstance();
+    }
+
+    private static string[] GetAllDllEntries()
+    {
+        var runtimeDir = AppDomain.CurrentDomain.BaseDirectory;
+        var files = Directory.GetFiles(runtimeDir)
+            .Where(x => DllRegex().IsMatch(x))
+            .Where(y =>
+            {
+                var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(y);
+                return fileNameWithoutExtension.StartsWith(_applicationPrefix, StringComparison.Ordinal);
+            })
+            .ToArray();
+
+        return files;
+    }
+
     private static void UpdateLogConfig()
     {
         string deviceType = DeviceTypeHelper.DetermineDeviceType();
@@ -127,15 +156,6 @@ public sealed class Bootstrapper : BootstrapperBase
                 // Throw Exception
                 break;
         }
-    }
-    private static IConfiguration AddConfiguration()
-    {
-        IConfigurationBuilder builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile(SettingsFileFullName, false, false);
-
-        return builder.Build();
-
     }
 
     private static bool IsAdmin()
@@ -157,4 +177,7 @@ public sealed class Bootstrapper : BootstrapperBase
         Process.Start(startInfo);
         Application.Shutdown();
     }
+
+    [GeneratedRegex("^.+\\.(dll)$")]
+    private static partial Regex DllRegex();
 }
