@@ -1,6 +1,8 @@
 ﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
 public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 {
+    private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+
     private string? _terminalName;
     private string? _ipAddress;
 

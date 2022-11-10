@@ -35,7 +35,7 @@ public sealed class ShellViewModel : Conductor<object>, IHandle<CloseApplication
                 await ActivateItemAsync(IoC.Get<TerminalConfigureViewModel>());
                 break;
             case var name when name.Equals(DeviceType.Kitchen.ToString()):
-                await ActivateItemAsync(IoC.Get<ServerConfigureViewModel>());
+                await ActivateItemAsync(IoC.Get<KitchenConfigureViewModel>());
                 break;
             default:
                 break;

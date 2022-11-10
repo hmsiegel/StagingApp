@@ -58,21 +58,25 @@ public sealed partial class Bootstrapper : BootstrapperBase
     protected override async void OnStartup(object sender, StartupEventArgs e)
     {
         _logger.Info("Checking if the application is running as an administrator...");
+        _logger.Info("Application is running as administrator.");
+        await DisplayRootViewForAsync<ShellViewModel>();
 
-        bool isAdmin = IsAdmin();
+        // TODO: Change code to check if running as administartor prior to deployment.
 
-        if (isAdmin == false)
-        {
-            _logger.Info("Application is not running as administrator. Restarting application as administrator...");
-            string? exeName = Environment.ProcessPath;
-            RestartApplicationAsAdministrator(exeName);
-            return;
-        }
-        else
-        {
-            _logger.Info("Application is running as administrator.");
-            await DisplayRootViewForAsync<ShellViewModel>();
-        }
+        //bool isAdmin = IsAdmin();
+
+        //if (isAdmin == false)
+        //{
+        //    _logger.Info("Application is not running as administrator. Restarting application as administrator...");
+        //    string? exeName = Environment.ProcessPath;
+        //    RestartApplicationAsAdministrator(exeName);
+        //    return;
+        //}
+        //else
+        //{
+        //    _logger.Info("Application is running as administrator.");
+        //    await DisplayRootViewForAsync<ShellViewModel>();
+        //}
 
     }
 
@@ -108,7 +112,10 @@ public sealed partial class Bootstrapper : BootstrapperBase
 
     private static void RegisterModules(ContainerBuilder builder)
     {
-        builder.RegisterModule<ModuleLoader>();
+        builder.RegisterModule<Presentation.ModuleLoader>();
+        builder.RegisterModule<Application.ModuleLoader>();
+        builder.RegisterModule<Infrastructure.ModuleLoader>();
+        builder.RegisterModule<Persistence.ModuleLoader>();
     }
 
     private static void RegisterTypes(ContainerBuilder builder)

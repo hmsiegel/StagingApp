@@ -9,7 +9,7 @@ public static class GlobalConfig
     /// The name of the computer that the application is being run on.
     /// </summary>
     //public static string ComputerName { get; set; } = Environment.MachineName;
-    public const string ComputerName = "TERMXXX";
+    public const string ComputerName = "AKXXXSTAGE";
 
     /// <summary>
     /// The name of the application.
