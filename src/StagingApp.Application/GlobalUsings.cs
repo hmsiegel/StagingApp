@@ -5,3 +5,4 @@ global using Autofac;
 global using MediatR;
 
 global using StagingApp.Domain.Enums;
+global using StagingApp.Domain.Shared;

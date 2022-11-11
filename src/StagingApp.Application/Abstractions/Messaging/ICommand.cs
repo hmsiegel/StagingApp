@@ -1,6 +1,8 @@
-﻿using StagingApp.Domain.Shared;
-
-namespace StagingApp.Application.Abstractions.Messaging;
+﻿namespace StagingApp.Application.Abstractions.Messaging;
 public interface ICommand : IRequest<Result>
+{
+}
+
+public interface ICommand<TResponse> : IRequest<Result<TResponse>>
 {
 }

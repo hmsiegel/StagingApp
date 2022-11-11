@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ErrorOr" Version="1.0.1" />
     <PackageReference Include="NLog" Version="5.0.5" />
   </ItemGroup>
 

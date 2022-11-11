@@ -6,6 +6,17 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
     private string? _terminalName;
     private string? _ipAddress;
 
+    public TerminalConfigureViewModel()
+    {
+
+    }
+
+    protected override void OnViewLoaded(object view)
+    {
+        base.OnViewLoaded(view);
+        CheckForMarkerFiles();
+    }
+
     [Description("TERMINAL NAME:")]
     public string? TerminalName
     {
