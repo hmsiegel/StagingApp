@@ -1,11 +1,19 @@
 ﻿namespace StagingApp.Domain.Errors;
-public static class Errors
+public static partial class Errors
 {
     public static class FileSystem
     {
-        public static Error MarkerFileAlreadyExists => Error.Conflict(
+        public static Error MarkerFileAlreadyExists => new(
             code: "FileSystem.MarkerFileAlreadyExists",
-            description: "Marker file already exists");
+            message: "Marker file already exists");
+
+        public static Error CannotCreateMarkerFile => new(
+            code: "FileSystem.CannotCreateMarkerFile",
+            message: "Error creating marker file.");
+
+        public static Error CannotDeleteMarkerFile => new(
+            code: "FileSystem.CannotDeleteMarkerFile",
+            message: "Error deleting marker file.");
     }
 
 }
