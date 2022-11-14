@@ -1,4 +1,4 @@
-﻿namespace StagingApp.Application;
+﻿namespace StagingApp.Domain;
 public static class GlobalConfig
 {
     public const string ScriptPath = "C:\\AlohaStaging";
@@ -14,6 +14,6 @@ public static class GlobalConfig
     /// <summary>
     /// The name of the application.
     /// </summary>
-    public static string? ApplicationName { get; set; } = 
+    public static string? ApplicationName { get; set; } =
         Environment.ProcessPath?.Split('\\').Where(x => x.Contains(".exe")).FirstOrDefault();
 }

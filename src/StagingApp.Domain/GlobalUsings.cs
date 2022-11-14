@@ -1,2 +1,2 @@
 ﻿global using System.ComponentModel;
-global using ErrorOr;
+global using StagingApp.Domain.Shared;

@@ -1,14 +1,20 @@
-﻿using StagingApp.Domain.Errors;
-
-namespace StagingApp.Application.FileSystem.Commands.CreateMarkerFile;
+﻿namespace StagingApp.Application.FileSystem.Commands.CreateMarkerFile;
 internal sealed class CreateMarkerFileCommandHandler : ICommandHandler<CreateMarkerFileCommand>
 {
-
-    Task<ErrorOr<Domain.Shared.Result>> IRequestHandler<CreateMarkerFileCommand, ErrorOr<Domain.Shared.Result>>.Handle(CreateMarkerFileCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CreateMarkerFileCommand request, CancellationToken cancellationToken)
     {
-        if (File.Exists(request.FileName)
+        if (File.Exists(request.FileName))
         {
-            return Errors.FileSystem.MarkerFileAlreadyExists;
+            return Result.Failure(Errors.FileSystem.MarkerFileAlreadyExists);
         }
+
+        if (request.FileName is null)
+        {
+            return Result.Failure(Errors.FileSystem.CannotCreateMarkerFile);
+        }
+
+        await Task.Run(() => File.Create(request.FileName), cancellationToken);
+
+        return Result.Success();
     }
 }
