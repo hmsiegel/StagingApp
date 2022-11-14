@@ -16,4 +16,8 @@
     <ProjectReference Include="..\StagingApp.Domain\StagingApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DeviceEnvironment\Queries\" />
+  </ItemGroup>
+
 </Project>

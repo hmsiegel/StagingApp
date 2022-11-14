@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Errors\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Repositories\" />
     <Folder Include="ValueObjects\" />
     <Folder Include="Primitives\" />
   </ItemGroup>
