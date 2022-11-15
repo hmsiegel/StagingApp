@@ -1,8 +1,9 @@
 ﻿namespace StagingApp.Main;
+
 [SupportedOSPlatform("Windows7.0")]
 public sealed partial class Bootstrapper : BootstrapperBase
 {
-    private IContainer _container;
+    private IContainer? _container;
 
     private const string _applicationPrefix = "StagingApp";
     private const string _deviceType = "DeviceType";
@@ -81,17 +82,17 @@ public sealed partial class Bootstrapper : BootstrapperBase
     }
 
     protected override object GetInstance(Type service, string key) =>
-        key == null ? _container.Resolve(service) : _container.ResolveKeyed(key, service);
+        key == null ? _container!.Resolve(service) : _container!.ResolveKeyed(key, service);
 
     protected override IEnumerable<object> GetAllInstances(Type service)
     {
         var enumerableOfServiceType = typeof(IEnumerable<>).MakeGenericType(service);
-        return (IEnumerable<object>)_container.Resolve(enumerableOfServiceType);
+        return (IEnumerable<object>)_container!.Resolve(enumerableOfServiceType);
     }
 
     protected override void BuildUp(object instance)
     {
-        _container.InjectProperties(instance);
+        _container!.InjectProperties(instance);
     }
 
     protected override IEnumerable<Assembly> SelectAssemblies()
@@ -126,7 +127,7 @@ public sealed partial class Bootstrapper : BootstrapperBase
 
     private static void RegisterClass<T>(ContainerBuilder builder)
     {
-        builder.RegisterType<T>().SingleInstance();
+        builder!.RegisterType<T>()!.SingleInstance();
     }
 
     private static string[] GetAllDllEntries()
