@@ -1,4 +1,3 @@
 ﻿namespace StagingApp.Application.DeviceEnvironment.Commands.SetAutoLogon;
-internal class SetAutoLogonCommand
-{
-}
+
+public sealed record SetAutoLogonCommand(string Username, string Password, string Domain) : ICommand;

@@ -17,3 +17,4 @@ global using StagingApp.Application.Abstractions.Services;
 global using StagingApp.Domain.Enums;
 global using StagingApp.Domain.Errors;
 global using StagingApp.Domain.Shared;
+global using StagingApp.Domain.Models;

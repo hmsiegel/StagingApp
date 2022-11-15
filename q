@@ -1,4 +1,4 @@
-﻿namespace StagingApp.Infrastructure.Services;
+namespace StagingApp.Infrastructure.Services;
 
 [SupportedOSPlatform("Windows7.0")]
 public class RegistryService : IRegistryService
