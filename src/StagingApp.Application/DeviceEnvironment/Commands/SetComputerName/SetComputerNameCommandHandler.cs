@@ -3,15 +3,6 @@
 internal sealed partial class SetComputerNameCommandHandler : ICommandHandler<SetComputerNameCommand>
 {
     private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-    private const string _activeComputerName = @"SYSTEM\CurrentControlSet\Control\ComputerName\ActiveComputerName";
-    private const string _computerName = @"SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName";
-    private const string _hostName = @"SYSTEM\CurrentControlSet\services\Tcpip\Parameters";
-    private const string _parameters = @"SYSTEM\CurrentControlSet\services\lanmanserver\Parameters";
-    private const string _computerNameString = "ComputerName";
-    private const string _hostnameString = "Hostname";
-    private const string _nvHostname = "NV Hostname";
-    private const string _comment = "srvcomment";
-
     private readonly IRegistryService _registryService;
 
     public SetComputerNameCommandHandler(IRegistryService registryService)
@@ -21,17 +12,37 @@ internal sealed partial class SetComputerNameCommandHandler : ICommandHandler<Se
 
     public async Task<Result> Handle(SetComputerNameCommand request, CancellationToken cancellationToken)
     {
+        await Task.CompletedTask;
         _logger.Info($"Attempting to set computer name to: {request.ComputerName}.");
 
         if (SetComputerName(request.ComputerName))
         {
             _logger.Info("Computer name was set successfully.");
 
-            _registryService.SetRegistryKeyAndValue(_activeComputerName, _computerNameString, request.ComputerName);
-            _registryService.SetRegistryKeyAndValue(_computerName, _computerNameString, request.ComputerName);
-            _registryService.SetRegistryKeyAndValue(_hostName, _hostnameString, request.ComputerName);
-            _registryService.SetRegistryKeyAndValue(_hostName, _nvHostname, request.ComputerName);
-            _registryService.SetRegistryKeyAndValue(_parameters, _comment, request.ComputerName);
+            _registryService.SetRegistryKeyAndValue(
+                SetComputerNameConfig.ActiveComputerName,
+                SetComputerNameConfig.ComputerNameString,
+                request.ComputerName);
+
+            _registryService.SetRegistryKeyAndValue(
+                SetComputerNameConfig.ComputerName,
+                SetComputerNameConfig.ComputerNameString,
+                request.ComputerName);
+            
+            _registryService.SetRegistryKeyAndValue(
+                SetComputerNameConfig.HostName,
+                SetComputerNameConfig.HostnameString,
+                request.ComputerName);
+            
+            _registryService.SetRegistryKeyAndValue(
+                SetComputerNameConfig.HostName,
+                SetComputerNameConfig.NvHostname,
+                request.ComputerName);
+
+            _registryService.SetRegistryKeyAndValue(
+                SetComputerNameConfig.Parameters,
+                SetComputerNameConfig.Comment,
+                request.ComputerName);
         }
         else
         {

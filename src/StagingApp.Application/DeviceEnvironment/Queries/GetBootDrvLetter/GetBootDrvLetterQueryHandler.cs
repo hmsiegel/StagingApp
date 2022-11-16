@@ -3,6 +3,8 @@ internal sealed class GetBootDrvLetterQueryHandler : IQueryHandler<GetBootDrvLet
 {
     public async Task<Result<string>> Handle(GetBootDrvLetterQuery request, CancellationToken cancellationToken)
     {
+        await Task.CompletedTask;
+
         DriveInfo[] drives = DriveInfo.GetDrives();
         string output = string.Empty;
 

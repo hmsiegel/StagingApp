@@ -3,14 +3,9 @@
 [SupportedOSPlatform("Windows7.0")]
 internal sealed class SetAutoLogonCommandHandler : ICommandHandler<SetAutoLogonCommand>
 {
-    private const string _path = $@"Software\Microsoft\Windows NT\CurrentVersion\Winlogon";
-	private const string _lsaKey = "DefaultPassword";
-	private const string _autoAdminLogon = "AutoAdminLogon";
-	private const string _defaultUsername = "DefaultUserName";
-	private const string _defaultDomainName = "DefaultDomainName";
     private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-	private readonly IRegistryService _registryService;
+    private readonly IRegistryService _registryService;
 
     public SetAutoLogonCommandHandler(IRegistryService registryService)
     {
@@ -19,30 +14,46 @@ internal sealed class SetAutoLogonCommandHandler : ICommandHandler<SetAutoLogonC
 
     public async Task<Result> Handle(SetAutoLogonCommand request, CancellationToken cancellationToken)
     {
+        await Task.CompletedTask;
         _logger.Info("Attempting to set auto logon.");
 
-		try
-		{
-			_logger.Info("Storing the password securely.");
-			LsaModel lsa = new(_lsaKey);
-			lsa.SetSecret(request.Password);
+        try
+        {
+            _logger.Info("Storing the password securely.");
+            LsaModel lsa = new(SetAutoLogonConfig.LsaKey);
+            lsa.SetSecret(request.Password);
 
-			_logger.Info("Setting AutoAdminLogon to 1");
-			_registryService.EditRegistryFromValues(RegistryHive.LocalMachine, _path, _autoAdminLogon, "1", RegistryValueKind.String);
+            _logger.Info("Setting AutoAdminLogon to 1");
+            _registryService.EditRegistryFromValues(
+                RegistryHive.LocalMachine,
+                SetAutoLogonConfig.Path,
+                SetAutoLogonConfig.AutoAdminLogon,
+                SetAutoLogonConfig.EnableValue,
+                RegistryValueKind.String);
 
-			_logger.Info("Setting DefaultUserName to 1");
-			_registryService.EditRegistryFromValues(RegistryHive.LocalMachine, _path, _defaultUsername, "1", RegistryValueKind.String);
+            _logger.Info("Setting DefaultUserName to 1");
+            _registryService.EditRegistryFromValues(
+                RegistryHive.LocalMachine,
+                SetAutoLogonConfig.Path,
+                SetAutoLogonConfig.DefaultUsername,
+                SetAutoLogonConfig.EnableValue,
+                RegistryValueKind.String);
 
-			_logger.Info($"Setting Default DomainName to { request.Domain}.");
-			_registryService.EditRegistryFromValues(RegistryHive.LocalMachine, _path, _defaultDomainName,request.Domain, RegistryValueKind.String);
-		}
-		catch (Exception ex)
-		{
-			_logger.Error("Failed to set auto logon.");
-			_logger.Error(ex.ToString());
-			return Result.Failure(Errors.DeviceEnvironment.AutoLogon);
-		}
+            _logger.Info($"Setting Default DomainName to {request.Domain}.");
+            _registryService.EditRegistryFromValues(
+                RegistryHive.LocalMachine,
+                SetAutoLogonConfig.Path,
+                SetAutoLogonConfig.DefaultDomainName,
+                request.Domain,
+                RegistryValueKind.String);
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Failed to set auto logon.");
+            _logger.Error(ex.ToString());
+            return Result.Failure(Errors.DeviceEnvironment.SetAutoLogon);
+        }
 
-		return Result.Success();
+        return Result.Success();
     }
 }
