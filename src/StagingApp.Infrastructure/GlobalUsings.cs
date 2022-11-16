@@ -8,3 +8,5 @@ global using NLog;
 
 global using StagingApp.Application.Abstractions.Services;
 
+global using StagingApp.Infrastructure.Services;
+

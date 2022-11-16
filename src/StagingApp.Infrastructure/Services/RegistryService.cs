@@ -14,9 +14,7 @@ public class RegistryService : IRegistryService
     {
         try
         {
-            RegistryKey registryKey = !Environment.Is64BitOperatingSystem 
-                ? RegistryKey.OpenBaseKey(hiveType, RegistryView.Registry32) 
-                : RegistryKey.OpenBaseKey(hiveType, RegistryView.Registry64);
+            RegistryKey registryKey = DetermineRegistryHiveType(hiveType);
             registryKey.CreateSubKey(key);
             registryKey.OpenSubKey(key, true)!.SetValue(value, data, dataType);
         }
@@ -26,11 +24,58 @@ public class RegistryService : IRegistryService
             _logger.Error(ex.ToString());
         }
     }
-
     public void SetRegistryKeyAndValue(string subKeyName, string name, string value)
     {
         RegistryKey registryKey = Registry.LocalMachine.CreateSubKey(subKeyName);
         registryKey.SetValue(name, value);
         registryKey.Close();
     }
+
+    public string GetRegistryKeyAndValue(RegistryHive hiveType, string key, string value)
+    {
+        RegistryKey registryKey = DetermineRegistryHiveType(hiveType);
+        registryKey = registryKey.OpenSubKey(key)!;
+        string? output = string.Empty;
+        try
+        {
+            output = registryKey.GetValue(value)!.ToString();
+        }
+        catch (Exception)
+        {
+            _logger.Error("Unable to get key: {key} for value: {value}.", key, value);
+        }
+        _logger.Info("Getting registry data for: {key} with value: {value}., key, value");
+        return output!;
+    }
+
+    public byte[] GetLocalRegistryKeyAndValue(string key, string value)
+    {
+        RegistryHive hive = RegistryHive.LocalMachine;
+        RegistryKey registryKey = DetermineRegistryHiveType(hive);
+        registryKey = registryKey.OpenSubKey(key)!;
+
+        try
+        {
+            byte[]? keyValue = registryKey.GetValue(value) as byte[];
+
+            if (keyValue is null)
+            {
+                throw new NullReferenceException();
+            }
+
+            _logger.Info("Getting registry data for: {key} with value: {value}., key, value");
+            return keyValue;
+        }
+        catch (Exception)
+        {
+            _logger.Error("Unable to get key: {key} for value: {value}.", key, value);
+            throw;
+        }
+    }
+
+    private static RegistryKey DetermineRegistryHiveType(RegistryHive hiveType) =>
+        !Environment.Is64BitOperatingSystem
+            ? RegistryKey.OpenBaseKey(hiveType, RegistryView.Registry32)
+            : RegistryKey.OpenBaseKey(hiveType, RegistryView.Registry64);
+
 }
