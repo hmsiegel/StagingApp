@@ -14,6 +14,10 @@ public static partial class Errors
         public static Error CannotDeleteMarkerFile => new(
             code: "FileSystem.CannotDeleteMarkerFile",
             message: "Error deleting marker file.");
+
+        public static Error MarkerFileIsNull => new(
+            code: "FileSystem.MarkerFileIsNull",
+            message: "Marker file is null.");
     }
 
 }
