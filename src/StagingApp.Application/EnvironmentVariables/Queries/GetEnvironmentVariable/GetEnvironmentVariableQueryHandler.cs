@@ -3,6 +3,15 @@ internal sealed class GetEnvironmentVariableQueryHandler : IQueryHandler<GetEnvi
 {
     public async Task<Result<string>> Handle(GetEnvironmentVariableQuery request, CancellationToken cancellationToken)
     {
-        return await Task.Run(() => Environment.GetEnvironmentVariable(request.Key));
+        await Task.CompletedTask;
+
+        var output = Environment.GetEnvironmentVariable(request.Key);
+
+        if (output is null)
+        {
+            return null!;
+        }
+
+        return output;
     }
 }
