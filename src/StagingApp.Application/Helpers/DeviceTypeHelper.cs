@@ -1,6 +1,4 @@
-﻿using StagingApp.Domain;
-
-namespace StagingApp.Application.Helpers;
+﻿namespace StagingApp.Application.Helpers;
 public static class DeviceTypeHelper
 {
     public static bool IsThisATerminal(string computerName)
@@ -33,7 +31,7 @@ public static class DeviceTypeHelper
         {
             stagingViewModelName = CheckComputerName(computerName);
         }
-        return stagingViewModelName;
+        return stagingViewModelName!;
     }
 
     private static string? CheckComputerName(string computerName)

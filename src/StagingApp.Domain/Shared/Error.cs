@@ -15,7 +15,7 @@ public class Error : IEquatable<Error>
 
     public static implicit operator string(Error error) => error.Code;
     
-    public static bool operator ==(Error? a, Error? b)
+    public static bool operator ==(Error a, Error b)
     {
         if (a is null && b is null)
         {
@@ -30,7 +30,7 @@ public class Error : IEquatable<Error>
         return a.Equals(b);
     }
 
-    public static bool operator !=(Error? a, Error? b) => !(a == b);
+    public static bool operator !=(Error a, Error b) => !(a == b);
 
     public virtual bool Equals(Error? other)
     {
@@ -47,7 +47,7 @@ public class Error : IEquatable<Error>
         return Code == other.Code && Message == other.Message;
     }
 
-    public override bool Equals(object obj) =>
+    public override bool Equals(object? obj) =>
         obj is Error other && Equals(other);
 
     public override int GetHashCode() => HashCode.Combine(Code, Message);

@@ -17,4 +17,8 @@
     <ProjectReference Include="..\StagingApp.Domain\StagingApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ApplicationEnvironment\Commands\" />
+  </ItemGroup>
+
 </Project>

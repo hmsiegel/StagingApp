@@ -14,7 +14,11 @@ global using NLog;
 global using StagingApp.Application.Abstractions.Messaging;
 global using StagingApp.Application.Abstractions.Services;
 
+
+global using StagingApp.Domain;
 global using StagingApp.Domain.Enums;
 global using StagingApp.Domain.Errors;
 global using StagingApp.Domain.Shared;
 global using StagingApp.Domain.Models;
+global using StagingApp.Domain.Server;
+global using StagingApp.Domain.Server.ValueObjects;
