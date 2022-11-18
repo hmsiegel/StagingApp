@@ -1,4 +1,9 @@
-﻿namespace StagingApp.Application.Helpers;
+﻿using System.Text.RegularExpressions;
+
+using StagingApp.Domain;
+using StagingApp.Domain.Enums;
+
+namespace StagingApp.Application.Helpers;
 public static class DeviceTypeHelper
 {
     public static bool IsThisATerminal(string computerName)
