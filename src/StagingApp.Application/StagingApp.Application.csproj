@@ -18,7 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationEnvironment\Commands\" />
+    <Folder Include="Kitchen\Commands\" />
+    <Folder Include="Kitchen\Queries\" />
+    <Folder Include="Server\Commands\" />
+    <Folder Include="Server\Queries\" />
+    <Folder Include="Terminal\Commands\" />
+    <Folder Include="Terminal\Queries\" />
   </ItemGroup>
 
 </Project>

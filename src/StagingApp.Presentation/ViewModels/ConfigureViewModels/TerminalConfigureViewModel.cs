@@ -1,10 +1,4 @@
-﻿using MediatR;
-
-using StagingApp.Application.FileSystem.Queries.CheckMarkerFile;
-using StagingApp.Domain;
-using StagingApp.Domain.Shared;
-
-namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
+﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
 public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 {
     private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
@@ -88,7 +82,7 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
             StartOSK();
         }
 
-        CheckMarkerFileQuery query = new CheckMarkerFileQuery(markerFile!);
+        CheckMarkerFileQuery query = new(markerFile!);
 
         Result<string> response = await _sender.Send(query, new CancellationToken());
 

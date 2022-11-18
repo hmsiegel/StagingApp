@@ -1,4 +1,5 @@
-﻿global using System.Runtime.Versioning;
+﻿global using System.Diagnostics;
+global using System.Runtime.Versioning;
 
 global using Microsoft.Win32;
 
