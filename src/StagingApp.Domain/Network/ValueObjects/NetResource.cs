@@ -1,11 +1,9 @@
-﻿using StagingApp.Domain.Enums;
-
-namespace StagingApp.Domain.Network.ValueObjects;
+﻿namespace StagingApp.Domain.Network.ValueObjects;
 
 [StructLayout(LayoutKind.Sequential)]
 public class NetResource
 {
-   public ResourceScope Scope;
+   public Enums.ResourceScope Scope;
    public ResourceType ResourceType;
    public ResourceDisplaytype DisplayType;
    public int Usage;

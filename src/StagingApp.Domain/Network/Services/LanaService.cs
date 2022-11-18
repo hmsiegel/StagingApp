@@ -77,15 +77,15 @@ public abstract class LanaService
         return false;
     }
 
-    public static NICInfoArray GetNicAndLanaNumbers()
+    public static NicInfoArray GetNicAndLanaNumbers()
     {
         _logger.Info("In GetNicNumber");
         List<NicInfoModel> wmiNicDetails = GetWmiNicDetails();
 
         _logger.Info($"NIC Array count: {wmiNicDetails.Count}");
-        NICInfoArray lanaCfgArray = GetLanaCfgArray();
-        NICInfoArray nicsValidTemp = new();
-        NICInfoArray nicInfoArray = new();
+        NicInfoArray lanaCfgArray = GetLanaCfgArray();
+        NicInfoArray nicsValidTemp = new();
+        NicInfoArray nicInfoArray = new();
 
         lanaCfgArray.ValidNICs = 0;
 
@@ -323,7 +323,7 @@ public abstract class LanaService
     private static ArrayList WMINicConnectedCards()
     {
         ArrayList arrayList = new();
-        foreach (ManagementObject instance in new ManagementClass("Win32_NetworkAdapter").GetInstances())
+        foreach (ManagementObject instance in new ManagementClass("Win32_NetworkAdapter")!.GetInstances().Cast<ManagementObject>())
         {
             try
             {

@@ -13,21 +13,21 @@ public static class NetworkManagementService
         {
             if ((bool)managementObject["IPEnabled"]!)
             {
-                if (managementObject["Caption"]!.ToString()!.Contains(NIC))
+                if (managementObject["Caption"]!.ToString()!.Contains(NIC!))
                 {
                     try
                     {
                         object propertyValue = managementObject.GetPropertyValue("SettingID");
                         using (RegistryKey? registryKey = Registry.LocalMachine.OpenSubKey($"SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\{propertyValue}", true))
                         {
-                            registryKey.SetValue("EnableDHCP", 0);
-                            registryKey.SetValue("IPAddress", new string[1] { ipAddress }, RegistryValueKind.MultiString);
-                            registryKey.SetValue("SubnetMask", new string[1] { subnetMask }, RegistryValueKind.MultiString);
+                            registryKey!.SetValue("EnableDHCP", 0);
+                            registryKey.SetValue("IPAddress", new string[1] { ipAddress! }, RegistryValueKind.MultiString);
+                            registryKey.SetValue("SubnetMask", new string[1] { subnetMask! }, RegistryValueKind.MultiString);
                         }
                         ManagementBaseObject? methodParameters = managementObject.GetMethodParameters("EnableStatic");
-                        methodParameters["IPAddress"] = new string[1] { ipAddress };
-                        methodParameters["SubnetMask"] = new string[1] { subnetMask };
-                        managementObject.InvokeMethod("EnableStatic", methodParameters, null);
+                        methodParameters["IPAddress"] = new string[1] { ipAddress! };
+                        methodParameters["SubnetMask"] = new string[1] { subnetMask! };
+                        managementObject.InvokeMethod("EnableStatic", methodParameters, null!);
                         _logger.Info("Invoked EnableStatic");
                     }
                     catch (Exception ex)
@@ -44,9 +44,9 @@ public static class NetworkManagementService
     {
         _logger.Info("In SetIP. Setting to {ipAddress} Subnet: {subnetMask} Gateway: {gateway}", ipAddress, subnetMask, gateway);
 
-        NetworkInterface networkInterface = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(x => x.Name == NIC);
+        NetworkInterface networkInterface = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(x => x.Name == NIC)!;
         IPInterfaceProperties ipProperties = networkInterface.GetIPProperties();
-        UnicastIPAddressInformation ipInfo = ipProperties.UnicastAddresses.FirstOrDefault(ip => ip.Address.AddressFamily == AddressFamily.InterNetwork);
+        UnicastIPAddressInformation ipInfo = ipProperties.UnicastAddresses.FirstOrDefault(ip => ip.Address.AddressFamily == AddressFamily.InterNetwork)!;
         string currentIP = ipInfo.Address.ToString();
         string currentSubnet = ipInfo.IPv4Mask.ToString();
         bool isDHCPEnabled = ipProperties.GetIPv4Properties().IsDhcpEnabled;
@@ -79,7 +79,7 @@ public static class NetworkManagementService
                         ManagementBaseObject methodParameters = managementObject.GetMethodParameters("SetGateways");
                         methodParameters["DefaultIPGateway"] = new string[1] { gateway };
                         methodParameters["GatewayCostMetric"] = new int[1] { 1 };
-                        managementObject.InvokeMethod("SetGateways", methodParameters, null);
+                        managementObject.InvokeMethod("SetGateways", methodParameters, null!);
                         _logger.Info("Invoked SetGateways");
                     }
                     catch (Exception ex)
@@ -109,7 +109,7 @@ public static class NetworkManagementService
                         {
                             ManagementBaseObject methodParameters = managementObject.GetMethodParameters("SetDNSServerSearchOrder");
                             methodParameters["DNSServerSearchOrder"] = new string[2] { DNS1, DNS2 };
-                            managementObject.InvokeMethod("SetDNSServerSearchOrder", methodParameters, null);
+                            managementObject.InvokeMethod("SetDNSServerSearchOrder", methodParameters, null!);
                             _logger.Info("Invoked SetDNSServerSearchOrder");
                         }
                         catch (Exception ex)
@@ -148,14 +148,14 @@ public static class NetworkManagementService
         {
             if ((bool)managementObject["IPEnabled"])
             {
-                if (managementObject["Caption"].ToString().Contains(NIC))
+                if (managementObject["Caption"].ToString()!.Contains(NIC))
                 {
                     try
                     {
                         ManagementBaseObject methodParameters = managementObject.GetMethodParameters("SetWINSServer");
                         methodParameters.SetPropertyValue("WINSPrimaryServer", priWINS);
                         methodParameters.SetPropertyValue("WINSSecondaryServer", secWINS);
-                        managementObject.InvokeMethod("SetWINSServer", methodParameters, null);
+                        managementObject.InvokeMethod("SetWINSServer", methodParameters, null!);
                         _logger.Info("Invoked SetWINSServer");
                     }
                     catch (Exception ex)
@@ -199,11 +199,11 @@ public static class NetworkManagementService
     {
         foreach (ManagementObject instance in new ManagementClass("Win32_NetworkAdapter").GetInstances())
         {
-            if (instance["Caption"].ToString().Contains(nic))
+            if (instance["Caption"].ToString()!.Contains(nic))
             {
                 try
                 {
-                    return instance["NetConnectionID"].ToString();
+                    return instance["NetConnectionID"].ToString()!;
                 }
                 catch (Exception)
                 {
@@ -222,13 +222,13 @@ public static class NetworkManagementService
         {
             if ((bool)managementObject["IPEnabled"])
             {
-                if (managementObject["Caption"].ToString().Contains(NIC))
+                if (managementObject["Caption"].ToString()!.Contains(NIC))
                 {
                     try
                     {
                         ManagementBaseObject methodParameters = managementObject.GetMethodParameters("SetDNSServerSearchOrder");
-                        methodParameters["DNSServerSearchOrder"] = null;
-                        managementObject.InvokeMethod("DisableDHCP", null, null);
+                        methodParameters["DNSServerSearchOrder"] = null!;
+                        managementObject.InvokeMethod("DisableDHCP", null, null!);
                         managementObject.InvokeMethod("SetDNSServerSearchOrder", methodParameters, null);
                         _logger.Info("Invoked SetDNSServerSearchOrder");
                     }
@@ -302,7 +302,7 @@ public static class NetworkManagementService
     public static bool PingHost(string nameOrIP, int count)
     {
         bool pingable = false;
-        Ping pinger = null;
+        Ping? pinger = null;
 
         for (int i = 0; i <= count; i++)
         {
@@ -320,10 +320,7 @@ public static class NetworkManagementService
             }
             finally
             {
-                if (pinger != null)
-                {
-                    pinger.Dispose();
-                }
+                pinger?.Dispose();
             }
         }
         return pingable;
@@ -333,7 +330,7 @@ public static class NetworkManagementService
     {
         NetworkInterface nic = NetworkInterface
             .GetAllNetworkInterfaces()
-            .FirstOrDefault(i => i.NetworkInterfaceType != NetworkInterfaceType.Loopback && i.NetworkInterfaceType != NetworkInterfaceType.Tunnel);
+            .FirstOrDefault(i => i.NetworkInterfaceType != NetworkInterfaceType.Loopback && i.NetworkInterfaceType != NetworkInterfaceType.Tunnel)!;
 
         return nic.Description;
     }
@@ -342,7 +339,7 @@ public static class NetworkManagementService
     {
         NetworkInterface nic = NetworkInterface
            .GetAllNetworkInterfaces()
-           .FirstOrDefault(x => x.NetworkInterfaceType != NetworkInterfaceType.Loopback && x.NetworkInterfaceType != NetworkInterfaceType.Tunnel);
+           .FirstOrDefault(x => x.NetworkInterfaceType != NetworkInterfaceType.Loopback && x.NetworkInterfaceType != NetworkInterfaceType.Tunnel)!;
         return nic.Name;
     }
 
