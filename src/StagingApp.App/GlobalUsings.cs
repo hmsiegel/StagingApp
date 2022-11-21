@@ -13,18 +13,21 @@ global using System.Windows.Controls;
 
 global using Microsoft.Extensions.Configuration;
 
+global using Autofac;
+global using Autofac.Configuration;
+
+global using AutoMapper;
+
 global using Caliburn.Micro;
 global using LogManager = Caliburn.Micro.LogManager;
 
 global using NLog;
 
-global using Autofac;
-global using Autofac.Configuration;
 global using StagingApp.Application.Helpers;
 
 global using StagingApp.Domain;
 global using StagingApp.Domain.Enums;
+global using StagingApp.Domain.Terminal.ValueObjects;
 
+global using StagingApp.Presentation.Models.ConfigureModels;
 global using StagingApp.Presentation.ViewModels;
-
-

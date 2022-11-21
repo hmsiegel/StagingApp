@@ -1,4 +1,6 @@
-﻿namespace StagingApp.Main;
+﻿using AutoMapper.Contrib.Autofac.DependencyInjection;
+
+namespace StagingApp.Main;
 
 [SupportedOSPlatform("Windows7.0")]
 public sealed partial class Bootstrapper : BootstrapperBase
@@ -52,6 +54,7 @@ public sealed partial class Bootstrapper : BootstrapperBase
         RegisterClass<ShellViewModel>(builder);
         RegisterTypes(builder);
         RegisterModules(builder);
+        RegisterProfiles(builder);
         _container = builder.Build();
     }
 
@@ -129,6 +132,12 @@ public sealed partial class Bootstrapper : BootstrapperBase
     {
         builder!.RegisterType<T>()!.SingleInstance();
     }
+
+    private static void RegisterProfiles(ContainerBuilder builder)
+    {
+        builder.RegisterAutoMapper(AssemblyReference.Assembly);
+    }
+        
 
     private static string[] GetAllDllEntries()
     {

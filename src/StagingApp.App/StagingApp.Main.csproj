@@ -22,8 +22,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Autofac" Version="6.4.0" />
+		<PackageReference Include="Autofac" Version="6.5.0" />
 		<PackageReference Include="Autofac.Configuration" Version="6.0.0" />
+		<PackageReference Include="AutoMapper.Contrib.Autofac.DependencyInjection" Version="7.0.0" />
 		<PackageReference Include="Caliburn.Micro" Version="4.0.212" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
