@@ -1,7 +1,6 @@
 ﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
 public class KitchenConfigureViewModel : BaseConfigureViewModel
 {
-
     private string? _controllerName;
     private string? _controllerNumber;
     private string? _termStr;
@@ -112,7 +111,7 @@ public class KitchenConfigureViewModel : BaseConfigureViewModel
         Concepts = new ObservableCollection<string>(conceptsList);
     }
 
-    public override void ValidateInput()
+    public override Task<bool> ValidateInput()
     {
         throw new NotImplementedException();
         // TODO: Implement data input validation

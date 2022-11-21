@@ -5,16 +5,19 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 
     private readonly IValidator<TerminalConfigureModel> _validator;
     private readonly ISender _sender;
+    private readonly IMapper _mapper;
 
     private string? _terminalName;
     private string? _ipAddress;
 
     public TerminalConfigureViewModel(
         IValidator<TerminalConfigureModel> validator,
-        ISender sender)
+        ISender sender,
+        IMapper mapper)
     {
         _validator = validator;
         _sender = sender;
+        _mapper = mapper;
     }
 
     protected override void OnViewLoaded(object view)
@@ -45,23 +48,32 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         }
     }
 
-    public override void ValidateInput()
+    public async override Task<bool> ValidateInput()
     {
         _logger.Info("Validating user inputs...");
 
-        var model 
+        var model
             = TerminalConfigureModel.Create(
-                TerminalName!,
+                TerminalName!.Replace("_", "-"),
                 IpAddress!);
 
         var result = _validator.Validate(model);
 
+        var terminalModel = _mapper.Map<TerminalModel>(model);
+
         if (result.IsValid)
         {
             _logger.Info("Inputs are valid. Configuring...");
-            SaveTerminalInfoAndSysPrep(model);
+
+            var command = new SaveTerminalInfoAndSysPrepCommand(terminalModel);
+            var response = await _sender.Send(command);
+            return response.IsSuccess;
         }
-        // TODO: Implement data input validation
+        else
+        {
+            // TODO: Implement what happens when validation is not successful.
+            return false;
+        }
     }
 
     public override void Configure()
@@ -79,7 +91,7 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         if (markerFile is null)
         {
             _logger.Info("No marker files found. Starting first run...");
-            StartOSK();
+            StartOsk();
         }
 
         CheckMarkerFileQuery query = new(markerFile!);
@@ -98,5 +110,25 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
                 StartRadiantAutoLoader();
                 break;
         }
+    }
+
+    private void StartStageTerminal()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void StartThirdPass()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void StartRadiantAutoLoader()
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void StartOsk()
+    {
+        ApplicationHelper.RunProcessInCurrentDirectory(GlobalConfig.Osk, GlobalConfig.ScriptPath);
     }
 }

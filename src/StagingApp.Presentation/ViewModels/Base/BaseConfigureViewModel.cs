@@ -2,5 +2,5 @@
 public abstract class BaseConfigureViewModel : Screen
 {
     public abstract void Configure();
-    public abstract void ValidateInput();
+    public abstract Task<bool> ValidateInput();
 }

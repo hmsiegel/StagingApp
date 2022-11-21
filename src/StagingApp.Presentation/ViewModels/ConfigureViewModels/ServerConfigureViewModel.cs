@@ -105,7 +105,7 @@ public class ServerConfigureViewModel : BaseConfigureViewModel
         ReplacementSelectionsList = new BindableCollection<string>(replacementSelection);
     }
 
-    public override void ValidateInput()
+    public override Task<bool> ValidateInput()
     {
         throw new NotImplementedException();
         // TODO: Implement data input validation
