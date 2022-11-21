@@ -21,10 +21,8 @@ public class Result
     public Error Error { get; }
 
     public static Result Success() => new(true, Error.None);
-    public static Result<TValue> Success<TValue>(TValue value) => new(value, true, Error.None);
+    public static Result<TValue> Success<TValue>(TValue value) => new(true, Error.None, value);
     public static Result Failure(Error error) => new(false, error);
-    public static Result<TValue> Failure<TValue>(Error error) => new(default, true, error);
+    public static Result<TValue> Failure<TValue>(Error error) => new(true, error, default);
     public static Result<TValue> Create<TValue>(TValue? value) => value is not null ? Success(value) : Failure<TValue>(Error.NullValue);
-
-
 }

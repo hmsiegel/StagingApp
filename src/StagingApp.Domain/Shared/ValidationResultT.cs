@@ -1,10 +1,9 @@
 ﻿namespace StagingApp.Domain.Shared;
 public sealed class ValidationResult<TValue> : Result<TValue>, IValidationResult
 {
-    private ValidationResult(Error[] errors) : base(false, IValidationResult.ValidationError)
-    {
+    private ValidationResult(Error[] errors)
+        : base(false, IValidationResult.ValidationError, default) => 
         Errors = errors;
-    }
 
     public Error[] Errors { get; }
 

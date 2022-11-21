@@ -1,4 +1,8 @@
-﻿namespace StagingApp.Domain.Network.Services;
+﻿using StagingApp.Domain.Network.ValueObjects;
+
+namespace StagingApp.Domain.Network.Services;
+
+[SupportedOSPlatform("Windows7.0")]
 public abstract class LanaService
 {
     private readonly static Logger _logger = LogManager.GetCurrentClassLogger();
@@ -87,26 +91,26 @@ public abstract class LanaService
         NicInfoArray nicsValidTemp = new();
         NicInfoArray nicInfoArray = new();
 
-        lanaCfgArray.ValidNICs = 0;
+        lanaCfgArray.ValidNics = 0;
 
         if (wmiNicDetails.Count == 0)
         {
             return nicInfoArray;
         }
 
-        if (lanaCfgArray?.nics?.Length != wmiNicDetails.Count)
+        if (lanaCfgArray?.Nics?.Length != wmiNicDetails.Count)
         {
-            _logger.Info($"NIC array counts don't match WMI: {wmiNicDetails.Count} LanaCfg: {lanaCfgArray?.nics?.Length}");
+            _logger.Info($"NIC array counts don't match WMI: {wmiNicDetails.Count} LanaCfg: {lanaCfgArray?.Nics?.Length}");
         }
         else
         {
-            _logger.Info($"Lana count matches: {lanaCfgArray.nics.Length}");
+            _logger.Info($"Lana count matches: {lanaCfgArray.Nics.Length}");
         }
-        if (lanaCfgArray?.ValidNICs is null)
+        if (lanaCfgArray?.ValidNics is null)
         {
             throw new NullReferenceException();
         }
-        lanaCfgArray.ValidNICs = lanaCfgArray?.nics?.Length;
+        lanaCfgArray.ValidNics = lanaCfgArray?.Nics?.Length;
 
         foreach (NicInfoModel nicInfo in wmiNicDetails)
         {
@@ -115,85 +119,83 @@ public abstract class LanaService
             _logger.Info("IP: {ipaddress}, DNS1: {dns1}, DNS2: {dns2}, Gateway: {gateway}", nicInfo.IpAddress, nicInfo.Dns1, nicInfo.Dns2, nicInfo.Gateway);
         }
 
-        if (lanaCfgArray?.nics is null)
+        if (lanaCfgArray?.Nics is null)
         {
             throw new NullReferenceException();
         }
-        foreach (NicInfoModel nic in lanaCfgArray.nics)
+        foreach (NicInfoModel nic in lanaCfgArray.Nics)
         {
-            if (nic != null)
+            if (nic != null!)
             {
                 _logger.Info("Lana #{lananumber} NIC Description: {nicdescription}", nic.LanaNumber, nic.NicDescription);
             }
         }
 
-        int nics = FindNics(lanaCfgArray.nics, wmiNicDetails, nicsValidTemp);
+        int nics = FindNics(lanaCfgArray.Nics, wmiNicDetails, nicsValidTemp);
         _logger.Info("NicsValidTotal = {nics}", nics);
-        nicInfoArray.nics = new NicInfoModel[nics];
+        nicInfoArray.Nics = new NicInfoModel[nics];
 
         for (int i = 0; i < nics; ++i)
         {
-            if (nicInfoArray.nics[i] is null)
+            if (nicInfoArray.Nics[i] is null)
             {
                 throw new NullReferenceException();
             }
 
-            if (nicsValidTemp?.nics?[i] is null)
+            if (nicsValidTemp?.Nics?[i] is null)
             {
                 throw new NullReferenceException();
             }
 
-            nicInfoArray.nics[i] = new NicInfoModel()
-            {
-                IpAddress = nicsValidTemp.nics[i].IpAddress,
-                MacAddress = nicsValidTemp.nics[i].MacAddress,
-                LanaNumber = nicsValidTemp.nics[i].LanaNumber,
-                Caption = nicsValidTemp.nics[i].Caption,
-                NicDescription = nicsValidTemp.nics[i].NicDescription,
-                NicProtocol = nicsValidTemp.nics[i].NicProtocol,
-                NicProtocol1 = nicsValidTemp.nics[i].NicProtocol1,
-                Valid = nicsValidTemp.nics[i].Valid,
-                Dns1 = nicsValidTemp.nics[i].Dns1,
-                Dns2 = nicsValidTemp.nics[i].Dns2,
-                Gateway = nicsValidTemp.nics[i].Gateway,
-                DhcpEnabled = nicsValidTemp.nics[i].DhcpEnabled
-            };
-            _logger.Info("Nics {i} IP = {IpAddress}, DNS1 = {Dns1}, ", i, nicInfoArray.nics[i].IpAddress, nicInfoArray.nics[i].Dns1 +
-                "DNS2 = {Dns2}, Gateway = {Gateway}, DHCP = {DhcpEnabled}, ", nicInfoArray.nics[i].Dns2, nicInfoArray.nics[i].Gateway, nicInfoArray.nics[i].DhcpEnabled +
-                "NicProtocol = {NicProtocol}, NicProtocol1 = {NicProtocol1} ", nicInfoArray.nics[i].NicProtocol, nicInfoArray.nics[i].NicProtocol1);
+            nicInfoArray.Nics[i] = NicInfoModel.Create(
+                nicsValidTemp.Nics[i].IpAddress,
+                nicsValidTemp.Nics[i].NicDescription,
+                nicsValidTemp.Nics[i].MacAddress,
+                nicsValidTemp.Nics[i].LanaNumber,
+                nicsValidTemp.Nics[i].NicProtocol,
+                nicsValidTemp.Nics[i].Caption,
+                nicsValidTemp.Nics[i].IsValid,
+                nicsValidTemp.Nics[i].Dns1,
+                nicsValidTemp.Nics[i].Dns2,
+                nicsValidTemp.Nics[i].Gateway,
+                nicsValidTemp.Nics[i].DhcpEnabled
+            );
+            _logger.Info("Nics {i} IP = {IpAddress}, DNS1 = {Dns1}, ", i, nicInfoArray.Nics[i].IpAddress, nicInfoArray.Nics[i].Dns1 +
+                "DNS2 = {Dns2}, Gateway = {Gateway}, DHCP = {DhcpEnabled}, ", nicInfoArray.Nics[i].Dns2, nicInfoArray.Nics[i].Gateway, nicInfoArray.Nics[i].DhcpEnabled +
+                "NicProtocol = {NicProtocol}, NicProtocol1 = {NicProtocol1} ", nicInfoArray.Nics[i].NicProtocol, nicInfoArray.Nics[i].NicProtocol);
         }
-        if (lanaCfgArray.nics.Length != nics)
+        if (lanaCfgArray.Nics.Length != nics)
         {
             _logger.Info("Valid lana count does not match... please research... Valid lana count is {nics}", nics);
         }
         return nicInfoArray;
     }
 
-    private static int FindNics(NicInfoModel[] nics, ICollection<NicInfoModel> wmiNics, NICInfoArray nicsValidTemp)
+    private static int FindNics(NicInfoModel[] nics, ICollection<NicInfoModel> wmiNics, NicInfoArray nicsValidTemp)
     {
-        nicsValidTemp.nics = new NicInfoModel[100];
+        nicsValidTemp.Nics = new NicInfoModel[100];
         int index = 0;
         foreach (NicInfoModel wmiNic in wmiNics)
         {
             foreach (NicInfoModel nic in nics)
             {
-                if (nic != null && !nic.NicDescription.ToUpper().Contains("VMWARE") && !nic.NicDescription.ToUpper().Contains("VIRTUAL"))
+                if (nic != null! && !nic.NicDescription!.ToUpper().Contains("VMWARE") && !nic.NicDescription.ToUpper().Contains("VIRTUAL"))
                 {
                     string firstDescription = nic.NicDescription.Trim().ToUpper();
                     _logger.Info("Checking LANA: {firstDescription}", firstDescription);
 
                     int length = firstDescription.Length;
 
-                    nic.Valid = false;
+                    nic.SetIsValid(false);
 
-                    string secondDescription = wmiNic.Caption.Trim().ToUpper();
+                    string secondDescription = wmiNic.Caption!.Trim().ToUpper();
                     if (length > secondDescription.Length)
                     {
                         length = secondDescription.Length;
                     }
                     if (secondDescription[..length] != firstDescription[..length])
                     {
-                        string thirdDescription = wmiNic.NicDescription.Trim().ToUpper();
+                        string thirdDescription = wmiNic.NicDescription!.Trim().ToUpper();
 
                         if (length > thirdDescription.Length)
                         {
@@ -205,25 +207,23 @@ public abstract class LanaService
                         }
                     }
 
-                    nic.Valid = true;
+                    nic.SetIsValid(true);
 
-                    nicsValidTemp.nics[index] = new NicInfoModel()
-                    {
-                        IpAddress = wmiNic.IpAddress,
-                        LanaNumber = wmiNic.LanaNumber,
-                        Caption = wmiNic.Caption,
-                        NicDescription = wmiNic.NicDescription,
-                        NicProtocol = wmiNic.NicProtocol,
-                        NicProtocol1 = wmiNic.NicProtocol1,
-                        Valid = wmiNic.Valid,
-                        MacAddress = wmiNic.MacAddress,
-                        Dns1 = wmiNic.Dns1,
-                        Dns2 = wmiNic.Dns2,
-                        Gateway = wmiNic.Gateway,
-                        DhcpEnabled = wmiNic.DhcpEnabled
-                    };
-                    _logger.Info("Adding valid NIC Description: {NicDescription}", nicsValidTemp.nics[index].NicDescription);
-                    _logger.Info("Caption: {caption}", nicsValidTemp.nics[index].Caption);
+                    nicsValidTemp.Nics[index] = NicInfoModel.Create(
+                        wmiNic.IpAddress,
+                        wmiNic.NicDescription,
+                        wmiNic.MacAddress,
+                        wmiNic.LanaNumber,
+                        wmiNic.NicProtocol,
+                        wmiNic.Caption,
+                        wmiNic.IsValid,
+                        wmiNic.Dns1,
+                        wmiNic.Dns2,
+                        wmiNic.Gateway,
+                        wmiNic.DhcpEnabled
+                    );
+                    _logger.Info("Adding valid NIC Description: {NicDescription}", nicsValidTemp.Nics[index].NicDescription);
+                    _logger.Info("Caption: {caption}", nicsValidTemp.Nics[index].Caption);
                     _logger.Info("IP: {IpAddress}, DNS1: {Dns1}, DNS2: {Dns2}, Gateway: {Gateway}, DHCPEnabled: {DhcpEnabled}", wmiNic.IpAddress, wmiNic.Dns1, wmiNic.Dns2, wmiNic.Gateway, wmiNic.DhcpEnabled);
                     ++index;
                 }
@@ -276,25 +276,24 @@ public abstract class LanaService
                         }
                         else
                         {
-                            NicInfoModel nicInfo = new()
-                            {
-                                IpAddress = str3,
-                                NicDescription = str1,
-                                Caption = str2,
-                                MacAddress = (string)managementBaseObject["MacAddress"],
-                                DhcpEnabled = (bool)managementBaseObject["DHCPEnabled"]
-                            };
+                            NicInfoModel nicInfo = NicInfoModel.Create(
+                                str3,
+                                str1,
+                                (string)managementBaseObject["MacAddress"],
+                                str2,
+                                (bool)managementBaseObject["DHCPEnabled"]
+                            );
                             if (managementBaseObject["DNSServerSearchOrder"] != null)
                             {
                                 string[] strArray = (string[])managementBaseObject["DNSServerSearchOrder"];
                                 if (strArray.Length > 0)
                                 {
-                                    nicInfo.Dns1 = strArray[0];
+                                    nicInfo.SetDns1(strArray[0]);
                                 }
 
                                 if (strArray.Length > 1)
                                 {
-                                    nicInfo.Dns2 = strArray[1];
+                                    nicInfo.SetDns2(strArray[1]);
                                 }
                             }
                             if (managementBaseObject["DefaultIPGateway"] != null)
@@ -302,7 +301,7 @@ public abstract class LanaService
                                 string[] strArray = (string[])managementBaseObject["DefaultIPGateway"];
                                 if (strArray.Length > 0)
                                 {
-                                    nicInfo.Gateway = strArray[0];
+                                    nicInfo.SetGateway(strArray[0]);
                                 }
                             }
                             _logger.Info("Adding   NIC with:\nIPAddress = {IpAddress}\nMacAddress = {MacAddress}\nCaption = {Caption}\n", nicInfo.IpAddress, nicInfo.MacAddress, nicInfo.Caption +
@@ -339,34 +338,32 @@ public abstract class LanaService
         return arrayList;
     }
 
-    public static NICInfoArray GetLanaDetails(string lanaoutput)
+    public static NicInfoArray GetLanaDetails(string lanaoutput)
     {
         ArrayList array = SplitToArray(lanaoutput, "Lana:", false);
         _logger.Info("GetLanaDetails lana conut : " + array.Count);
-        NICInfoArray nics = new() { nics = new NicInfoModel[array.Count] };
+        NicInfoArray nics = new() { Nics = new NicInfoModel[array.Count] };
 
         for (int i = 0; i < array.Count; i++)
         {
-            ArrayList output = SplitToArray(array[i].ToString(), "-->", true);
+            ArrayList output = SplitToArray(array[i]!.ToString()!, "-->", true);
             if (output.Count >= 4)
             {
-                nics.nics[i] = new NicInfoModel()
-                {
-                    LanaNumber = Convert.ToInt32(output[0].ToString()),
-                    NicProtocol = output[1].ToString(),
-                    NicProtocol1 = output[2].ToString(),
-                    NicDescription = output[3].ToString()
-                };
+                nics.Nics[i] = NicInfoModel.Create(
+                     output[3]!.ToString(),
+                     Convert.ToInt32(output[0]!.ToString()),
+                     output[1]!.ToString(),
+                     output[2]!.ToString()
+                );
             }
             else if (output.Count == 3)
             {
-                nics.nics[i] = new NicInfoModel()
-                {
-                    LanaNumber = Convert.ToInt32(output[0].ToString()),
-                    NicProtocol = output[1].ToString(),
-                    NicProtocol1 = "",
-                    NicDescription = output[2].ToString()
-                };
+                nics.Nics[i] =  NicInfoModel.Create(
+                     output[2]!.ToString(),
+                     Convert.ToInt32(output[0]!.ToString()),
+                     output[1]!.ToString(),
+                     ""
+                );
             }
         }
         _logger.Info("GetLanaDetails nics count: {count}", array.Count);

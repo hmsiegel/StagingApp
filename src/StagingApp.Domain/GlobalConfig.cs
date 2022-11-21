@@ -4,6 +4,7 @@ public static class GlobalConfig
     public const string ScriptPath = "C:\\AlohaStaging";
     public const string StageExtension = "*.stage";
     public const string Ibgolden = "IBGOLDEN";
+    public const string Osk = "osk";
 
     /// <summary>
     /// The name of the computer that the application is being run on.

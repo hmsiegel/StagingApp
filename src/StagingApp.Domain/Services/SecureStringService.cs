@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace StagingApp.Domain.Services;
+﻿namespace StagingApp.Domain.Services;
 public static class SecureStringService
 {
     //TODO: Add Salt to secrets.json
@@ -8,13 +6,13 @@ public static class SecureStringService
 
     public static string EncryptString(string plainText, string sharedSecret)
     {
-        string result = null;
-        Aes aesAlg = null;
+        string result = null!;
+        Aes aesAlg = null!;
 
         try
         {
-            Rfc2898DeriveBytes key = new(sharedSecret, _salt);
-            aesAlg = Aes.Create("AesManaged");
+            Rfc2898DeriveBytes key = new(sharedSecret!, _salt!,100,HashAlgorithmName.SHA256);
+            aesAlg = Aes.Create()!;
             aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
 
             ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
@@ -31,10 +29,7 @@ public static class SecureStringService
         }
         finally
         {
-            if (aesAlg != null)
-            {
-                aesAlg.Clear();
-            }
+            aesAlg?.Clear();
         }
 
         return result;
@@ -42,15 +37,15 @@ public static class SecureStringService
 
     public static string DecryptString(string cipherText, string sharedSecret)
     {
-        Aes aesAlg = null;
-        string result = null;
+        Aes aesAlg = null!;
+        string result = null!;
 
         try
         {
-            Rfc2898DeriveBytes key = new(sharedSecret, _salt);
+            Rfc2898DeriveBytes key = new(sharedSecret, _salt, 100, HashAlgorithmName.SHA256);
             byte[] bytes = Convert.FromBase64String(cipherText);
             using MemoryStream msDecrypt = new(bytes);
-            aesAlg = Aes.Create("AesManaged");
+            aesAlg = Aes.Create();
             aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
             aesAlg.IV = ReadByteArray(msDecrypt);
             ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
@@ -60,10 +55,7 @@ public static class SecureStringService
         }
         finally
         {
-            if (aesAlg != null)
-            {
-                aesAlg.Clear();
-            }
+            aesAlg?.Clear();
         }
 
         return result;

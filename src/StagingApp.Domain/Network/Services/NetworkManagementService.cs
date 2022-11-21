@@ -9,7 +9,7 @@ public static class NetworkManagementService
     {
         ManagementObjectCollection instances = new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances();
         _logger.Info($"In SetIP. Setting to {ipAddress} Subnet: {subnetMask}");
-        foreach (ManagementObject managementObject in instances)
+        foreach (ManagementObject managementObject in instances.Cast<ManagementObject>())
         {
             if ((bool)managementObject["IPEnabled"]!)
             {
@@ -56,11 +56,11 @@ public static class NetworkManagementService
             return;
         }
 
-        AppHelper.RunProcess($"netsh interface ip set address \"{NIC}\" static {ipAddress} {subnetMask} {(string.IsNullOrWhiteSpace(gateway) ? "" : $"{gateway} 1")}",
-                             false,
-                             true,
-                             true,
-                             "SetIP");
+        //AppHelper.RunProcess($"netsh interface ip set address \"{NIC}\" static {ipAddress} {subnetMask} {(string.IsNullOrWhiteSpace(gateway) ? "" : $"{gateway} 1")}",
+        //                     false,
+        //                     true,
+        //                     true,
+        //                     "SetIP");
 
     }
 
@@ -68,7 +68,7 @@ public static class NetworkManagementService
     {
         ManagementObjectCollection instances = new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances();
         _logger.Info("In SetGateway. Setting to {gateway}", gateway);
-        foreach (ManagementObject managementObject in instances)
+        foreach (ManagementObject managementObject in instances.Cast<ManagementObject>())
         {
             if ((bool)managementObject["IPEnabled"])
             {
@@ -123,28 +123,25 @@ public static class NetworkManagementService
         }
         else
         {
-            AppHelper.RunProcess($"netsh interface ipv4 set dns name=\"{NIC}\" static {DNS1}",
-                        false,
-                        true,
-                        true,
-                        "SetDNS1");
+            //AppHelper.RunProcess($"netsh interface ipv4 set dns name=\"{NIC}\" static {DNS1}",
+            //            false,
+            //            true,
+            //            true,
+            //            "SetDNS1");
 
-            AppHelper.RunProcess($"netsh interface ip add dns name=\"{NIC}\" {DNS2} index=2",
-                         false,
-                         true,
-                         true,
-                         "SetDNS2");
+            //AppHelper.RunProcess($"netsh interface ip add dns name=\"{NIC}\" {DNS2} index=2",
+            //             false,
+            //             true,
+            //             true,
+            //             "SetDNS2");
         }
-
-
-
     }
 
     public static void SetWINS(string NIC, string priWINS, string secWINS)
     {
         ManagementObjectCollection instances = new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances();
         _logger.Info("In SetWINS. Setting to {priWINS} {secWINS}", priWINS, secWINS);
-        foreach (ManagementObject managementObject in instances)
+        foreach (ManagementObject managementObject in instances.Cast<ManagementObject>())
         {
             if ((bool)managementObject["IPEnabled"])
             {
@@ -172,17 +169,17 @@ public static class NetworkManagementService
     {
         ManagementObjectCollection instances = new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances();
         _logger.Info($"In SetGateway. In SetNetBIOS");
-        foreach (ManagementObject managementObject in instances)
+        foreach (ManagementObject managementObject in instances.Cast<ManagementObject>())
         {
             if ((bool)managementObject["IPEnabled"])
             {
-                if (managementObject["Caption"].ToString().Contains(NIC))
+                if (managementObject["Caption"].ToString()!.Contains(NIC))
                 {
                     try
                     {
                         ManagementBaseObject methodParameters = managementObject.GetMethodParameters("SetTcpipNetbios");
                         methodParameters.SetPropertyValue("TcpipNetbiosOptions", 0);
-                        managementObject.InvokeMethod("SetTcpipnetbios", methodParameters, null);
+                        managementObject.InvokeMethod("SetTcpipnetbios", methodParameters, null!);
                         _logger.Info("Invoked SetTcpipNetbios");
                     }
                     catch (Exception ex)
@@ -197,7 +194,7 @@ public static class NetworkManagementService
 
     public static string GetNetConnectionID(string nic)
     {
-        foreach (ManagementObject instance in new ManagementClass("Win32_NetworkAdapter").GetInstances())
+        foreach (ManagementObject instance in new ManagementClass("Win32_NetworkAdapter").GetInstances().Cast<ManagementObject>())
         {
             if (instance["Caption"].ToString()!.Contains(nic))
             {
@@ -218,7 +215,7 @@ public static class NetworkManagementService
     {
         ManagementObjectCollection instances = new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances();
         _logger.Info("In DisableDHCP.");
-        foreach (ManagementObject managementObject in instances)
+        foreach (ManagementObject managementObject in instances.Cast<ManagementObject>())
         {
             if ((bool)managementObject["IPEnabled"])
             {
@@ -228,8 +225,8 @@ public static class NetworkManagementService
                     {
                         ManagementBaseObject methodParameters = managementObject.GetMethodParameters("SetDNSServerSearchOrder");
                         methodParameters["DNSServerSearchOrder"] = null!;
-                        managementObject.InvokeMethod("DisableDHCP", null, null!);
-                        managementObject.InvokeMethod("SetDNSServerSearchOrder", methodParameters, null);
+                        managementObject.InvokeMethod("DisableDHCP", null!, null!);
+                        managementObject.InvokeMethod("SetDNSServerSearchOrder", methodParameters, null!);
                         _logger.Info("Invoked SetDNSServerSearchOrder");
                     }
                     catch (Exception ex)

@@ -16,4 +16,9 @@ public static class EnumExtensions
             .Select(x => x.ToString())
             .ToList();
     }
+
+    public static string ConvertToFileExtension(this Enum val)
+    {
+        return "." + val.ToString().ToLower();
+    }
 }
