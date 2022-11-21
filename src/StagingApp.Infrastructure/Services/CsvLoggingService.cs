@@ -1,11 +1,4 @@
-﻿using MediatR;
-
-using StagingApp.Application.EnvironmentVariables.Queries.GetEnvironmentVariable;
-using StagingApp.Domain.Kitchen.ValueObjects;
-using StagingApp.Domain.Server.ValueObjects;
-using StagingApp.Domain.Shared;
-
-namespace StagingApp.Infrastructure.Services;
+﻿namespace StagingApp.Infrastructure.Services;
 public class CsvLoggingService : ICsvLoggingService
 {
     private static readonly Logger _logger = LogManager.GetCurrentClassLogger();

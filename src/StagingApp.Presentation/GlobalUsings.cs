@@ -14,7 +14,6 @@ global using MediatR;
 
 global using NLog;
 
-global using StagingApp.Application.FileSystem.Queries.CheckMarkerFile;
 global using StagingApp.Application.Terminal.Commands.SaveTerminalInfoAndSysPrep;
 global using StagingApp.Application.Helpers;
 

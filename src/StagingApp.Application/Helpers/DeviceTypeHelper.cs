@@ -19,7 +19,7 @@ public static class DeviceTypeHelper
         string? computerName = GlobalConfig.ComputerName;
         string? stagingMarkerFile = Directory.GetFiles(
             GlobalConfig.ScriptPath,
-            GlobalConfig.StageExtension,
+            FileExtensions.stage.ConvertToFileExtension(),
             SearchOption.TopDirectoryOnly)
             .FirstOrDefault();
         string? stagingViewModelName;

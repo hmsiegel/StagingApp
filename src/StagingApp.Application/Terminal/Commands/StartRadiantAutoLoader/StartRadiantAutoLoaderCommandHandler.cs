@@ -5,7 +5,7 @@ internal sealed class StartRadiantAutoLoaderCommandHandler : ICommandHandler<Sta
     public async Task<Result> Handle(StartRadiantAutoLoaderCommand request, CancellationToken cancellationToken)
     {
         _logger.Info("Third marker file found. Starting third pass...");
-
+        return default;
         
     }
 }

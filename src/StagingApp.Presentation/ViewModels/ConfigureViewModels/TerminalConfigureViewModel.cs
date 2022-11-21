@@ -1,23 +1,30 @@
-﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
+﻿using StagingApp.Domain.Extensions;
+
+namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
 public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 {
     private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-    private readonly IValidator<TerminalConfigureModel> _validator;
-    private readonly ISender _sender;
-    private readonly IMapper _mapper;
+    private readonly IValidator<TerminalConfigureModel>? _validator;
+    private readonly ISender? _sender;
+    private readonly IMapper? _mapper;
 
     private string? _terminalName;
     private string? _ipAddress;
 
-    public TerminalConfigureViewModel(
-        IValidator<TerminalConfigureModel> validator,
-        ISender sender,
-        IMapper mapper)
+    internal TerminalConfigureViewModel(
+        IValidator<TerminalConfigureModel>? validator,
+        ISender? sender,
+        IMapper? mapper) : this()
     {
         _validator = validator;
         _sender = sender;
         _mapper = mapper;
+    }
+
+    public TerminalConfigureViewModel()
+    {
+
     }
 
     protected override void OnViewLoaded(object view)
@@ -57,16 +64,16 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
                 TerminalName!.Replace("_", "-"),
                 IpAddress!);
 
-        var result = _validator.Validate(model);
+        var result = _validator!.Validate(model);
 
-        var terminalModel = _mapper.Map<TerminalModel>(model);
+        var terminalModel = _mapper!.Map<TerminalModel>(model);
 
         if (result.IsValid)
         {
             _logger.Info("Inputs are valid. Configuring...");
 
             var command = new SaveTerminalInfoAndSysPrepCommand(terminalModel);
-            var response = await _sender.Send(command);
+            var response = await _sender!.Send(command);
             return response.IsSuccess;
         }
         else
@@ -81,12 +88,15 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         throw new NotImplementedException();
         // TODO: Implement the configure method to start the configuration
     }
-    private async void CheckForMarkerFiles()
+    private void CheckForMarkerFiles()
     {
         _logger.Info("Checking for marker files...");
 
         var markerFile =
-            Directory.GetFiles(GlobalConfig.ScriptPath, "*.done", SearchOption.TopDirectoryOnly).FirstOrDefault();
+            Directory.GetFiles(
+                GlobalConfig.ScriptPath,
+                "*.done",
+                SearchOption.TopDirectoryOnly).FirstOrDefault();
 
         if (markerFile is null)
         {
@@ -94,11 +104,7 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
             StartOsk();
         }
 
-        CheckMarkerFileQuery query = new(markerFile!);
-
-        Result<string> response = await _sender.Send(query, new CancellationToken());
-
-        switch (response.Value)
+        switch (markerFile)
         {
             case nameof(MarkerFiles.first):
                 StartStageTerminal();
@@ -129,6 +135,11 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 
     private static void StartOsk()
     {
-        ApplicationHelper.RunProcessInCurrentDirectory(GlobalConfig.Osk, GlobalConfig.ScriptPath);
+        ApplicationHelper.RunProcessInCurrentDirectory(
+            GlobalConfig.Osk + FileExtensions.exe.ConvertToFileExtension(),
+            GlobalConfig.ScriptPath,
+            true,
+            true,
+            true);
     }
 }

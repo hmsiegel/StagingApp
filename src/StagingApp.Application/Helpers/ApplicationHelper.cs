@@ -1,24 +1,23 @@
 ﻿namespace StagingApp.Application.Helpers;
+
+[SupportedOSPlatform("Windows7.0")]
 public static partial class ApplicationHelper
 {
-    private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-    private const string _commandString = "/c ";
-    private const string _cmd = "CMD.exe";
-    private static readonly string _cmdExe = Path.Combine(Environment.GetEnvironmentVariable("SYSTEM32")!, _cmd);
+    private readonly static Logger _logger = LogManager.GetCurrentClassLogger();
 
     public static string GetSoftwareVersion(string filePath)
     {
         return FileVersionInfo.GetVersionInfo(filePath).FileVersion!;
     }
 
-    public static void RunProcess(string[] args, bool logToNormalLog, bool ignoreExitCode)
+    public static void RunProcess(string[] args, bool logToNormalLog, bool ignoreExitCode, bool runAsAdmin)
     {
-        ExecuteCmdProcess(string.Join(" ", _commandString, args), logToNormalLog, ignoreExitCode);
+        ExecuteCmdProcess(string.Join(" ", GlobalConfig.CommandString, args), logToNormalLog, ignoreExitCode, runAsAdmin);
     }
 
-    public static void RunProcessInCurrentDirectory(object osk, string scriptPath)
+    public static void RunProcessInCurrentDirectory(string args, string currentDir, bool logToNormalLog, bool ignoreExitCode, bool runAsAdmin)
     {
-        throw new NotImplementedException();
+        ExecuteCmdProcessInCurrentDirectory(GlobalConfig.CommandString + args, currentDir, logToNormalLog, ignoreExitCode, runAsAdmin);
     }
 
     public static void EndProcess(string processName)
@@ -32,60 +31,62 @@ public static partial class ApplicationHelper
         }
     }
 
-    private static void ExecuteCmdProcess(string args, bool logToNormalLog, bool ignoreExitCode)
-
+    public static void RunSysPrep()
     {
         try
         {
-            if (logToNormalLog)
+            if (EnableWow64FsRedirection(true) == true)
             {
-                _logger.Info("Executing CMD process: {args}", args);
+                EnableWow64FsRedirection(false);
+            }
+
+            _logger.Info("Starting system sysprep...");
+            Process process = new();
+            process.StartInfo.FileName = @"C:\Windows\System32\sysprep\sysprep.exe";
+            process.StartInfo.Arguments = @"/generalize /oobe /reboot /unattend:C:\Windows\System32\Sysprep\unattend.xml";
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            process.Start();
+
+            if (EnableWow64FsRedirection(false) == true)
+            {
+                EnableWow64FsRedirection(true);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.Error(ex.Message);
+            throw;
+        }
+    }
+
+    private static void ExecuteCmdProcess(string args, bool logToNormalLog, bool ignoreExitCode, bool runAsAdmin)
+    {
+        string? verb = null;
+        try
+        {
+            LogToNormalLog(args, logToNormalLog);
+
+            if (runAsAdmin)
+            {
+                verb = "runAs";
             }
 
             Process process = new()
             {
                 StartInfo = new ProcessStartInfo()
                 {
-                    FileName = _cmdExe,
+                    FileName = GlobalConfig.CmdExe,
                     Arguments = args,
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     WindowStyle = ProcessWindowStyle.Hidden,
-                    CreateNoWindow = true
+                    CreateNoWindow = true,
+                    Verb = verb
                 }
             };
             process.Start();
-            string returnMessage = string.Empty;
-            process.OutputDataReceived += (sender, line) =>
-            {
-                if (line.Data is null) { return; }
-
-                returnMessage += line.Data;
-            };
-
-            string returnError = string.Empty;
-            process.ErrorDataReceived += (sender, line) =>
-            {
-                if (line.Data is null) { return; }
-
-                returnError += line.Data;
-            };
-
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-            process.WaitForExit();
-            int exitCode = process.ExitCode;
-            process.Close();
-            if (exitCode != 0 && ignoreExitCode)
-            {
-                throw new ProcessException(exitCode, returnMessage + returnError);
-            }
-
-            if (logToNormalLog)
-            {
-                _logger.Info("Process with arguments: {args} completed with exit code {exitCode}. Output: {returnMessage} {returnError}", args, exitCode, returnMessage, returnError);
-            }
+            ReturnOutputAndMessages(args, logToNormalLog, ignoreExitCode, process);
 
         }
         catch (ProcessException ex)
@@ -116,31 +117,111 @@ public static partial class ApplicationHelper
         }
     }
 
-    public static void RunSysPrep()
+    private static void ReturnOutputAndMessages(string args, bool logToNormalLog, bool ignoreExitCode, Process process)
     {
+        string returnMessage = string.Empty;
+        process.OutputDataReceived += (sender, line) =>
+        {
+            if (line.Data is null) { return; }
+
+            returnMessage += line.Data;
+        };
+
+        string returnError = string.Empty;
+        process.ErrorDataReceived += (sender, line) =>
+        {
+            if (line.Data is null) { return; }
+
+            returnError += line.Data;
+        };
+
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
+        process.WaitForExit();
+        int exitCode = process.ExitCode;
+        process.Close();
+        if (exitCode != 0 && ignoreExitCode)
+        {
+            throw new ProcessException(exitCode, returnMessage + returnError);
+        }
+
+        if (logToNormalLog)
+        {
+            _logger.Info("Process with arguments: {args} completed with exit code {exitCode}. Output: {returnMessage} {returnError}", args, exitCode, returnMessage, returnError);
+        }
+    }
+
+    private static void ExecuteCmdProcessInCurrentDirectory(string args, string currentDir, bool logToNormalLog, bool ignoreExitCode, bool runAsAdmin)
+    {
+        string? verb = null;
         try
         {
-            if (EnableWow64FsRedirection(true) == true)
+            LogToNormalLog(
+                args,
+                logToNormalLog);
+
+            if (runAsAdmin)
             {
-                EnableWow64FsRedirection(false);
+                verb = "runAs";
             }
 
-            _logger.Info("Starting system sysprep...");
-            Process process = new();
-            process.StartInfo.FileName = @"C:\Windows\System32\sysprep\sysprep.exe";
-            process.StartInfo.Arguments = @"/generalize /oobe /reboot /unattend:C:\Windows\System32\Sysprep\unattend.xml";
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-            process.Start();
-
-            if (EnableWow64FsRedirection(false) == true)
+            Process process = new()
             {
-                EnableWow64FsRedirection(true);
+                StartInfo = new ProcessStartInfo()
+                {
+                    FileName = GlobalConfig.CmdExe, 
+                    Arguments = args,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    WorkingDirectory = currentDir,
+                    CreateNoWindow = true,
+                    Verb = verb
+                }
+            };
+
+            process.Start();
+            ReturnOutputAndMessages(args, logToNormalLog, ignoreExitCode, process);
+
+        }
+        catch (ProcessException ex)
+        {
+            if (ex.ErrorCode != 3010)
+            {
+                if (logToNormalLog)
+                {
+                    _logger.Error("Process failed with exception: {ErrorCode} Message: {Message} Args: {args}", ex.ErrorCode, ex.Message, args);
+                }
+                else
+                {
+                    _logger.Error("Process failed with exception: {ErrorCode} No further logging as it is turned off for this function.", ex.ErrorCode);
+                }
+                throw new ProcessException(ex.ErrorCode, ex.Message);
             }
         }
         catch (Exception ex)
         {
-            _logger.Error(ex.Message);
-            throw;
+            if (logToNormalLog)
+            {
+                _logger.Error("Process with arguments: {args} could not be completed. Output: {Message} Full String: {ex}", args, ex.Message, ex);
+            }
+            else
+            {
+                _logger.Error("Process could not be completed. Output: {Message} Full String: {ex}", ex.Message, ex);
+            }
+        }
+    }
+
+    private static void LogToNormalLog(string args, bool logToNormalLog)
+    {
+        if (logToNormalLog)
+        {
+            _logger.Info($"Execute CMD Process {args}...");
+        }
+        else
+        {
+            _logger.Info("Executing CMD process but logging is turned off...");
         }
     }
 

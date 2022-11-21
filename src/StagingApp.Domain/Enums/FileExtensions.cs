@@ -4,5 +4,7 @@ public enum FileExtensions
 {
     csv,
     marker,
-    stage
+    stage,
+    exe,
+    done
 }
