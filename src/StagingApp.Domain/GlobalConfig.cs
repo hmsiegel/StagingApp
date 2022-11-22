@@ -1,6 +1,4 @@
-﻿using StagingApp.Domain.Extensions;
-
-namespace StagingApp.Domain;
+﻿namespace StagingApp.Domain;
 public static class GlobalConfig
 {
     public const string ScriptPath = "C:\\AlohaStaging";
@@ -23,5 +21,5 @@ public static class GlobalConfig
             .Where(x => x.Contains(FileExtensions.exe.ConvertToFileExtension())).FirstOrDefault();
 
     public static string? CmdExe { get; set; } =
-        Path.Combine(Environment.SpecialFolder.System.ToString(), Cmd);
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), Cmd);
 }

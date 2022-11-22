@@ -26,6 +26,6 @@ global using StagingApp.Domain.Attributes;
 global using StagingApp.Domain.Common.Models;
 global using StagingApp.Domain.Enums;
 global using StagingApp.Domain.EventModels;
+global using StagingApp.Domain.Extensions;
 global using StagingApp.Domain.Services;
-global using StagingApp.Domain.Shared;
 global using StagingApp.Domain.Terminal.ValueObjects;

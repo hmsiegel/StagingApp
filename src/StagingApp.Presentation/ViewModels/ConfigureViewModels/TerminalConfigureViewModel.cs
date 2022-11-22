@@ -1,6 +1,4 @@
-﻿using StagingApp.Domain.Extensions;
-
-namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
+﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
 public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 {
     private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
@@ -88,7 +86,7 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         throw new NotImplementedException();
         // TODO: Implement the configure method to start the configuration
     }
-    private void CheckForMarkerFiles()
+    private async void CheckForMarkerFiles()
     {
         _logger.Info("Checking for marker files...");
 
@@ -101,7 +99,7 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         if (markerFile is null)
         {
             _logger.Info("No marker files found. Starting first run...");
-            StartOsk();
+            await StartOsk();
         }
 
         switch (markerFile)
@@ -133,13 +131,13 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         throw new NotImplementedException();
     }
 
-    private static void StartOsk()
+    private static async Task StartOsk()
     {
-        ApplicationHelper.RunProcessInCurrentDirectory(
+        await Task.Run(() => ApplicationHelper.RunProcessInCurrentDirectory(
             GlobalConfig.Osk + FileExtensions.exe.ConvertToFileExtension(),
             GlobalConfig.ScriptPath,
             true,
             true,
-            true);
+            true));
     }
 }
