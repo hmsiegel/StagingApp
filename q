@@ -1,36 +1,31 @@
-namespace StagingApp.Infrastructure.Services;
-
-[SupportedOSPlatform("Windows7.0")]
-public class RegistryService : IRegistryService
+namespace StagingApp.Domain.Terminal.ValueObjects;
+public sealed class TerminalModel : ValueObject
 {
-    private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+    public string TerminalName { get; private set; }
+    public string IpAddress { get; private set; }
 
-    public void EditRegistryFromValues(
-        RegistryHive hiveType,
-        string key,
-        string value,
-        string data,
-        RegistryValueKind dataType)
+    private TerminalModel(string terminalName, string ipAddress)
     {
-        try
-        {
-            RegistryKey registryKey = !Environment.Is64BitOperatingSystem 
-                ? RegistryKey.OpenBaseKey(hiveType, RegistryView.Registry32) 
-                : RegistryKey.OpenBaseKey(hiveType, RegistryView.Registry64);
-            registryKey.CreateSubKey(key);
-            registryKey.OpenSubKey(key, true)!.SetValue(value, data, dataType);
-        }
-        catch (Exception ex)
-        {
-            _logger.Error("Error editing registry.");
-            _logger.Error(ex.ToString());
-        }
+        TerminalName = terminalName;
+        IpAddress = ipAddress;
     }
 
-    public void SetRegistryKeyAndValue(string subKeyName, string name, string value)
+    public static TerminalModel Create(string terminalName, string ipAddress) =>
+        new(terminalName, ipAddress);
+
+    public void SetTerminalName(string terminalName)
     {
-        RegistryKey registryKey = Registry.LocalMachine.CreateSubKey(subKeyName);
-        registryKey.SetValue(name, value);
-        registryKey.Close();
+        TerminalName = terminalName;
+    }
+
+    public void SetTerminalIp(string terminalIp)
+    {
+        IpAddress = terminalIp;
+    }
+
+    public override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return TerminalName;
+        yield return IpAddress;
     }
 }

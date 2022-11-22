@@ -13,6 +13,16 @@ public sealed class TerminalModel : ValueObject
     public static TerminalModel Create(string terminalName, string ipAddress) =>
         new(terminalName, ipAddress);
 
+    public void SetTerminalName(string terminalName)
+    {
+        TerminalName = terminalName;
+    }
+
+    public void SetTerminalIp(string terminalIp)
+    {
+        IpAddress = terminalIp;
+    }
+
     public override IEnumerable<object> GetEqualityComponents()
     {
         yield return TerminalName;
