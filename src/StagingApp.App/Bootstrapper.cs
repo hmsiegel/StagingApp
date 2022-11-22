@@ -51,7 +51,8 @@ public sealed partial class Bootstrapper : BootstrapperBase
 
         var builder = new ContainerBuilder();
         builder.RegisterModule(module);
-        RegisterClass<ShellViewModel>(builder);
+        builder.RegisterType<ShellViewModel>().SingleInstance();
+        //RegisterClass<ShellViewModel>(builder);
         RegisterTypes(builder);
         RegisterModules(builder);
         RegisterProfiles(builder);
@@ -128,10 +129,10 @@ public sealed partial class Bootstrapper : BootstrapperBase
         builder.RegisterType<EventAggregator>().As<IEventAggregator>();
     }
 
-    private static void RegisterClass<T>(ContainerBuilder builder)
-    {
-        builder!.RegisterType<T>()!.SingleInstance();
-    }
+    //private static void RegisterClass<T>(ContainerBuilder builder)
+    //{
+    //    builder.RegisterType<T>().SingleInstance();
+    //}
 
     private static void RegisterProfiles(ContainerBuilder builder)
     {

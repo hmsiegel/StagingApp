@@ -5,5 +5,6 @@ public enum MarkerFiles
     second,
     third,
     fourth,
-    fifth
+    fifth,
+    bigfix
 }

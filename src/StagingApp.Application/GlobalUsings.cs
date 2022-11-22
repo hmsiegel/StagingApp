@@ -4,6 +4,7 @@ global using System.Runtime.InteropServices;
 global using System.Runtime.Versioning;
 global using System.Text.RegularExpressions;
 
+global using Microsoft.Extensions.Configuration;
 global using Microsoft.Win32;
 
 global using Autofac;
