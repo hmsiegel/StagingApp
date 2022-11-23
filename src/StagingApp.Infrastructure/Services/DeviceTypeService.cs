@@ -1,23 +1,7 @@
-﻿using StagingApp.Domain.Enums;
-using StagingApp.Domain.Extensions;
-
-namespace StagingApp.Application.Helpers;
-public static class DeviceTypeHelper
+﻿namespace StagingApp.Infrastructure.Services;
+public class DeviceTypeService : IDeviceTypeService
 {
-    public static bool IsThisATerminal(string computerName)
-    {
-        List<string> termPrefixes = Enum.GetNames(typeof(TermPrefix))
-            .Cast<string>()
-            .Select(x => x.ToString())
-            .ToList();
-
-        IEnumerable<string?> escapedWords = termPrefixes
-            .Select(x => Regex.Escape(x));
-        Regex pattern = new($@"({string.Join("|", escapedWords)})\d{{2,4}}(_|-)\d{{1,3}}");
-
-        return pattern.IsMatch(computerName);
-    }
-    public static string DetermineDeviceType()
+    public string DetermineDeviceType()
     {
         string? computerName = GlobalConfig.ComputerName;
         string? stagingMarkerFile = Directory.GetFiles(
@@ -46,13 +30,9 @@ public static class DeviceTypeHelper
 
         string? stagingViewModel = string.Empty;
 
-        if (DeviceTypeHelper.IsThisATerminal(computerName))
-        {
-            stagingViewModel = DeviceType.Terminal.ToString();
-        }
-        else
-        {
-            stagingViewModel = computerName.ToLower() switch
+        stagingViewModel = IsThisATerminal(computerName)
+            ? DeviceType.Terminal.ToString()
+            : computerName.ToLower() switch
             {
                 var name when name.StartsWith(InitialDevicePrefix.ALOHABOH.ToString().ToLower()) => DeviceType.Server.ToString(),
                 var name when name.StartsWith(GlobalConfig.Ibgolden.ToLower()) => DeviceType.Server.ToString(),
@@ -60,7 +40,6 @@ public static class DeviceTypeHelper
                 var name when name.StartsWith(InitialDevicePrefix.AK.ToString().ToLower()) => DeviceType.Kitchen.ToString(),
                 _ => null,
             };
-        }
         if (stagingViewModel is null)
         {
             // TODO: Throw an error here
@@ -89,5 +68,18 @@ public static class DeviceTypeHelper
                 break;
         }
         return stagingViewModel;
+    }
+    private static bool IsThisATerminal(string computerName)
+    {
+        List<string> termPrefixes = Enum.GetNames(typeof(TermPrefix))
+            .Cast<string>()
+            .Select(x => x.ToString())
+            .ToList();
+
+        IEnumerable<string?> escapedWords = termPrefixes
+            .Select(x => Regex.Escape(x));
+        Regex pattern = new($@"({string.Join("|", escapedWords)})\d{{2,4}}(_|-)\d{{1,3}}");
+
+        return pattern.IsMatch(computerName);
     }
 }

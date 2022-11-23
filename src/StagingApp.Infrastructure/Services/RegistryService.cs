@@ -1,11 +1,11 @@
-﻿namespace StagingApp.Infrastructure.Helpers;
+﻿namespace StagingApp.Infrastructure.Services;
 
 [SupportedOSPlatform("Windows7.0")]
-public static class RegistryHelper
+public class RegistryService : IRegistryService
 {
     private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-    public static void EditRegistryFromValues(
+    public void EditRegistryFromValues(
         RegistryHive hiveType,
         string key,
         string value,
@@ -24,14 +24,14 @@ public static class RegistryHelper
             _logger.Error(ex.ToString());
         }
     }
-    public static void SetRegistryKeyAndValue(string subKeyName, string name, string value)
+    public void SetRegistryKeyAndValue(string subKeyName, string name, string value)
     {
         RegistryKey registryKey = Registry.LocalMachine.CreateSubKey(subKeyName);
         registryKey.SetValue(name, value);
         registryKey.Close();
     }
 
-    public static string GetRegistryKeyAndValue(RegistryHive hiveType, string key, string value)
+    public string GetRegistryKeyAndValue(RegistryHive hiveType, string key, string value)
     {
         RegistryKey registryKey = DetermineRegistryHiveType(hiveType);
         registryKey = registryKey.OpenSubKey(key)!;
@@ -48,7 +48,7 @@ public static class RegistryHelper
         return output!;
     }
 
-    public static byte[] GetLocalRegistryKeyAndValue(string key, string value)
+    public byte[] GetLocalRegistryKeyAndValue(string key, string value)
     {
         RegistryHive hive = RegistryHive.LocalMachine;
         RegistryKey registryKey = DetermineRegistryHiveType(hive);

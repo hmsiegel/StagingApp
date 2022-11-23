@@ -1,8 +1,8 @@
-﻿namespace StagingApp.Application.Helpers;
-public static class FileSystemHelper
+﻿namespace StagingApp.Infrastructure.Services;
+public class FileSystemService : IFileSystemService
 {
     private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-    public static void CreateMarkerFile(string? fileName)
+    public void CreateMarkerFile(string? fileName)
     {
         {
             if (File.Exists(fileName))
@@ -19,7 +19,7 @@ public static class FileSystemHelper
         }
     }
 
-    public static void DeleteMarkerFile(string? fileName)
+    public void DeleteMarkerFile(string? fileName)
     {
         if (File.Exists(fileName))
         {
@@ -27,7 +27,7 @@ public static class FileSystemHelper
         }
     }
 
-    public static string CheckForMarkerFile(string? fileName)
+    public string CheckForMarkerFile(string? fileName)
     {
 
         if (fileName is null)
@@ -38,7 +38,7 @@ public static class FileSystemHelper
         return Path.GetFileNameWithoutExtension(fileName);
     }
 
-    public static void RemoveFilesAndDirectories(string path, string[] extensions)
+    public void RemoveFilesAndDirectories(string path, string[] extensions)
     {
         _logger.Info("Removing all files from directory: {path}", path);
 
@@ -51,7 +51,7 @@ public static class FileSystemHelper
                 _logger.Info("Deleting {file}", x);
                 File.Delete(x);
             }
-            catch 
+            catch
             {
             }
         });
@@ -66,7 +66,7 @@ public static class FileSystemHelper
                 _logger.Info("Deleting {file}", x);
                 Directory.Delete(x);
             }
-            catch 
+            catch
             {
             }
         });

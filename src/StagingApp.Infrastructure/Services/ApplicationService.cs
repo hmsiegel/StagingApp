@@ -1,26 +1,26 @@
-﻿namespace StagingApp.Infrastructure.Helpers;
+﻿namespace StagingApp.Infrastructure.Services;
 
 [SupportedOSPlatform("Windows7.0")]
-public static partial class ApplicationHelper
+public partial class ApplicationService : IApplicationService
 {
-    private readonly static Logger _logger = LogManager.GetCurrentClassLogger();
+    private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-    public static string GetSoftwareVersion(string filePath)
+    public string GetSoftwareVersion(string filePath)
     {
         return FileVersionInfo.GetVersionInfo(filePath).FileVersion!;
     }
 
-    public static void RunProcess(string[] args, bool logToNormalLog, bool ignoreExitCode, bool runAsAdmin)
+    public void RunProcess(string[] args, bool logToNormalLog, bool ignoreExitCode, bool runAsAdmin)
     {
         ExecuteCmdProcess(string.Join(" ", GlobalConfig.CommandString, args), logToNormalLog, ignoreExitCode, runAsAdmin);
     }
 
-    public static void RunProcessInCurrentDirectory(string args, string currentDir, bool logToNormalLog, bool ignoreExitCode, bool runAsAdmin)
+    public void RunProcessInCurrentDirectory(string args, string currentDir, bool logToNormalLog, bool ignoreExitCode, bool runAsAdmin)
     {
         ExecuteCmdProcessInCurrentDirectory(GlobalConfig.CommandString + args, currentDir, logToNormalLog, ignoreExitCode, runAsAdmin);
     }
 
-    public static void EndProcess(string processName)
+    public void EndProcess(string processName)
     {
         var processes = Process.GetProcessesByName(processName);
         foreach (var process in processes)
@@ -31,7 +31,7 @@ public static partial class ApplicationHelper
         }
     }
 
-    public static void RunSysprep(string args)
+    public void RunSysprep(string args)
     {
         try
         {
@@ -57,6 +57,16 @@ public static partial class ApplicationHelper
             _logger.Error(ex.Message);
             throw;
         }
+    }
+
+    public void StartOsk()
+    {
+        RunProcessInCurrentDirectory(
+            GlobalConfig.Osk + FileExtensions.exe.ConvertToFileExtension(),
+            GlobalConfig.ScriptPath,
+            true,
+            true,
+            true);
     }
 
     private static void ExecuteCmdProcess(string args, bool logToNormalLog, bool ignoreExitCode, bool runAsAdmin)
@@ -225,8 +235,8 @@ public static partial class ApplicationHelper
         }
     }
 
-    [LibraryImport("Kernel32.dll", EntryPoint = "Wow64EnableWow64FsRedirection")]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    private static partial bool EnableWow64FsRedirection([MarshalAs(UnmanagedType.Bool)] bool enable);
+    [DllImport("Kernel32.dll", EntryPoint = "Wow64EnableWow64FsRedirection")]
+    private static extern bool EnableWow64FsRedirection(bool enable);
+
 }
 
