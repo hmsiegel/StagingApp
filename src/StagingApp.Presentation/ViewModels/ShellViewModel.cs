@@ -3,6 +3,13 @@ public sealed class ShellViewModel : Conductor<object>, IHandle<CloseApplication
 {
     private readonly static Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
+    private readonly ISender? _sender;
+
+    internal ShellViewModel(ISender? sender) : base()
+    {
+        _sender = sender;
+    }
+
     public ShellViewModel()
     {
     }
@@ -18,7 +25,9 @@ public sealed class ShellViewModel : Conductor<object>, IHandle<CloseApplication
     protected override async void OnViewLoaded(object view)
     {
         base.OnViewLoaded(view);
-        string? viewModelName = DeviceTypeHelper.DetermineDeviceType();
+        var query = new DetermineDeviceQuery();
+        var response = _sender!.Send(query, new CancellationToken());
+        string? viewModelName = response.Result.Value;
 
         if (viewModelName == null)
         {

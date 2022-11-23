@@ -1,6 +1,4 @@
-﻿using StagingApp.Infrastructure.Helpers;
-
-namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
+﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
 public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 {
     private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
@@ -107,10 +105,10 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         switch (markerFile)
         {
             case nameof(MarkerFiles.first):
-                StartStageTerminal();
+                await StartStageTerminal();
                 break;
             case nameof(MarkerFiles.second):
-                StartThirdPass();
+                await StartThirdPass();
                 break;
             case nameof(MarkerFiles.third):
                 await StartRadiantAutoLoader();
@@ -118,12 +116,18 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         }
     }
 
-    private void StartStageTerminal()
+    private async Task<bool> StartStageTerminal()
     {
-        throw new NotImplementedException();
+        var query = new GetTerminalConfigQuery();
+        var response = _sender!.Send(query, new CancellationToken());
+
+        var command = new StageTerminalCommand(response.Result.Value!);
+        var commandResponse = await _sender!.Send(command, new CancellationToken());
+
+        return commandResponse.IsSuccess;
     }
 
-    private void StartThirdPass()
+    private Task<bool> StartThirdPass()
     {
         throw new NotImplementedException();
     }
@@ -135,13 +139,10 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         return response.IsSuccess;
     }
 
-    private static async Task StartOsk()
+    private async Task<bool> StartOsk()
     {
-        await Task.Run(() => ApplicationHelper.RunProcessInCurrentDirectory(
-            GlobalConfig.Osk + FileExtensions.exe.ConvertToFileExtension(),
-            GlobalConfig.ScriptPath,
-            true,
-            true,
-            true));
+        var command = new StartOskCommand();
+        var response = await  _sender!.Send(command, new CancellationToken());
+        return response.IsSuccess;
     }
 }

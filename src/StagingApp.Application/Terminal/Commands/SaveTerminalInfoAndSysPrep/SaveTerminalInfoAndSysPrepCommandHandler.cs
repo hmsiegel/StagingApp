@@ -7,18 +7,24 @@ internal sealed class SaveTerminalInfoAndSysPrepCommandHandler : ICommandHandler
 
     private readonly ICsvFileRepository _csvFileRepository;
     private readonly IConfiguration _config;
+    private readonly IApplicationService _appService;
+    private readonly IFileSystemService _fileSystemService;
 
     public SaveTerminalInfoAndSysPrepCommandHandler(
         ICsvFileRepository csvFileRepository,
-        IConfiguration config)
+        IConfiguration config,
+        IApplicationService appService,
+        IFileSystemService fileSystemService)
     {
         _csvFileRepository = csvFileRepository;
         _config = config;
+        _appService = appService;
+        _fileSystemService = fileSystemService;
     }
 
     public Task<Result> Handle(SaveTerminalInfoAndSysPrepCommand request, CancellationToken cancellationToken)
     {
-        ApplicationHelper.EndProcess(GlobalConfig.Osk);
+        _appService.EndProcess(GlobalConfig.Osk);
 
         string outfile = Path.Combine(GlobalConfig.ScriptPath, $"{CsvFiles.staging}.csv");
         var terminalModel = new List<TerminalModel> { request.Model };
@@ -26,7 +32,7 @@ internal sealed class SaveTerminalInfoAndSysPrepCommandHandler : ICommandHandler
 
         _logger.Info("Terminal info saved to csv file.");
 
-        FileSystemHelper.CreateMarkerFile(Path.Combine(
+        _fileSystemService.CreateMarkerFile(Path.Combine(
             GlobalConfig.ScriptPath,
             MarkerFiles.first.ToString(),
             FileExtensions.marker.ConvertToFileExtension()));
@@ -37,7 +43,7 @@ internal sealed class SaveTerminalInfoAndSysPrepCommandHandler : ICommandHandler
 
         var sysprepargs = _config!.GetValue<string>("ApplicationSettings:SysPrepArguments") + ":" + Path.Join(GlobalConfig.SysPrepPath, GlobalConfig.Unattend);
 
-        ApplicationHelper.RunSysprep(sysprepargs);
+        _appService.RunSysprep(sysprepargs);
 
         return Task.FromResult(Result.Success());
     }

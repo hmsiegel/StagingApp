@@ -7,6 +7,7 @@ public static class GlobalConfig
     public const string ImageBuilderPath = "C:\\ImageBuilder";
     public const string RunKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
     public const string RunOnceKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce";
+    public const string Winlogon = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon";
     public const string SqlDataPath = "Program Files\\Microsoft SQL Server\\MSSQL11.SQLEXPRESS\\MSSQL\\DATA";
     public const string AlohaTakeoutData = "Aloha Takeout\\Database";
 

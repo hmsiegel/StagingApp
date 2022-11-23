@@ -7,6 +7,7 @@ global using System.Reflection;
 global using System.Runtime.Versioning;
 global using System.Security.Principal;
 global using System.Text.RegularExpressions;
+global using System.Threading;
 global using System.Windows;
 global using System.Windows.Data;
 global using System.Windows.Controls;
@@ -17,13 +18,16 @@ global using Autofac;
 global using Autofac.Configuration;
 
 global using AutoMapper;
+global using AutoMapper.Contrib.Autofac.DependencyInjection;
 
 global using Caliburn.Micro;
 global using LogManager = Caliburn.Micro.LogManager;
 
+global using MediatR;
+
 global using NLog;
 
-global using StagingApp.Application.Helpers;
+global using StagingApp.Application.Shell.Queries.DetermineDevice;
 
 global using StagingApp.Domain;
 global using StagingApp.Domain.Enums;

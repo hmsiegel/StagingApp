@@ -1,11 +1,11 @@
-﻿using AutoMapper.Contrib.Autofac.DependencyInjection;
-
-namespace StagingApp.Main;
+﻿namespace StagingApp.Main;
 
 [SupportedOSPlatform("Windows7.0")]
 public sealed partial class Bootstrapper : BootstrapperBase
 {
     private IContainer? _container;
+    private readonly ISender? _sender;
+
 
     private const string _applicationPrefix = "StagingApp";
     private const string _deviceType = "DeviceType";
@@ -17,6 +17,11 @@ public sealed partial class Bootstrapper : BootstrapperBase
     public static readonly string SettingsFileFullName =
         Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
                      ?? string.Empty, SettingsFileName);
+
+    internal Bootstrapper(ISender sender) : base()
+    {
+        _sender = sender;
+    }
 
     public Bootstrapper()
     {
@@ -52,7 +57,6 @@ public sealed partial class Bootstrapper : BootstrapperBase
         var builder = new ContainerBuilder();
         builder.RegisterModule(module);
         builder.RegisterType<ShellViewModel>().SingleInstance();
-        //RegisterClass<ShellViewModel>(builder);
         RegisterTypes(builder);
         RegisterModules(builder);
         RegisterProfiles(builder);
@@ -138,7 +142,7 @@ public sealed partial class Bootstrapper : BootstrapperBase
     {
         builder.RegisterAutoMapper(AssemblyReference.Assembly);
     }
-        
+
 
     private static string[] GetAllDllEntries()
     {
@@ -155,9 +159,11 @@ public sealed partial class Bootstrapper : BootstrapperBase
         return files;
     }
 
-    private static void UpdateLogConfig()
+    private void UpdateLogConfig()
     {
-        string deviceType = DeviceTypeHelper.DetermineDeviceType();
+        var query = new DetermineDeviceQuery();
+        var response = _sender!.Send(query, new CancellationToken());
+        string deviceType = response.Result.Value!;
 
         switch (deviceType)
         {

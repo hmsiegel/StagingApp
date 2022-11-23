@@ -12,15 +12,24 @@ internal sealed class StartRadiantAutoLoaderCommandHandler : ICommandHandler<Sta
     private readonly ICsvFileRepository _csvFileRepository;
     private readonly IConfiguration _config;
     private readonly IEmailService _emailService;
+    private readonly IFileSystemService _fileSystemService;
+    private readonly IRegistryService _registryService;
+    private readonly IApplicationService _applicationService;
 
     public StartRadiantAutoLoaderCommandHandler(
         ICsvFileRepository csvFileRepository,
         IConfiguration config,
-        IEmailService emailService)
+        IEmailService emailService,
+        IFileSystemService fileSystemService,
+        IRegistryService registryService,
+        IApplicationService applicationService)
     {
         _csvFileRepository = csvFileRepository;
         _config = config;
         _emailService = emailService;
+        _fileSystemService = fileSystemService;
+        _registryService = registryService;
+        _applicationService = applicationService;
     }
 
     public Task<Result> Handle(StartRadiantAutoLoaderCommand request, CancellationToken cancellationToken)
@@ -48,11 +57,11 @@ internal sealed class StartRadiantAutoLoaderCommandHandler : ICommandHandler<Sta
             true);
 
         _logger.Info("Deleting application directory and files...");
-        FileSystemHelper.RemoveFilesAndDirectories(
+        _fileSystemService.RemoveFilesAndDirectories(
             GlobalConfig.ScriptPath,
             _config.GetValue<string[]>("FileSettings:ExtensionsToExclude")!);
 
-        FileSystemHelper.DeleteMarkerFile(Path.Join(
+        _fileSystemService.DeleteMarkerFile(Path.Join(
             GlobalConfig.ScriptPath, (
                 string.Join(
                     "",
@@ -60,7 +69,7 @@ internal sealed class StartRadiantAutoLoaderCommandHandler : ICommandHandler<Sta
                     FileExtensions.marker.ConvertToFileExtension()))));
 
         _logger.Info("Create the BigFix baseline marker file.");
-        FileSystemHelper.CreateMarkerFile(Path.Join(
+        _fileSystemService.CreateMarkerFile(Path.Join(
             GlobalConfig.ScriptPath, (
                 string.Join(
                     "",
@@ -68,7 +77,7 @@ internal sealed class StartRadiantAutoLoaderCommandHandler : ICommandHandler<Sta
                     FileExtensions.marker.ConvertToFileExtension()))));
 
         _logger.Info("Create the version registry key...");
-        RegistryHelper.EditRegistryFromValues(
+        _registryService.EditRegistryFromValues(
             RegistryHive.LocalMachine,
             _registryKey,
             _registryKeyValue,
@@ -83,7 +92,7 @@ internal sealed class StartRadiantAutoLoaderCommandHandler : ICommandHandler<Sta
             "Terminal Staging Complete",
             emailMessage);
 
-        ApplicationHelper.RunProcessInCurrentDirectory(
+        _applicationService.RunProcessInCurrentDirectory(
             GlobalConfig.RalExe,
             GlobalConfig.RalPath!,
             true,
