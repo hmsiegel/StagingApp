@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StagingApp.Application\StagingApp.Application.csproj" />
+    <ProjectReference Include="..\StagingApp.Infrastructure\StagingApp.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

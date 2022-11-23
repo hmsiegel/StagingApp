@@ -1,4 +1,6 @@
-﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
+﻿using StagingApp.Infrastructure.Helpers;
+
+namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
 public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 {
     private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
@@ -111,7 +113,7 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
                 StartThirdPass();
                 break;
             case nameof(MarkerFiles.third):
-                StartRadiantAutoLoader();
+                await StartRadiantAutoLoader();
                 break;
         }
     }
@@ -126,9 +128,11 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         throw new NotImplementedException();
     }
 
-    private void StartRadiantAutoLoader()
+    private async Task<bool> StartRadiantAutoLoader()
     {
-        throw new NotImplementedException();
+        var command = new StartRadiantAutoLoaderCommand();
+        var response = await  _sender!.Send(command, new CancellationToken());
+        return response.IsSuccess;
     }
 
     private static async Task StartOsk()

@@ -28,8 +28,6 @@
     <Folder Include="Server\Commands\" />
     <Folder Include="Server\Queries\" />
     <Folder Include="Terminal\Commands\StartThirdPass\" />
-    <Folder Include="Terminal\Commands\StartStageTerminal\" />
-    <Folder Include="Terminal\Queries\" />
   </ItemGroup>
 
 </Project>

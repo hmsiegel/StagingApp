@@ -2,12 +2,6 @@
 public class CsvLoggingService : ICsvLoggingService
 {
     private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-    private readonly ISender _sender;
-
-    public CsvLoggingService(ISender sender)
-    {
-        _sender = sender;
-    }
 
     public void CreateCsvKitchenLog(KitchenController model)
     {

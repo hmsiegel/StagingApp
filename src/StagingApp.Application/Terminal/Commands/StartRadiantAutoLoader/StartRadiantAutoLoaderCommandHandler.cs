@@ -11,17 +11,14 @@ internal sealed class StartRadiantAutoLoaderCommandHandler : ICommandHandler<Sta
 
     private readonly ICsvFileRepository _csvFileRepository;
     private readonly IConfiguration _config;
-    private readonly IRegistryService _registryService;
     private readonly IEmailService _emailService;
 
     public StartRadiantAutoLoaderCommandHandler(
         ICsvFileRepository csvFileRepository,
-        IRegistryService registryService,
         IConfiguration config,
         IEmailService emailService)
     {
         _csvFileRepository = csvFileRepository;
-        _registryService = registryService;
         _config = config;
         _emailService = emailService;
     }
@@ -36,10 +33,12 @@ internal sealed class StartRadiantAutoLoaderCommandHandler : ICommandHandler<Sta
             CsvFiles.staging.ToString(),
             FileExtensions.csv.ConvertToFileExtension());
 
-        var model = _csvFileRepository.ReadFromCsvFile<TerminalModel>(stagingCsv);
+        var csvModel = _csvFileRepository.ReadFromCsvFile<TerminalModel>(stagingCsv);
 
-        request.Model.SetTerminalName(model.TerminalName);
-        request.Model.SetTerminalIp(model.IpAddress);
+        var terminalModel = TerminalModel.Create(
+            csvModel.TerminalName,
+            csvModel.IpAddress);
+
 
         _logger.Info("Copying the RAL shortcut from the application path to the startup folder.");
 
@@ -69,14 +68,14 @@ internal sealed class StartRadiantAutoLoaderCommandHandler : ICommandHandler<Sta
                     FileExtensions.marker.ConvertToFileExtension()))));
 
         _logger.Info("Create the version registry key...");
-        _registryService.EditRegistryFromValues(
+        RegistryHelper.EditRegistryFromValues(
             RegistryHive.LocalMachine,
             _registryKey,
             _registryKeyValue,
             _registryData,
             RegistryValueKind.String);
 
-        string? emailMessage = _emailService.CreateEmailMessage(request.Model);
+        string? emailMessage = _emailService.CreateEmailMessage(terminalModel);
 
         _logger.Info("Sending email...");
         _emailService.SendEmailMessage(

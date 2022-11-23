@@ -1,14 +1,9 @@
 ﻿namespace StagingApp.Application.DeviceEnvironment.Commands.SetComputerName;
 
+[SupportedOSPlatform("Windows7.0")]
 internal sealed partial class SetComputerNameCommandHandler : ICommandHandler<SetComputerNameCommand>
 {
     private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-    private readonly IRegistryService _registryService;
-
-    public SetComputerNameCommandHandler(IRegistryService registryService)
-    {
-        _registryService = registryService;
-    }
 
     public async Task<Result> Handle(SetComputerNameCommand request, CancellationToken cancellationToken)
     {
@@ -19,27 +14,27 @@ internal sealed partial class SetComputerNameCommandHandler : ICommandHandler<Se
         {
             _logger.Info("Computer name was set successfully.");
 
-            _registryService.SetRegistryKeyAndValue(
+            RegistryHelper.SetRegistryKeyAndValue(
                 SetComputerNameConfig.ActiveComputerName,
                 SetComputerNameConfig.ComputerNameString,
                 request.ComputerName);
 
-            _registryService.SetRegistryKeyAndValue(
+            RegistryHelper.SetRegistryKeyAndValue(
                 SetComputerNameConfig.ComputerName,
                 SetComputerNameConfig.ComputerNameString,
                 request.ComputerName);
             
-            _registryService.SetRegistryKeyAndValue(
+            RegistryHelper.SetRegistryKeyAndValue(
                 SetComputerNameConfig.HostName,
                 SetComputerNameConfig.HostnameString,
                 request.ComputerName);
             
-            _registryService.SetRegistryKeyAndValue(
+            RegistryHelper.SetRegistryKeyAndValue(
                 SetComputerNameConfig.HostName,
                 SetComputerNameConfig.NvHostname,
                 request.ComputerName);
 
-            _registryService.SetRegistryKeyAndValue(
+            RegistryHelper.SetRegistryKeyAndValue(
                 SetComputerNameConfig.Parameters,
                 SetComputerNameConfig.Comment,
                 request.ComputerName);

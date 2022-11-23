@@ -5,13 +5,6 @@ internal sealed class SetAutoLogonCommandHandler : ICommandHandler<SetAutoLogonC
 {
     private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-    private readonly IRegistryService _registryService;
-
-    public SetAutoLogonCommandHandler(IRegistryService registryService)
-    {
-        _registryService = registryService;
-    }
-
     public async Task<Result> Handle(SetAutoLogonCommand request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
@@ -24,7 +17,7 @@ internal sealed class SetAutoLogonCommandHandler : ICommandHandler<SetAutoLogonC
             lsa.SetSecret(request.Password);
 
             _logger.Info("Setting AutoAdminLogon to 1");
-            _registryService.EditRegistryFromValues(
+            RegistryHelper.EditRegistryFromValues(
                 RegistryHive.LocalMachine,
                 SetAutoLogonConfig.Path,
                 SetAutoLogonConfig.AutoAdminLogon,
@@ -32,7 +25,7 @@ internal sealed class SetAutoLogonCommandHandler : ICommandHandler<SetAutoLogonC
                 RegistryValueKind.String);
 
             _logger.Info("Setting DefaultUserName to 1");
-            _registryService.EditRegistryFromValues(
+            RegistryHelper.EditRegistryFromValues(
                 RegistryHive.LocalMachine,
                 SetAutoLogonConfig.Path,
                 SetAutoLogonConfig.DefaultUsername,
@@ -40,7 +33,7 @@ internal sealed class SetAutoLogonCommandHandler : ICommandHandler<SetAutoLogonC
                 RegistryValueKind.String);
 
             _logger.Info($"Setting Default DomainName to {request.Domain}.");
-            _registryService.EditRegistryFromValues(
+            RegistryHelper.EditRegistryFromValues(
                 RegistryHive.LocalMachine,
                 SetAutoLogonConfig.Path,
                 SetAutoLogonConfig.DefaultDomainName,

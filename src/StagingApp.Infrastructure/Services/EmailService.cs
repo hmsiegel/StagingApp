@@ -1,8 +1,4 @@
-﻿using System.Net.Mail;
-
-using Microsoft.Extensions.Configuration;
-
-namespace StagingApp.Infrastructure.Services;
+﻿namespace StagingApp.Infrastructure.Services;
 public sealed class EmailService : IEmailService
 {
     private static readonly Logger _logger= LogManager.GetCurrentClassLogger();

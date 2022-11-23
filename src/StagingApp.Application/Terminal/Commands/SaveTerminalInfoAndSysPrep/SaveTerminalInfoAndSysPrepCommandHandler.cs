@@ -6,13 +6,13 @@ internal sealed class SaveTerminalInfoAndSysPrepCommandHandler : ICommandHandler
     private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
     private readonly ICsvFileRepository _csvFileRepository;
-    private readonly IApplicationService _applicationService;
     private readonly IConfiguration _config;
 
-    public SaveTerminalInfoAndSysPrepCommandHandler(ICsvFileRepository csvFileRepository, IApplicationService applicationService, IConfiguration config)
+    public SaveTerminalInfoAndSysPrepCommandHandler(
+        ICsvFileRepository csvFileRepository,
+        IConfiguration config)
     {
         _csvFileRepository = csvFileRepository;
-        _applicationService = applicationService;
         _config = config;
     }
 
@@ -37,7 +37,7 @@ internal sealed class SaveTerminalInfoAndSysPrepCommandHandler : ICommandHandler
 
         var sysprepargs = _config!.GetValue<string>("ApplicationSettings:SysPrepArguments") + ":" + Path.Join(GlobalConfig.SysPrepPath, GlobalConfig.Unattend);
 
-        _applicationService.RunSysprep(sysprepargs);
+        ApplicationHelper.RunSysprep(sysprepargs);
 
         return Task.FromResult(Result.Success());
     }

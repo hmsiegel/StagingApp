@@ -1,11 +1,11 @@
-﻿namespace StagingApp.Infrastructure.Services;
+﻿namespace StagingApp.Infrastructure.Helpers;
 
 [SupportedOSPlatform("Windows7.0")]
-public class RegistryService : IRegistryService
+public static class RegistryHelper
 {
-    private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+    private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-    public void EditRegistryFromValues(
+    public static void EditRegistryFromValues(
         RegistryHive hiveType,
         string key,
         string value,
@@ -24,14 +24,14 @@ public class RegistryService : IRegistryService
             _logger.Error(ex.ToString());
         }
     }
-    public void SetRegistryKeyAndValue(string subKeyName, string name, string value)
+    public static void SetRegistryKeyAndValue(string subKeyName, string name, string value)
     {
         RegistryKey registryKey = Registry.LocalMachine.CreateSubKey(subKeyName);
         registryKey.SetValue(name, value);
         registryKey.Close();
     }
 
-    public string GetRegistryKeyAndValue(RegistryHive hiveType, string key, string value)
+    public static string GetRegistryKeyAndValue(RegistryHive hiveType, string key, string value)
     {
         RegistryKey registryKey = DetermineRegistryHiveType(hiveType);
         registryKey = registryKey.OpenSubKey(key)!;
@@ -48,7 +48,7 @@ public class RegistryService : IRegistryService
         return output!;
     }
 
-    public byte[] GetLocalRegistryKeyAndValue(string key, string value)
+    public static byte[] GetLocalRegistryKeyAndValue(string key, string value)
     {
         RegistryHive hive = RegistryHive.LocalMachine;
         RegistryKey registryKey = DetermineRegistryHiveType(hive);
@@ -56,9 +56,7 @@ public class RegistryService : IRegistryService
 
         try
         {
-            byte[]? keyValue = registryKey.GetValue(value) as byte[];
-
-            if (keyValue is null)
+            if (registryKey.GetValue(value) is not byte[] keyValue)
             {
                 throw new NullReferenceException();
             }
