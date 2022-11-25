@@ -6,5 +6,6 @@ public enum FileExtensions
     marker,
     stage,
     exe,
-    done
+    done,
+    lnk
 }

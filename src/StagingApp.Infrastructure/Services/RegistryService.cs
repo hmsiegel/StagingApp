@@ -71,9 +71,69 @@ public class RegistryService : IRegistryService
         }
     }
 
+    public void DeleteRunRegistryKey(string path, string runValue)
+    {
+        RemoveRegistryKeyValue(path, runValue);
+    }
+
+    public void CreateRunOnceRegistryKey(string path, string runValue)
+    {
+        EditRegistryFromValues(
+            RegistryHive.LocalMachine,
+            path,
+            runValue,
+            Path.Combine(
+                GlobalConfig.ScriptPath, "bin",
+                String.Join(
+                    "",
+                    GlobalConfig.ApplicationName,
+                    FileExtensions.lnk.ConvertToFileExtension())),
+            RegistryValueKind.String);
+    }
+
     private static RegistryKey DetermineRegistryHiveType(RegistryHive hiveType) =>
         !Environment.Is64BitOperatingSystem
             ? RegistryKey.OpenBaseKey(hiveType, RegistryView.Registry32)
             : RegistryKey.OpenBaseKey(hiveType, RegistryView.Registry64);
+    private static void RemoveRegistryKeyValue(string keyName, string keyValue)
+    {
+        RegistryHive hive = RegistryHive.LocalMachine;
 
+        try
+        {
+            RegistryKey registryKey = DetermineRegistryHiveType(hive);
+            registryKey.OpenSubKey(keyName);
+
+            if (registryKey is null)
+            {
+                _logger.Error("Unable to get key: {key} for value: {value}.", keyName, keyValue);
+                return;
+            }
+            else
+            {
+                if (registryKey.GetValue(keyValue) is not null)
+                {
+                    _logger.Info("Removing registry data for: {key} with value: {value}., keyName, keyValue");
+                    registryKey.DeleteValue(keyValue);
+                }
+                else
+                {
+                    _logger.Error("Unable to get key: {key} for value: {value}.", keyName, keyValue);
+                    return;
+                }
+            }
+        }
+        catch (NullReferenceException ex)
+        {
+            _logger.Error("Error deleting registry key.");
+            _logger.Error(ex.ToString());
+            throw;
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Error deleting registry key.");
+            _logger.Error(ex.ToString());
+            throw;
+        }
+    }
 }

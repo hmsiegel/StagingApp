@@ -6,14 +6,23 @@ internal sealed class StageTerminalCommandHandler : ICommandHandler<StageTermina
     private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
     private readonly ISystemEnvironmentService _systemEnvironmentService;
+    private readonly IFileSystemService _fileSystemService;
+    private readonly IRegistryService _registryService;
+    private readonly IApplicationService _appService;
     private readonly IConfiguration _config;
 
     public StageTerminalCommandHandler(
         ISystemEnvironmentService systemEnvironmentService,
-        IConfiguration config)
+        IConfiguration config,
+        IFileSystemService fileSystemService,
+        IRegistryService registryService,
+        IApplicationService appService)
     {
         _systemEnvironmentService = systemEnvironmentService;
         _config = config;
+        _fileSystemService = fileSystemService;
+        _registryService = registryService;
+        _appService = appService;
     }
 
     public async Task<Result> Handle(StageTerminalCommand request, CancellationToken cancellationToken)
@@ -58,8 +67,29 @@ internal sealed class StageTerminalCommandHandler : ICommandHandler<StageTermina
 
             Thread.Sleep(30000);
 
-            return Result.Success();
+            _fileSystemService.DeleteMarkerFile(
+                Path.Join(
+                    GlobalConfig.ScriptPath,
+                    string.Join(
+                        "",
+                        MarkerFiles.first.ToString(),
+                        FileExtensions.done.ConvertToFileExtension())));
 
+            _fileSystemService.CheckForMarkerFile(
+                Path.Join(
+                    GlobalConfig.ScriptPath,
+                    string.Join(
+                        "",
+                        MarkerFiles.second.ToString(),
+                        FileExtensions.done.ConvertToFileExtension())));
+
+            _registryService.DeleteRunRegistryKey(GlobalConfig.RunKey, StagingRegistryKey.TerminalStaging.ToString());
+            _registryService.CreateRunOnceRegistryKey(GlobalConfig.RunOnceKey, StagingRegistryKey.TerminalStaging.ToString());
+
+            _logger.Info("First configuration is complete.");
+            _appService.RunProcess(GlobalConfig.ShutdownCommand, true, true, false);
+
+            return Result.Success();
         }
         catch (Exception ex)
         {

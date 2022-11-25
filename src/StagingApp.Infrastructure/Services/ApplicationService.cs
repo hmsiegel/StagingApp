@@ -10,7 +10,7 @@ public partial class ApplicationService : IApplicationService
         return FileVersionInfo.GetVersionInfo(filePath).FileVersion!;
     }
 
-    public void RunProcess(string[] args, bool logToNormalLog, bool ignoreExitCode, bool runAsAdmin)
+    public void RunProcess(string args, bool logToNormalLog, bool ignoreExitCode, bool runAsAdmin)
     {
         ExecuteCmdProcess(string.Join(" ", GlobalConfig.CommandString, args), logToNormalLog, ignoreExitCode, runAsAdmin);
     }
