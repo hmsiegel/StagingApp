@@ -1,9 +1,9 @@
 ﻿namespace StagingApp.Domain.Shared;
 public interface IValidationResult
 {
-    public static readonly Errors ValidationError = new(
+    public static readonly Error ValidationError = new(
         "Validation Error",
         "A validation problem occurred");
 
-    Errors[] Errors { get; }
+    Error[] Errors { get; }
 }
