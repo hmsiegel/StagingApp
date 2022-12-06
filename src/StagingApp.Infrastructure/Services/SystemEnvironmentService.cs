@@ -1,25 +1,23 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-using StagingApp.Domain.Models;
-using StagingApp.Domain.Network.Services;
-using StagingApp.Domain.Services;
-using StagingApp.Infrastructure.Configuration;
-
-namespace StagingApp.Infrastructure.Services;
+﻿namespace StagingApp.Infrastructure.Services;
 
 [SupportedOSPlatform("Windows7.0")]
 public sealed class SystemEnvironmentService : ISystemEnvironmentService
 {
-    private const string lasKey = "Default Password";
+    private const string _lasKey = "Default Password";
     private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
     private readonly IRegistryService _registryService;
+    private readonly IDeviceTypeService _deviceTypeService;
     private readonly IConfiguration _config;
 
-    public SystemEnvironmentService(IRegistryService registryService, IConfiguration config)
+    public SystemEnvironmentService(
+        IRegistryService registryService,
+        IConfiguration config,
+        IDeviceTypeService deviceTypeService)
     {
         _registryService = registryService;
         _config = config;
+        _deviceTypeService = deviceTypeService;
     }
 
     public void SetCompName(string compName)
@@ -90,7 +88,7 @@ public sealed class SystemEnvironmentService : ISystemEnvironmentService
                 SecureStringService.DecryptString(password, _config.GetValue<string>("PasswordSettings:PasswordSalt")!);
 
             _logger.Info("Storing the password securely.");
-            LsaModel lsa = new(lasKey);
+            LsaModel lsa = new(_lasKey);
             lsa.SetSecret(decryptedPassword);
 
             _logger.Info("Setting registry entries.");
@@ -126,7 +124,32 @@ public sealed class SystemEnvironmentService : ISystemEnvironmentService
         }
     }
 
+    public string GetDomainOu(string computerName)
+    {
+        string output = _deviceTypeService.DetermineDeviceType();
+
+        switch (output)
+        {
+            case var type when type.Equals(DeviceType.Server.ToString()):
+                DomainOUs.BOHServers.ToString();
+                break;
+            case var type when type.Equals(DeviceType.Terminal.ToString()):
+                DomainOUs.Terminals.ToString();
+                break;
+            case var type when type.Equals(DeviceType.Kitchen.ToString()):
+                DomainOUs.Kitchen.ToString();
+                break;
+            default:
+                break;
+        }
+
+        return output;
+
+    }
+
+
     [DllImport("kernel32.dll")]
     [SuppressMessage("Globalization", "CA2101:Specify marshalling for P/Invoke string arguments", Justification = "Method fails when specifying marshalling.")]
     private static extern bool SetComputerName(string lpComputerName);
+
 }

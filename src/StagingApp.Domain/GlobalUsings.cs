@@ -23,4 +23,5 @@ global using StagingApp.Domain.Enums;
 global using StagingApp.Domain.Extensions;
 global using StagingApp.Domain.Network.Services;
 global using StagingApp.Domain.Network.ValueObjects;
+global using StagingApp.Domain.Services;
 global using StagingApp.Domain.Shared;

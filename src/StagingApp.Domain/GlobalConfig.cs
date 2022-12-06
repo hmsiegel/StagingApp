@@ -11,23 +11,22 @@ public static class GlobalConfig
     private const string _sqlDataPath = "Program Files\\Microsoft SQL Server\\MSSQL11.SQLEXPRESS\\MSSQL\\DATA";
     private const string _alohaTakeoutData = "Aloha Takeout\\Database";
 
-    public const string Ibgolden = "IBGOLDEN";
-    public const string Osk = "osk";
-    public const string AlohaSupportReady = "Aloha SupportReady";
-    public const string AlohaAdm = "AlohaAdm";
-    public const string RalExe = "AlhAdmin";
-    public const string Archive = "Archive";
-    public const string EdcTa = "EdcTa";
-    public const string Bootdrv = "Bootdrv";
+    private const string _ibgolden = "IBGOLDEN";
+    private const string _osk = "osk";
+    private const string _alohaSupportReady = "Aloha SupportReady";
+    private const string _alohaAdm = "AlohaAdm";
+    private const string _ralExe = "AlhAdmin";
+    private const string _archive = "Archive";
+    private const string _edcTa = "EdcTa";
+    private const string _bootdrv = "Bootdrv";
 
-    public const string CommandString = "/c ";
-    public const string ShutdownCommand = "shutdown /r /t 30 /c \"The terminal will reboot in 30 seconds\"";
-
-    public const string Cmd = "CMD.exe";
-    public const string RalShortcut = "Aloha Terminal Configuration.lnk";
-    public const string TaDomain = "@ta.com";
-    public const string SysPrepExe = "sysprep.exe";
-    public const string Unattend = "unattend.xml";
+    private const string _commandString = "/c ";
+    private const string _shutdownCommand = "shutdown /r /t 30 /c \"The terminal will reboot in 30 seconds\"";
+    private const string _cmd = "CMD.exe";
+    private const string _ralShortcut = "Aloha Terminal Configuration.lnk";
+    private const string _taDomain = "@ta.com";
+    private const string _sysPrepExe = "sysprep.exe";
+    private const string _unattend = "unattend.xml";
 
     /// <summary>
     /// The name of the computer that the application is being run on.
@@ -71,4 +70,34 @@ public static class GlobalConfig
     public static string SqlDataPath => _sqlDataPath;
 
     public static string AlohaTakeoutData => _alohaTakeoutData;
+
+    public static string Ibgolden => _ibgolden;
+
+    public static string Osk => _osk;
+
+    public static string AlohaSupportReady => _alohaSupportReady;
+
+    public static string AlohaAdm => _alohaAdm;
+
+    public static string RalExe => _ralExe;
+
+    public static string Archive => _archive;
+
+    public static string EdcTa => _edcTa;
+
+    public static string Bootdrv => _bootdrv;
+
+    public static string CommandString => _commandString;
+
+    public static string ShutdownCommand => _shutdownCommand;
+
+    public static string Cmd => _cmd;
+
+    public static string RalShortcut => _ralShortcut;
+
+    public static string TaDomain => _taDomain;
+
+    public static string SysPrepExe => _sysPrepExe;
+
+    public static string Unattend => _unattend;
 }

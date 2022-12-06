@@ -1,4 +1,6 @@
-﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
+﻿using StagingApp.Application.Terminal.Commands.StartThirdPass;
+
+namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
 public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 {
     private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
@@ -127,9 +129,15 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         return commandResponse.IsSuccess;
     }
 
-    private Task<bool> StartThirdPass()
+    private async Task<bool> StartThirdPass()
     {
-        throw new NotImplementedException();
+        var query = new GetTerminalConfigQuery();
+        var response = _sender!.Send(query, new CancellationToken());
+
+        var command = new StartThirdPassCommand(response.Result.Value!);
+        var commandResponse = await _sender!.Send(command, new CancellationToken());
+
+        return commandResponse.IsSuccess;
     }
 
     private async Task<bool> StartRadiantAutoLoader()

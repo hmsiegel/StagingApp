@@ -9,16 +9,16 @@ public class DeviceTypeService : IDeviceTypeService
             FileExtensions.stage.ConvertToFileExtension(),
             SearchOption.TopDirectoryOnly)
             .FirstOrDefault();
-        string? stagingViewModelName;
+        string? deviceType;
         if (stagingMarkerFile is not null)
         {
-            stagingViewModelName = CheckStagingMarkerFile(stagingMarkerFile);
+            deviceType = CheckStagingMarkerFile(stagingMarkerFile);
         }
         else
         {
-            stagingViewModelName = CheckComputerName(computerName);
+            deviceType = CheckComputerName(computerName);
         }
-        return stagingViewModelName!;
+        return deviceType!;
     }
 
     private static string? CheckComputerName(string computerName)

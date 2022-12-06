@@ -27,7 +27,6 @@
     <Folder Include="Kitchen\Queries\" />
     <Folder Include="Server\Commands\" />
     <Folder Include="Server\Queries\" />
-    <Folder Include="Terminal\Commands\StartThirdPass\" />
   </ItemGroup>
 
 </Project>
