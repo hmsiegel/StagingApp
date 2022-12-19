@@ -3,6 +3,7 @@ global using System.Collections.ObjectModel;
 global using System.ComponentModel;
 global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
+global using System.Globalization;
 global using System.Management;
 global using System.Net;
 global using System.Net.NetworkInformation;

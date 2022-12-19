@@ -1,6 +1,4 @@
-﻿using StagingApp.Application.Terminal.Commands.StartThirdPass;
-
-namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
+﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
 public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 {
     private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();

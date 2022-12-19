@@ -2,10 +2,14 @@
 internal sealed class StartThirdPassCommandHandler : ICommandHandler<StartThirdPassCommand>
 {
     private readonly ISystemEnvironmentService _systemEnvironmentService;
+    private readonly IDownloadRepository _downloadRepository;
 
-    public StartThirdPassCommandHandler(ISystemEnvironmentService systemEnvironmentService)
+    public StartThirdPassCommandHandler(
+        ISystemEnvironmentService systemEnvironmentService,
+        IDownloadRepository downloadRepository)
     {
         _systemEnvironmentService = systemEnvironmentService;
+        _downloadRepository = downloadRepository;
     }
 
     public Task<Result> Handle(StartThirdPassCommand request, CancellationToken cancellationToken)
