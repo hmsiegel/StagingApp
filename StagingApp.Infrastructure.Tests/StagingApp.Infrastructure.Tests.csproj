@@ -24,4 +24,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\src\StagingApp.Infrastructure\StagingApp.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

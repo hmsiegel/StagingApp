@@ -1,5 +1,5 @@
 ﻿namespace StagingApp.Domain.Extensions;
-public static class FileExtensions
+public static class DownloadExtensions
 {
     public static void AssertHasText(this string argument, string name)
     {

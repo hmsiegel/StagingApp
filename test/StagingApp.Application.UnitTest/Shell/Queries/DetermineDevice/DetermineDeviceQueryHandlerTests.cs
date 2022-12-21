@@ -1,9 +1,4 @@
-﻿using Moq;
-
-using StagingApp.Application.Abstractions.Services;
-using StagingApp.Application.Shell.Queries.DetermineDevice;
-
-namespace StagingApp.Application.UnitTest.Shell.Queries.DetermineDevice;
+﻿namespace StagingApp.Application.UnitTest.Shell.Queries.DetermineDevice;
 public class DetermineDeviceQueryHandlerTests
 {
     private readonly Mock<IDeviceTypeService> _deviceServiceMock;

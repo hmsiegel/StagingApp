@@ -1,4 +1,6 @@
-﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
+﻿using StagingApp.Application.DeviceEnvironment.Commands.SetComputerName;
+
+namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
 public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 {
     private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
@@ -6,18 +8,20 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
     private readonly IValidator<TerminalConfigureModel>? _validator;
     private readonly ISender? _sender;
     private readonly IMapper? _mapper;
-
+    private readonly IConfiguration? _config;
     private string? _terminalName;
     private string? _ipAddress;
 
     internal TerminalConfigureViewModel(
         IValidator<TerminalConfigureModel>? validator,
         ISender? sender,
-        IMapper? mapper) : this()
+        IMapper? mapper,
+        IConfiguration? config) : this()
     {
         _validator = validator;
         _sender = sender;
         _mapper = mapper;
+        _config = config;
     }
 
     public TerminalConfigureViewModel()
@@ -70,8 +74,26 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         {
             _logger.Info("Inputs are valid. Configuring...");
 
-            var command = new SaveTerminalInfoAndSysPrepCommand(terminalModel);
-            var response = await _sender!.Send(command);
+            var command = new SaveTerminalInfoCommand(terminalModel);
+            await _sender!.Send(command);
+
+            File.Create(Path.Combine(
+                GlobalConfig.ScriptPath,
+                MarkerFiles.first.ToString(),
+                FileExtensions.marker.ConvertToFileExtension()));
+
+            File.Create(Path.Combine(
+                GlobalConfig.ScriptPath,
+                StagingRegistryKey.TerminalStaging.ToString(),
+                FileExtensions.stage.ConvertToFileExtension()));
+
+            var sysprepargs = _config!.GetValue<string>("ApplicationSettings:SysPrepArguments")
+                + ":"
+                + Path.Join(GlobalConfig.SysPrepPath, GlobalConfig.Unattend);
+
+            var sysPrepCommand = new RunSysPrepCommand(sysprepargs);
+            var response = await _sender!.Send(sysPrepCommand);    
+
             return response.IsSuccess;
         }
         else
@@ -116,10 +138,19 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
         }
     }
 
-    private async Task<bool> StartStageTerminal()
+    private async Task<bool> StartStageTerminal(CancellationToken cancellationToken = default)
     {
         var query = new GetTerminalConfigQuery();
-        var response = _sender!.Send(query, new CancellationToken());
+        var response = _sender!.Send(query, cancellationToken);
+
+        var model = TerminalModel.Create(
+            response.Result.Value!.TerminalName,
+            response.Result.Value!.IpAddress);
+
+        var setComputerNameCommand = new SetComputerNameCommand(model.TerminalName);
+        var computerNameResponse = _sender!.Send(setComputerNameCommand, cancellationToken);
+
+
 
         var command = new StageTerminalCommand(response.Result.Value!);
         var commandResponse = await _sender!.Send(command, new CancellationToken());
@@ -141,14 +172,14 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
     private async Task<bool> StartRadiantAutoLoader()
     {
         var command = new StartRadiantAutoLoaderCommand();
-        var response = await  _sender!.Send(command, new CancellationToken());
+        var response = await _sender!.Send(command, new CancellationToken());
         return response.IsSuccess;
     }
 
     private async Task<bool> StartOsk()
     {
         var command = new StartOskCommand();
-        var response = await  _sender!.Send(command, new CancellationToken());
+        var response = await _sender!.Send(command, new CancellationToken());
         return response.IsSuccess;
     }
 }
