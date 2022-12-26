@@ -1,4 +1,5 @@
 ﻿namespace StagingApp.Application.DeviceEnvironment.Commands.SetComputerName;
+
 public sealed class SetComputerNameCommandHandler : ICommandHandler<SetComputerNameCommand>
 {
     private static readonly Logger _logger = LogManager.GetCurrentClassLogger();

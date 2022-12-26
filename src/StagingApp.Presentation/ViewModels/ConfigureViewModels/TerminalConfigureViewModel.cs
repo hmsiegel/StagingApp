@@ -1,6 +1,4 @@
-﻿using StagingApp.Application.DeviceEnvironment.Commands.SetComputerName;
-
-namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
+﻿namespace StagingApp.Presentation.ViewModels.ConfigureViewModels;
 public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
 {
     private static readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
@@ -92,7 +90,7 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
                 + Path.Join(GlobalConfig.SysPrepPath, GlobalConfig.Unattend);
 
             var sysPrepCommand = new RunSysPrepCommand(sysprepargs);
-            var response = await _sender!.Send(sysPrepCommand);    
+            var response = await _sender!.Send(sysPrepCommand);
 
             return response.IsSuccess;
         }
@@ -148,38 +146,65 @@ public sealed class TerminalConfigureViewModel : BaseConfigureViewModel
             response.Result.Value!.IpAddress);
 
         var setComputerNameCommand = new SetComputerNameCommand(model.TerminalName);
-        var computerNameResponse = _sender!.Send(setComputerNameCommand, cancellationToken);
+        await _sender!.Send(setComputerNameCommand, cancellationToken);
 
+        var setIpAddressCommand = new SetIpAddressCommand(model.IpAddress);
+        await _sender!.Send(setIpAddressCommand, cancellationToken);
 
+        var setAutoLogonCommand = new SetAutoLogonCommand(model.TerminalName);
+        await _sender!.Send(setAutoLogonCommand, cancellationToken);
 
-        var command = new StageTerminalCommand(response.Result.Value!);
-        var commandResponse = await _sender!.Send(command, new CancellationToken());
+        File.Delete(
+            Path.Join(
+                GlobalConfig.ScriptPath,
+                string.Join(
+                    "",
+                    MarkerFiles.first.ToString(),
+                    FileExtensions.done.ConvertToFileExtension())));
 
-        return commandResponse.IsSuccess;
+        File.Create(
+            Path.Join(
+                GlobalConfig.ScriptPath,
+                string.Join(
+                    "",
+                    MarkerFiles.second.ToString(),
+                    FileExtensions.done.ConvertToFileExtension())));
+
+        var deleteRunRegistryKeyCommand = new DeleteRunRegistryKeyCommand(StagingRegistryKey.TerminalStaging);
+        await _sender!.Send(deleteRunRegistryKeyCommand, cancellationToken);
+
+        var createRunOnceRegistryKeyCommand = new CreateRunOnceRegistryKeyCommand(StagingRegistryKey.TerminalStaging);
+        await _sender!.Send(createRunOnceRegistryKeyCommand, cancellationToken);
+
+        _logger.Info("First configuration is complete.");
+        var runShutdownCommand = new RunShutdownCommand();
+        await _sender!.Send(runShutdownCommand, cancellationToken);
+
+        return true;
     }
 
-    private async Task<bool> StartThirdPass()
+    private async Task<bool> StartThirdPass(CancellationToken cancellationToken = default)
     {
         var query = new GetTerminalConfigQuery();
-        var response = _sender!.Send(query, new CancellationToken());
+        var response = _sender!.Send(query, cancellationToken);
 
         var command = new StartThirdPassCommand(response.Result.Value!);
-        var commandResponse = await _sender!.Send(command, new CancellationToken());
+        var commandResponse = await _sender!.Send(command, cancellationToken);
 
         return commandResponse.IsSuccess;
     }
 
-    private async Task<bool> StartRadiantAutoLoader()
+    private async Task<bool> StartRadiantAutoLoader(CancellationToken cancellationToken = default)
     {
         var command = new StartRadiantAutoLoaderCommand();
-        var response = await _sender!.Send(command, new CancellationToken());
+        var response = await _sender!.Send(command, cancellationToken);
         return response.IsSuccess;
     }
 
-    private async Task<bool> StartOsk()
+    private async Task<bool> StartOsk(CancellationToken cancellationToken = default)
     {
         var command = new StartOskCommand();
-        var response = await _sender!.Send(command, new CancellationToken());
+        var response = await _sender!.Send(command, cancellationToken)
         return response.IsSuccess;
     }
 }
