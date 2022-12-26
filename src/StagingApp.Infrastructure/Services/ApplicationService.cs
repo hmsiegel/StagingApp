@@ -235,8 +235,9 @@ public partial class ApplicationService : IApplicationService
         }
     }
 
-    [DllImport("Kernel32.dll", EntryPoint = "Wow64EnableWow64FsRedirection")]
-    private static extern bool EnableWow64FsRedirection(bool enable);
+    [LibraryImport("Kernel32.dll", EntryPoint = "Wow64EnableWow64FsRedirection")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static partial bool EnableWow64FsRedirection([MarshalAs(UnmanagedType.Bool)] bool enable);
 
 }
 

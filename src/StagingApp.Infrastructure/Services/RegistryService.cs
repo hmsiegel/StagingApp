@@ -71,16 +71,16 @@ public class RegistryService : IRegistryService
         }
     }
 
-    public void DeleteRunRegistryKey(string path, string runValue)
+    public void DeleteRunRegistryKey(string runValue)
     {
-        RemoveRegistryKeyValue(path, runValue);
+        RemoveRegistryKeyValue(GlobalConfig.RunKey, runValue);
     }
 
-    public void CreateRunOnceRegistryKey(string path, string runValue)
+    public void CreateRunOnceRegistryKey(string runValue)
     {
         EditRegistryFromValues(
             RegistryHive.LocalMachine,
-            path,
+            GlobalConfig.RunOnceKey,
             runValue,
             Path.Combine(
                 GlobalConfig.ScriptPath, "bin",
@@ -95,6 +95,7 @@ public class RegistryService : IRegistryService
         !Environment.Is64BitOperatingSystem
             ? RegistryKey.OpenBaseKey(hiveType, RegistryView.Registry32)
             : RegistryKey.OpenBaseKey(hiveType, RegistryView.Registry64);
+
     private static void RemoveRegistryKeyValue(string keyName, string keyValue)
     {
         RegistryHive hive = RegistryHive.LocalMachine;
